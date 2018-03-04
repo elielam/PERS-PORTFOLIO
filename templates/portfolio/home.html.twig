@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    {# NAVBAR #}
+
+    {{ render(controller('App\\Controller\\PortfolioController::navbarAction')) }}
+
+    {# HEADER #}
+
+    {{ render(controller('App\\Controller\\PortfolioController::sectionHeaderAction')) }}
+
+    {# NAV BUTTON #}
+
+    {{ render(controller('App\\Controller\\PortfolioController::navbtnsAction')) }}
+
+    {# ABOUT #}
+
+    {{ render(controller('App\\Controller\\PortfolioController::sectionAboutAction')) }}
+
+    {# SERVICES #}
+
+    {{ render(controller('App\\Controller\\PortfolioController::sectionServicesAction')) }}
+
+    {# WORKS #}
+
+    {{ render(controller('App\\Controller\\PortfolioController::sectionWorksAction')) }}
+
+    {# CONTACT #}
+
+    {{ render(controller('App\\Controller\\PortfolioController::sectionContactAction')) }}
+
+{% endblock %}

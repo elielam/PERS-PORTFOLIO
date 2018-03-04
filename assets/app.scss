@@ -1,0 +1,309 @@
+@import '~bootstrap/scss/bootstrap.scss';
+
+$fa-font-path: "./fontawesome-free-5.0.6/webfonts/";
+@import './fontawesome-free-5.0.6/css/fontawesome-all.css';
+
+/* General */
+
+html {
+  overflow: hidden;
+}
+
+.title-col {
+  height: 10vh;
+  max-height: 5vh;
+  min-height: 5vh;
+  margin-top: 5vh;
+
+  border: 1px lightgray solid;
+  border-radius: 10px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom: none;
+
+  h5 {
+    border-left: 3px solid lightgray;
+  }
+
+}
+
+.content-row {
+  height: 70vh;
+  max-height: 70vh;
+  min-height: 70vh;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+}
+
+/* button */
+
+.generic-btn {
+  display: none;
+  position: fixed;
+  z-index: 99;
+  border: none;
+  outline: none;
+  color: black;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 18px;
+  background: transparent;
+
+  &:hover {
+    color: grey !important;
+  }
+
+}
+
+#page-top-btn {
+  bottom: 19vh;
+  right: 2vw;
+}
+
+#navbar-btn {
+  display: block !important;
+  top: 5vh;
+  right: 2vw;
+}
+
+#page-plus-btn {
+  display: block !important;
+  bottom: 12vh;
+  right: 2vw;
+}
+
+#page-minus-btn {
+  display: block !important;
+  bottom: 5vh;
+  right: 2vw;
+}
+
+/* NAVBAR */
+
+#navbar-col {
+  position: fixed;
+
+  display: none;
+  top: -0.5vh;
+  bottom: auto;
+
+  height: auto;
+  min-height: auto;
+  max-height: auto;
+  background-color: transparent;
+  color: white;
+
+}
+
+/* HEADER */
+
+#header-container {
+
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+
+  #header-row {
+
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+
+    #header-col {
+
+      background-color: grey;
+      opacity: 0.6;
+
+      position: relative;
+      height: 100vh;
+      min-height: 100vh;
+      max-height: 100vh;
+
+      #header-title {
+
+        position: absolute;
+        top: 40vh;
+        bottom: 40vh;
+        background: transparent;
+        height: 20vh;
+        min-height: 20vh;
+        max-height: 20vh;
+
+      }
+
+      #first-componentNav-row {
+
+        height: 5vh;
+        position: absolute;
+        top: auto;
+        bottom: 0;
+        background: transparent;
+
+      }
+
+    }
+  }
+}
+
+/* ABOUT */
+
+#about-container {
+
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+
+  #about-row {
+
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+
+    #about-col {
+
+      background-color: white;
+
+      height: 100vh;
+      min-height: 100vh;
+      max-height: 100vh;
+
+      #about-img {
+        background-image: url('imgs/default-user.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 30vh;
+        min-height: 30vh;
+        max-height: 30vh;
+      }
+
+      #about-skills-1 {
+
+      }
+
+      #about-skills-2 {
+        display: none;
+      }
+
+      #about-skills-3 {
+        display: none;
+      }
+
+      #about-skills-btn-next-1, #about-skills-btn-next-2, #about-skills-btn-next-3 {
+        background-image: url('imgs/chevron-right-bg.png');
+        background-position: center;
+        background-color: grey;
+        position: absolute;
+        width: 0.9vw;
+        right: 0;
+        left: auto;
+        top: 0;
+        bottom: 0;
+        height: 30vh;
+        min-height: 30vh;
+        max-height: 30vh;
+      }
+
+    }
+  }
+}
+
+/* SERVICES */
+
+#services-container {
+
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+
+  #services-row {
+
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+
+    #services-col {
+
+      background-color: white;
+
+      height: 100vh;
+      min-height: 100vh;
+      max-height: 100vh;
+
+
+    }
+
+  }
+}
+
+/* WORKS */
+
+#works-container {
+
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+
+  #works-row {
+
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+
+    #works-col {
+
+      background-color: white;
+
+      height: 100vh;
+      min-height: 100vh;
+      max-height: 100vh;
+
+    }
+
+  }
+}
+
+/* CONTACT */
+
+#contact-container {
+
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+
+  #contact-row {
+
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+
+    #contact-col {
+
+      background-color: white;
+
+      height: 100vh;
+      min-height: 100vh;
+      max-height: 100vh;
+
+      #contact-form-row {
+
+        height: 70vh;
+        min-height: 70vh;
+        max-height: 70vh;
+
+      }
+
+      #footer-row {
+
+        height: 5vh;
+        min-height: 5vh;
+        max-height: 5vh;
+        background-color: black;
+
+      }
+
+    }
+  }
+}
+
+

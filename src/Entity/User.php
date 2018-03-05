@@ -54,7 +54,7 @@ class User implements UserInterface, \Serializable
     private $roles;
 
     /**
-     * @ORM\Column(type="string", length=20, unique=true)
+     * @ORM\Column(type="string", length=40, unique=true)
      */
     private $username;
 
@@ -191,7 +191,7 @@ class User implements UserInterface, \Serializable
      */
     public function getUsername()
     {
-        return $this->name;
+        return $this->username;
     }
 
     /**

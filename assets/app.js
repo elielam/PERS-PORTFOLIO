@@ -105,8 +105,14 @@ $(document).ready(function(){
 
 /* NAVBAR */
 
-$('#navbar-btn').click(function(){
-    $('#navbar-col').slideToggle( "slow");
+$('#home-navbar-btn').click(function(){
+    $('#home-navbar-col').slideToggle( "slow");
+    return false;
+});
+
+$('#login-navbar-btn').click(function(){
+    $('#login-navbar-col').slideToggle( "slow");
+    $('#login-navbar-btn').attr('data-fa-transform', 'rotate-90');
     return false;
 });
 

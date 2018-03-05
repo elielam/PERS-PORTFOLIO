@@ -1,9 +1,18 @@
 security:
     providers:
-          maindb:
-            entity:
-                class: App\Entity\User
-                property: email
+        maindb:
+          entity:
+              class: App\Entity\User
+              property: username
+        in_memory:
+          memory:
+              users:
+                  elie:
+                      password: elie
+                      roles: 'ROLE_USER'
+                  admin:
+                      password: admin
+                      roles: 'ROLE_ADMIN'
 
     firewalls:
         dev:
@@ -11,7 +20,7 @@ security:
             security: false
         main:
             anonymous: ~
-            provider: maindb
+            provider: in_memory
             form_login:
               login_path: login
               check_path: login
@@ -20,10 +29,9 @@ security:
               target: /
 
     access_control:
-         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/dashboard, roles: ['ROLE_USER','ROLE_ADMIN'] }
 
     encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
         App\Entity\User:
             algorithm: bcrypt
-            cost: 12

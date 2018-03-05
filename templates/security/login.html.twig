@@ -2,6 +2,15 @@
 
 {% block body %}
 
+    {# NAVBAR #}
+
+    {{ render(controller('App\\Controller\\SecurityController::navbarAction')) }}
+
+    {# NAV BUTTON #}
+
+    {{ render(controller('App\\Controller\\SecurityController::navbtnsAction')) }}
+
+
     <div class="container text-center">
 
         <div class="row justify-content-center" style="min-height: 80vh; max-height: 80vh; height: 80vh;">
@@ -22,12 +31,11 @@
 
                         <form action="{{ path('login') }}" method="post">
                             <div class="form-group text-left">
-                                <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" class="form-control" id="email" name="_username" aria-describedby="emailHelp" placeholder="Enter email or Phone number" value="{{ last_username }}">
-                                <small id="emailHelp" class="form-text text-muted">We'll never share your email or your phone number with anyone else.</small>
+                                <label for="exampleInputEmail1" class="font-weight-bold">Email</label>
+                                <input type="text" class="form-control" id="username" name="_username" aria-describedby="emailHelp" placeholder="Enter email or Phone number" value="{{ last_username }}">
                             </div>
                             <div class="form-group text-left">
-                                <label for="password">Password</label>
+                                <label for="password" class="font-weight-bold">Password</label>
                                 <input type="password" class="form-control" id="password" name="_password" placeholder="Password">
                             </div>
                             <button type="submit" class="btn btn-primary col-12">Login</button>

@@ -25,4 +25,17 @@ class SecurityController extends Controller
             'error'         => $error,
         ));
     }
+
+    /* Navbar */
+
+    public function navbarAction () {
+        return $this->render('security/login-navbar.html.twig');
+    }
+
+    /* Navbtns */
+
+    public function navbtnsAction () {
+        return $this->render('security/login-navbtns.html.twig');
+    }
+
 }

@@ -1,0 +1,33 @@
+/* Navbar */
+#dashboard-navbar-col {
+  position: fixed;
+  display: none;
+  bottom: auto;
+  height: auto;
+  min-height: auto;
+  max-height: auto;
+  background-color: transparent;
+  color: black;
+
+  .nav-link {
+    margin-top: 5vh !important;
+    color: black !important;
+  }
+
+  .sign-link {
+    border: 1px solid lightgray;
+
+    &:hover {
+      background-color: lightgray;
+      color: white !important;
+      transition: all 1s;
+    }
+  }
+}
+
+/* Navbtns */
+#dashboard-navbar-btn {
+  display: block !important;
+  top: 7vh;
+  right: 2vw;
+}

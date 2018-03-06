@@ -1,0 +1,209 @@
+/* Generics */
+#about-col, #services-col, #works-col, #contact-col {
+  .title-row {
+    margin-top: 7vh;
+    height: 5vh;
+    max-height: 5vh;
+    min-height: 5vh;
+
+    .title-col {
+      border: 1px lightgray solid;
+      border-radius: 10px;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+      border-bottom: none;
+
+      h5 {
+        border-left: 3px solid lightgray;
+      }
+    }
+  }
+
+  .content-row {
+    height: 70vh;
+    max-height: 70vh;
+    min-height: 70vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+  }
+}
+
+/* Navbar */
+#home-navbar-col {
+  position: fixed;
+  display: none;
+  bottom: auto;
+  height: auto;
+  min-height: auto;
+  max-height: auto;
+  background-color: transparent;
+  color: black;
+
+  .nav-link {
+    margin-top: 1vh !important;
+    color: black !important;
+  }
+
+  .sign-link {
+    border: 1px solid black;
+    text-align: center;
+    min-width: 5vw;
+    width: 5vw;
+    max-width: 5vw;
+
+    &:hover {
+      background-color: black;
+      color: white !important;
+      transition: all 1s;
+    }
+  }
+}
+
+/* Navbtns */
+#home-navbar-btn {
+  display: block !important;
+  top: 7vh;
+  right: 2vw;
+}
+
+#page-top-btn {
+  bottom: 19vh;
+  right: 2vw;
+}
+
+#page-plus-btn {
+  display: block !important;
+  bottom: 12vh;
+  right: 2vw;
+}
+
+#page-minus-btn {
+  display: block !important;
+  bottom: 5vh;
+  right: 2vw;
+}
+
+/* Section */
+#header-container, #about-container, #services-container, #works-container, #contact-container {
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+
+  #header-row, #about-row, #services-row, #works-row, #contact-row {
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+
+    #about-col, #services-col, #works-col, #contact-col {
+      background-color: white;
+      height: 100vh;
+      min-height: 100vh;
+      max-height: 100vh;
+    }
+  }
+}
+
+/* Header */
+#header-container {
+  #header-row {
+    #header-col {
+      background-color: grey;
+      opacity: 0.6;
+      position: relative;
+      height: 100vh;
+      min-height: 100vh;
+      max-height: 100vh;
+
+      #header-title {
+        position: absolute;
+        top: 40vh;
+        bottom: 40vh;
+        background: transparent;
+        height: 20vh;
+        min-height: 20vh;
+        max-height: 20vh;
+      }
+
+      #first-componentNav-row {
+        height: 5vh;
+        position: absolute;
+        top: auto;
+        bottom: 0;
+        background: transparent;
+      }
+    }
+  }
+}
+
+/* About Section */
+#about-container {
+  #about-row {
+    #about-col {
+      #about-img {
+        background-image: url('imgs/default-user.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 30vh;
+        min-height: 30vh;
+        max-height: 30vh;
+      }
+
+      #about-skills-2, #about-skills-3 {
+        display: none;
+      }
+
+      #about-skills-btn-next-1, #about-skills-btn-next-2, #about-skills-btn-next-3 {
+        background-image: url('imgs/chevron-right-bg.png');
+        background-position: center;
+        background-color: grey;
+        position: absolute;
+        width: 0.9vw;
+        right: 0;
+        left: auto;
+        top: 0;
+        bottom: 0;
+        height: 30vh;
+        min-height: 30vh;
+        max-height: 30vh;
+      }
+    }
+  }
+}
+
+/* Services Section */
+#services-container {
+  #services-row {
+    #services-col {
+
+    }
+  }
+}
+
+/* Works Section */
+#works-container {
+  #works-row {
+    #works-col {
+
+    }
+  }
+}
+
+/* Contact Section */
+#contact-container {
+  #contact-row {
+    #contact-col {
+      #contact-form-row {
+        height: 70vh;
+        min-height: 70vh;
+        max-height: 70vh;
+      }
+
+      #footer-row {
+        height: 5vh;
+        min-height: 5vh;
+        max-height: 5vh;
+        background-color: black;
+      }
+    }
+  }
+}

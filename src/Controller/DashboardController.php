@@ -12,8 +12,18 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return $this->render('dashboard/index.html.twig', [
-            'controller_name' => 'DashboardController',
-        ]);
+        return $this->render('dashboard/dashboard.html.twig');
+    }
+
+    /* Navbar */
+
+    public function navbarAction () {
+        return $this->render('dashboard/dashboard-navbar.html.twig');
+    }
+
+    /* Navbtns */
+
+    public function navbtnsAction () {
+        return $this->render('dashboard/dashboard-navbtns.html.twig');
     }
 }

@@ -3,10 +3,11 @@ $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 });
 
-// ### BOOTSTRAP JS
+// ### VENDORS
 import 'bootstrap';
 import './fontawesome-free-5.0.6/js/fontawesome-all';
 import 'particles.js';
+
 particlesJS.load('particles-js', '~node_modules/particle.js/demo/particles.json', function() {
     console.log('callback - particles.js config loaded');
 });
@@ -112,7 +113,11 @@ $('#home-navbar-btn').click(function(){
 
 $('#login-navbar-btn').click(function(){
     $('#login-navbar-col').slideToggle( "slow");
-    $('#login-navbar-btn').attr('data-fa-transform', 'rotate-90');
+    return false;
+});
+
+$('#dashboard-navbar-btn').click(function(){
+    $('#dashboard-navbar-col').slideToggle( "slow");
     return false;
 });
 

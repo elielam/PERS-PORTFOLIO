@@ -1,0 +1,24 @@
+/* Navbar */
+#login-navbar-col {
+  position: fixed;
+  display: none;
+  bottom: auto;
+  height: auto;
+  min-height: auto;
+  max-height: auto;
+  background-color: transparent;
+  color: black;
+
+  .nav-link {
+    margin-top: 1vh !important;
+    color: white !important;
+  }
+}
+
+/* Navbtns */
+#login-navbar-btn {
+  display: block !important;
+  top: 7vh;
+  right: 2vw;
+}
+

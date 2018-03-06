@@ -14,8 +14,11 @@
     color: black !important;
   }
 
-  .sign-link {
+  .link {
     border: 1px solid lightgray;
+    min-width: auto;
+    width: auto;
+    max-width: auto;
 
     &:hover {
       background-color: lightgray;
@@ -30,4 +33,59 @@
   display: block !important;
   top: 7vh;
   right: 2vw;
+}
+
+/* Section */
+#dashboard-home-container {
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+
+  #dashboard-home-row {
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+
+    #dashboard-home-col {
+      background-color: white;
+      height: 100vh;
+      min-height: 100vh;
+      max-height: 100vh;
+
+      .todoToolsBtn {
+        color: black;
+        background: white;
+        transition: all 1s;
+      }
+
+      .todoToolsBtn:hover {
+        color: white;
+        background: black;
+      }
+
+      .todoLabel {
+      }
+
+      .todoToolsPanel {
+        display: none;
+        position: absolute;
+        top: 0;
+        background: white;
+      }
+
+      .panelBtn {
+        color: white;
+        background: black;
+        transition: all 1s;
+      }
+
+      .panelBtn:hover {
+        background: white;
+        color: black;
+      }
+
+      .todoToolsReport {
+      }
+    }
+  }
 }

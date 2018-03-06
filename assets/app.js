@@ -384,5 +384,11 @@ $('#services-web-return-btn').click(function(){
 
 /* CONTACT */
 
-/* Google Map */
 
+// DASHBOARD
+
+$(".todoToolsBtn").click(function(){
+    var id = $(this).attr('id');
+    var targetPanel = ".todoToolsPanel-"+id;
+    $(targetPanel).fadeToggle( "slow", "linear" );
+});

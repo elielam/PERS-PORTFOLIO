@@ -22,3 +22,91 @@
   right: 2vw;
 }
 
+/* Security */
+#security-container {
+  #security-row {
+    min-height: 80vh;
+    max-height: 80vh;
+    height: 80vh;
+
+    #security-col {
+
+      /* Login */
+      #login-row {
+        #login-alert-col {
+
+        }
+
+        #login-form-col {
+          height: 40vh;
+          min-height: 40vh;
+          max-height: 40vh;
+
+          #login-form-type-col {
+            border-bottom: 1px solid lightgray;
+            height: 5vh;
+
+            #login-form-type-email, #login-form-type-phone {
+              min-height: 5vh;
+              height: 5vh;
+              max-height: 5vh;
+
+              &:hover {
+                background-color: lightgray;
+                color: white;
+                transition: all 1s;
+              }
+            }
+
+            #login-form-type-email {
+              border-right: 1px solid lightgray;
+            }
+
+            & h5 {
+              min-height: 5vh;
+              height: 5vh;
+              max-height: 5vh;
+            }
+          }
+
+          #form-col {
+            height: 30vh;
+            min-height: 30vh;
+            max-height: 30vh;
+
+            & form {
+              margin-top: 7vh;
+
+              & input {
+
+              }
+            }
+          }
+
+          #login-form-submit-col {
+            border-top: 1px solid lightgray;
+            height: 5vh;
+
+            & button {
+              background-color: transparent;
+              border: none;
+              box-shadow: none;
+              min-height: 5vh;
+              height: 5vh;
+              max-height: 5vh;
+              font-size: 20px;
+              font-weight: bold;
+
+              &:hover {
+                background-color: lightgray;
+                color: white;
+                transition: all 1s;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

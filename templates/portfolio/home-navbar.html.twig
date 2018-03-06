@@ -22,24 +22,28 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto mr-0">
-                {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item">
-                        <a class="nav-link font-weight-bold" href="{{ path("dashboard") }}">DASHBOARD</a>
-                    </li>
+                {% if is_granted('ROLE_USER') %}
                     <li class="nav-item mr-2">
-                        <a class="nav-link font-weight-bold" href="#">BACK-OFFICE</a>
+                        <a class="nav-link link font-weight-bold" href="{{ path("dashboard") }}">DASHBOARD</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link sign-link font-weight-bold" href="/logout">LOGOUT</a>
+                        <a class="nav-link link font-weight-bold" href="/logout">LOGOUT</a>
+                    </li>
+                {% elseif is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item mr-1">
+                        <a class="nav-link link font-weight-bold" href="{{ path("dashboard") }}">DASHBOARD</a>
+                    </li>
+                    <li class="nav-item mr-1">
+                        <a class="nav-link link font-weight-bold" href="#">BACK-OFFICE</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link font-weight-bold" href="/logout">LOGOUT</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link sign-link font-weight-bold" href="{{ path("login") }}">LOGIN</a>
                     </li>
                 {% endif %}
-            </ul>
-            <ul class="navbar-nav mr-0">
-
             </ul>
         </div>
 

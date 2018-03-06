@@ -10,44 +10,67 @@
 
     {{ render(controller('App\\Controller\\SecurityController::navbtnsAction')) }}
 
-    <div class="container text-center">
+    <div id="security-container" class="container text-center">
+        <div id="security-row" class="row justify-content-center">
+            <div id="security-col" class="col-sm-8 align-self-center">
+                <div id="login-row" class="row justify-content-center">
 
-        <div class="row justify-content-center" style="min-height: 80vh; max-height: 80vh; height: 80vh;">
-
-            <div class="col-sm-8 align-self-center">
-
-                <div class="row justify-content-center">
-
-                    <div class="col-sm-12">
+                    <div id="login-alert-col" class="col-sm-12">
                         {% if error %}
-                            <div class="alert alert-danger" role="alert">
-                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            <div class="alert alert-danger text-left" role="alert">
+                                <h4 class="font-weight-bold">Error</h4>
+                                <p class="font-weight-bold">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
                             </div>
                         {% endif %}
                     </div>
 
-                    <div class="col-sm-10 mt-5">
+                    <div id="login-form-col" class="col-sm-10 mt-5 border">
+                        <div class="row">
 
-                        <form action="{{ path('login') }}" method="post">
-                            <div class="form-group text-left">
-                                <label for="exampleInputEmail1" class="font-weight-bold">Email</label>
-                                <input type="text" class="form-control" id="username" name="_username" aria-describedby="emailHelp" placeholder="Enter email or Phone number" value="{{ last_username }}">
-                            </div>
-                            <div class="form-group text-left">
-                                <label for="password" class="font-weight-bold">Password</label>
-                                <input type="password" class="form-control" id="password" name="_password" placeholder="Password">
-                            </div>
-                            <button type="submit" class="btn btn-primary col-12">Login</button>
-                        </form>
+                            <div id="login-form-type-col" class="col-12">
 
+                                <div class="row">
+                                    <div id="login-form-type-email" class="col-6 text-center align-items-center">
+                                        <span><i class="fas fa-envelope fa-2x mt-2"></i></span>
+                                    </div>
+                                    <div id="login-form-type-phone" class="col-6 text-center">
+                                        <span><i class="fas fa-phone fa-2x mt-2"></i></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="form-col" class="col-12">
+
+                                <form action="{{ path('login') }}" method="post">
+                                    <div class="form-group text-left">
+                                        <input type="text" class="form-control form-control-lg" id="username" name="_username" aria-describedby="emailHelp" placeholder="Enter email" value="{{ last_username }}">
+                                        <small id="emailHelp" class="form-text text-muted">Enter your email to login.</small>
+                                    </div>
+                                    <div class="form-group text-left">
+                                        <input type="password" class="form-control form-control-lg" id="password" name="_password" placeholder="Password">
+                                        <small id="emailHelp" class="form-text text-muted">Enter your password.</small>
+                                    </div>
+
+                            </div>
+
+                            <div id="login-form-submit-col" class="col-12">
+
+                                <div class="row">
+                                    <div class="col-12 text-center p-0">
+                                        <button type="submit" class="nav-link col-12">Go !</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
                     </div>
 
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
 {% endblock %}

@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files (x86)\nodejs\node.exe C:\Users\c03735\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js run encore dev
+  C:\Program Files (x86)\nodejs\node.exe C:\Users\c03735\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js run encore
 
 PATH: 
   C:\wamp64\bin\php\php7.1.9;C:\Program Files (x86)\nodejs\;C:\Program Files\nodejs\node_modules\npm;C:\wamp64\bin\php\php7.1.9;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft Application Virtualization Client;C:\Program Files\Axalto\Access Client\v5\;C:\Program Files (x86)\Gemalto\Access Client\v5\;C:\Program Files\ActivIdentity\SecureLogin\;C:\Windows\System32\WindowsPowerShell\v1.0\;c:\c03735\Apps\ComposerSetup\bin;c:\c03735\Apps\Composer\vendor\bin;C:\c03735\Apps\instantclient_12_1;C:\Program Files\Git\bin;C:\wamp64\bin\php\php7.1.9;C:\c03735\Apps\nodejs\;C:\c03735\Apps\nodejs\npm_data;C:\Users\c03735\AppData\Roaming\npm
@@ -5261,9 +5261,9 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 2
+  Exit code: 1
   Command: C:\Windows\system32\cmd.exe
-  Arguments: /d /s /c C:\c03735\workarea\labo\Autres\test\node_modules\.bin\encore dev
+  Arguments: /d /s /c C:\c03735\workarea\labo\Autres\test\node_modules\.bin\encore
   Directory: C:\c03735\workarea\labo\Autres\test
   Output:
   

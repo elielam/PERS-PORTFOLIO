@@ -40,16 +40,16 @@
   color: black;
 
   .nav-link {
-    margin-top: 1vh !important;
+    margin-top: 0.5vh !important;
     color: black !important;
   }
 
-  .sign-link {
+  .link {
     border: 1px solid black;
     text-align: center;
-    min-width: 5vw;
-    width: 5vw;
-    max-width: 5vw;
+    min-width: auto;
+    width: auto;
+    max-width: auto;
 
     &:hover {
       background-color: black;

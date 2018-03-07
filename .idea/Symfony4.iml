@@ -228,6 +228,5 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="portailcc" />
   </component>
 </module>

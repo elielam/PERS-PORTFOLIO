@@ -43,7 +43,6 @@
           max-height: 40vh;
 
           #login-form-type-col {
-            border-bottom: 1px solid lightgray;
             height: 5vh;
 
             #login-form-type-email, #login-form-type-phone {
@@ -84,7 +83,6 @@
           }
 
           #login-form-submit-col {
-            border-top: 1px solid lightgray;
             height: 5vh;
 
             & button {

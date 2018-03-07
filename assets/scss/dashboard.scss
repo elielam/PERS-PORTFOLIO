@@ -115,6 +115,13 @@
       background-color: white !important;
       border-bottom: 1px solid white;
     }
+    #todoComponent-input {
+      height: 5vh;
+      border-radius: 10px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
   }
 
 }

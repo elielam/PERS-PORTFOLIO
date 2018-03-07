@@ -29,6 +29,7 @@ class ComposerStaticInitdd301af0dc98344d33e584766ec47b50
         ),
         'T' => 
         array (
+            'Twig\\Extensions\\' => 16,
             'Twig\\' => 5,
         ),
         'S' => 
@@ -38,6 +39,8 @@ class ComposerStaticInitdd301af0dc98344d33e584766ec47b50
             'Symfony\\Flex\\' => 13,
             'Symfony\\Component\\Yaml\\' => 23,
             'Symfony\\Component\\VarDumper\\' => 28,
+            'Symfony\\Component\\Validator\\' => 28,
+            'Symfony\\Component\\Translation\\' => 30,
             'Symfony\\Component\\Stopwatch\\' => 28,
             'Symfony\\Component\\Serializer\\' => 29,
             'Symfony\\Component\\Security\\' => 27,
@@ -79,16 +82,26 @@ class ComposerStaticInitdd301af0dc98344d33e584766ec47b50
             'Psr\\Cache\\' => 10,
             'PackageVersions\\' => 16,
         ),
+        'J' => 
+        array (
+            'JavierEguiluz\\Bundle\\EasyAdminBundle\\' => 37,
+        ),
+        'E' => 
+        array (
+            'EasyCorp\\Bundle\\EasyAdminBundle\\' => 32,
+        ),
         'D' => 
         array (
             'Doctrine\\ORM\\' => 13,
             'Doctrine\\Instantiator\\' => 22,
             'Doctrine\\DBAL\\Migrations\\' => 25,
             'Doctrine\\Common\\Inflector\\' => 26,
+            'Doctrine\\Common\\DataFixtures\\' => 29,
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
             'Doctrine\\Bundle\\MigrationsBundle\\' => 33,
+            'Doctrine\\Bundle\\FixturesBundle\\' => 31,
             'Doctrine\\Bundle\\DoctrineCacheBundle\\' => 36,
             'Doctrine\\Bundle\\DoctrineBundle\\' => 31,
         ),
@@ -122,6 +135,10 @@ class ComposerStaticInitdd301af0dc98344d33e584766ec47b50
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
+        'Twig\\Extensions\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/extensions/src',
+        ),
         'Twig\\' => 
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
@@ -145,6 +162,14 @@ class ComposerStaticInitdd301af0dc98344d33e584766ec47b50
         'Symfony\\Component\\VarDumper\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/var-dumper',
+        ),
+        'Symfony\\Component\\Validator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/validator',
+        ),
+        'Symfony\\Component\\Translation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/translation',
         ),
         'Symfony\\Component\\Stopwatch\\' => 
         array (
@@ -294,6 +319,14 @@ class ComposerStaticInitdd301af0dc98344d33e584766ec47b50
         array (
             0 => __DIR__ . '/..' . '/ocramius/package-versions/src/PackageVersions',
         ),
+        'JavierEguiluz\\Bundle\\EasyAdminBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/easycorp/easyadmin-bundle/legacy',
+        ),
+        'EasyCorp\\Bundle\\EasyAdminBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/easycorp/easyadmin-bundle/src',
+        ),
         'Doctrine\\ORM\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/orm/lib/Doctrine/ORM',
@@ -310,6 +343,10 @@ class ComposerStaticInitdd301af0dc98344d33e584766ec47b50
         array (
             0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
         ),
+        'Doctrine\\Common\\DataFixtures\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/data-fixtures/lib/Doctrine/Common/DataFixtures',
+        ),
         'Doctrine\\Common\\Cache\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
@@ -325,6 +362,10 @@ class ComposerStaticInitdd301af0dc98344d33e584766ec47b50
         'Doctrine\\Bundle\\MigrationsBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/doctrine-migrations-bundle',
+        ),
+        'Doctrine\\Bundle\\FixturesBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/doctrine-fixtures-bundle',
         ),
         'Doctrine\\Bundle\\DoctrineCacheBundle\\' => 
         array (
@@ -351,6 +392,10 @@ class ComposerStaticInitdd301af0dc98344d33e584766ec47b50
     public static $prefixesPsr0 = array (
         'T' => 
         array (
+            'Twig_Extensions_' => 
+            array (
+                0 => __DIR__ . '/..' . '/twig/extensions/lib',
+            ),
             'Twig_' => 
             array (
                 0 => __DIR__ . '/..' . '/twig/twig/lib',
@@ -368,6 +413,10 @@ class ComposerStaticInitdd301af0dc98344d33e584766ec47b50
             'ProxyManager\\' => 
             array (
                 0 => __DIR__ . '/..' . '/ocramius/proxy-manager/src',
+            ),
+            'Pagerfanta\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/pagerfanta/pagerfanta/src',
             ),
         ),
         'D' => 

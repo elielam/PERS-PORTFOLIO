@@ -199,7 +199,7 @@ class User implements UserInterface, \Serializable
      */
     public function setUsername($username): void
     {
-        $this->name = $username;
+        $this->username = $username;
     }
 
 

@@ -12,9 +12,9 @@ import 'particles.js';
 require('./app.scss');
 
 // ### COMPONENTS
-require('./js/portfolio');
 require('./js/security');
 require('./js/dashboard');
+require('./js/portfolio');
 
 // ### PARTICLES JS LOAD
 particlesJS.load('particles-js', '~node_modules/particle.js/demo/particles.json', function() {

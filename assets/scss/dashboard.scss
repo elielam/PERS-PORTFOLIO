@@ -73,26 +73,26 @@
     }
 
     .todoComponent-element {
-      height: 5vh;
+      height: auto;
 
       &:hover {
-        .todoComponent-element-left {
+        .todoComponent-element-icon {
           background-color: white;
           border-right: 1px solid lightgray;
           transition: 1s all;
         }
-        .todoComponent-element-right {
+        .todoComponent-element-libelle {
           background-color: white;
           transition: 1s all;
         }
       }
     }
-    .todoComponent-element-left {
+    .todoComponent-element-icon {
       border-right: 1px solid white;
       border-bottom: 1px solid white;
       height: 5vh
     }
-    .todoComponent-element-right {
+    .todoComponent-element-libelle {
       border-bottom: 1px solid white;
       height: 5vh;
 
@@ -100,6 +100,20 @@
         margin-top: 1vh;
         font-size: 21px;
       }
+    }
+    .todoComponent-element-toolsbox {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 5vh;
+      border-bottom: 1px solid white;
+    }
+    .todoComponent-element-desc {
+      display: none;
+      height: 5vh;
+      background-color: white !important;
+      border-bottom: 1px solid white;
     }
   }
 

@@ -21,39 +21,40 @@
                             <div id="todoComponent-header" class="col-12 bg-dark">
                             </div>
 
-                            <div class="col-12 todoComponent-element bg-secondary">
-                                <div class="row">
+                            {% for todo in todos %}
 
-                                    <div class="col-2 todoComponent-element-left text-center">
-                                        <span><i class="fas fa-chevron-right fa-2x mt-2"></i></span>
+                                <div id="{{ todo }}" class="col-12 todoComponent-element bg-secondary">
+                                    <div class="row">
+
+                                        <div class="col-2 todoComponent-element-icon todoComponent-element-icon-{{ todo }} text-center">
+                                            <span><i class="fas fa-chevron-right fa-2x mt-2"></i></span>
+                                        </div>
+
+                                        <div class="col-10 todoComponent-element-libelle todoComponent-element-libelle-{{ todo }}">
+                                            <h6 class="p-0 font-weight-bold mt-2"></h6>
+                                        </div>
+
+                                        <div class="col-10 todoComponent-element-toolsbox todoComponent-element-toolsbox-{{ todo }} bg-danger">
+
+                                        </div>
+
+                                        <div class="col-12 todoComponent-element-desc todoComponent-element-desc-{{ todo }}">
+
+                                        </div>
+
                                     </div>
-
-                                    <div class="col-10 todoComponent-element-right">
-                                        <h6 class="p-0 font-weight-bold mt-2"></h6>
-                                    </div>
-
                                 </div>
-                            </div>
 
-                            <div class="col-12 todoComponent-element bg-secondary">
-                                <div class="row">
-
-                                    <div class="col-2 todoComponent-element-left text-center">
-                                        <span><i class="fas fa-chevron-right fa-2x mt-2"></i></span>
-                                    </div>
-
-                                    <div class="col-10 todoComponent-element-right">
-                                        <h6 class="p-0 font-weight-bold mt-2"></h6>
-                                    </div>
-
-                                </div>
-                            </div>
+                            {% endfor %}
 
                         </div>
                     </div>
 
                 </div>
             </div>
+
+
+
         </div>
     </div>
 

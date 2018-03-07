@@ -1,5 +1,6 @@
-./node_modules/.bin
-./var
-./public
-.idea/workspace.xml
-.idea
+/node_modules/.cache
+/var
+/public
+idea/workspace.xml
+/.idea
+/src/Migrations/

@@ -12,7 +12,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return $this->render('dashboard/dashboard.html.twig');
+        return $this->render('dashboard/dashboard.html.twig', array(
+            'todos' => array(1,2,3,4,5,6)
+        ));
     }
 
     /* Navbar */

@@ -2,5 +2,10 @@ index:
     path: /
     defaults: { _controller: 'App\Controller\PortfolioController::home' }
 
+easy_admin_bundle:
+    resource: "@EasyAdminBundle/Controller/AdminController.php"
+    type:     annotation
+    prefix:   /backoffice
+
 logout:
     path: /logout

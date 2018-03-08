@@ -14,47 +14,47 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", unique=true, nullable=false)
      */
     private $uid;
 
     /**
-     * @ORM\Column(type="string", length=20, unique=false)
+     * @ORM\Column(type="string", length=20, unique=false, nullable=false)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=20, unique=false)
+     * @ORM\Column(type="string", length=20, unique=false, nullable=false)
      */
     private $lastname;
 
     /**
-     * @ORM\Column(type="string", length=10, unique=false)
+     * @ORM\Column(type="date", unique=false, nullable=false)
      */
     private $birthdate;
 
     /**
-     * @ORM\Column(type="string", length=40, unique=true)
+     * @ORM\Column(type="string", length=40, unique=true, nullable=false)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=100, unique=false)
+     * @ORM\Column(type="string", length=100, unique=false, nullable=false)
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=100, unique=false)
+     * @ORM\Column(type="integer", length=500, unique=false, nullable=false)
      */
     private $salt;
 
     /**
-     * @ORM\Column(type="string", length=20, unique=false)
+     * @ORM\Column(type="array", unique=false, nullable=false)
      */
     private $roles;
 
     /**
-     * @ORM\Column(type="string", length=40, unique=true)
+     * @ORM\Column(type="string", length=40, unique=true, nullable=false)
      */
     private $username;
 

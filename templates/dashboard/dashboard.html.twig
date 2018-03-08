@@ -21,24 +21,42 @@
                             <div id="todoComponent-header" class="col-12 bg-dark">
                             </div>
 
-                            {% for todo in todos %}
+                            {% set maxValue = 5 %}
+                            {% for key, todo in todos %}
 
-                                <div id="{{ todo }}" class="col-12 todoComponent-element bg-secondary">
+                                {% if key == maxValue %}
+                                <div id="{{ key }}" class="col-12 todoComponent-element border-0 border-bottom-0 bg-secondary">
+                                {% else %}
+                                <div id="{{ key }}" class="col-12 todoComponent-element bg-secondary">
+                                {% endif %}
                                     <div class="row">
 
-                                        <div class="col-2 todoComponent-element-icon todoComponent-element-icon-{{ todo }} text-center">
-                                            <span><i class="fas fa-chevron-right fa-2x mt-2"></i></span>
+                                        <div class="col-2 todoComponent-element-icon todoComponent-element-icon-{{ key }} text-center">
+                                            <span><i class="fas fa-angle-right fa-2x mt-2"></i></span>
                                         </div>
 
-                                        <div class="col-10 todoComponent-element-libelle todoComponent-element-libelle-{{ todo }}">
+                                        <div class="col-10 todoComponent-element-libelle todoComponent-element-libelle-{{ key }}">
                                             <h6 class="p-0 font-weight-bold mt-2"></h6>
                                         </div>
 
-                                        <div class="col-10 todoComponent-element-toolsbox todoComponent-element-toolsbox-{{ todo }} bg-danger">
-
+                                        <div class="col-10 todoComponent-element-toolsbox todoComponent-element-toolsbox-{{ key }} bg-danger">
+                                            <div class="row">
+                                                <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool1">
+                                                    <span><i class="fas fa-angle-left fa-2x mt-2"></i></span>
+                                                </div>
+                                                <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool2">
+                                                    <span><i class="fas fa-angle-double-right fa-2x mt-2"></i></span>
+                                                </div>
+                                                <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool3">
+                                                    <span><i class="fas fa-check fa-2x mt-2"></i></span>
+                                                </div>
+                                                <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool last toolsbox-{{ key }}-tool4">
+                                                    <span><i class="fas fa-times fa-2x mt-2"></i></span>
+                                                </div>
+                                            </div>
                                         </div>
 
-                                        <div style="border: none !important;" class="col-12 todoComponent-element-desc todoComponent-element-desc-{{ todo }}">
+                                        <div class="col-12 todoComponent-element-desc todoComponent-element-desc-{{ key }}">
 
                                         </div>
 
@@ -48,6 +66,7 @@
                             {% endfor %}
 
                             <div id="todoComponent-input" class="col-12 bg-dark">
+
                             </div>
 
                         </div>
@@ -55,9 +74,6 @@
 
                 </div>
             </div>
-
-
-
         </div>
     </div>
 

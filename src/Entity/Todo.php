@@ -13,32 +13,32 @@ class Todo
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=40, unique=false)
+     * @ORM\Column(type="string", length=40, unique=false, nullable=false)
      */
     private $libelle;
 
     /**
-     * @ORM\Column(type="string", length=200, unique=false)
+     * @ORM\Column(type="string", length=200, unique=false, nullable=false)
      */
     private $desc;
 
     /**
-     * @ORM\Column(type="string", length=17, unique=false)
+     * @ORM\Column(type="datetime", length=17, unique=false, nullable=false)
      */
     private $datetime;
 
     /**
-     * @ORM\Column(type="integer", unique=false)
+     * @ORM\Column(type="integer", length=2, unique=false, nullable=false)
      */
     private $state;
 
     /**
-     * @ORM\Column(type="integer", unique=false)
+     * @ORM\Column(type="integer", unique=false, nullable=false)
      */
     private $uid;
 

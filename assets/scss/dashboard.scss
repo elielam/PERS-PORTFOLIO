@@ -56,7 +56,6 @@
 }
 
 /* Components */
-
 #dashboard-components-row {
   margin-top: 10vh;
 
@@ -74,6 +73,7 @@
 
     .todoComponent-element {
       height: auto;
+      border-bottom: 1px solid white;
 
       &:hover {
         .todoComponent-element-icon {
@@ -89,11 +89,9 @@
     }
     .todoComponent-element-icon {
       border-right: 1px solid white;
-      border-bottom: 1px solid white;
       height: 5vh
     }
     .todoComponent-element-libelle {
-      border-bottom: 1px solid white;
       height: 5vh;
 
       & h6 {
@@ -107,7 +105,28 @@
       top: 0;
       right: 0;
       height: 5vh;
-      border-bottom: 1px solid white;
+      border: none;
+
+      &:hover {
+        background: white !important;
+      }
+
+      .todoComponent-element-toolsbox-tool {
+        height: 5vh;
+        min-height: 5vh;
+        max-height: 5vh;
+        border-right: 1px solid white;
+
+        &:hover {
+          background-color: white !important;
+          color: black !important;
+          border: none !important;
+          transition: all 1s;
+        }
+      }
+      .last {
+        border-right: none !important;
+      }
     }
     .todoComponent-element-desc {
       display: none;

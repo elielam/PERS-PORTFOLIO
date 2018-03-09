@@ -2,11 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Todo;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
+use App\Entity\Todo;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class DashboardController extends Controller
 {
@@ -15,6 +21,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
+    //  $this->addFlash('success',
+    //    'Suppression a été effectuée avec succès!'
+    //  );
+
         $entityManager = $this->getDoctrine()->getManager();
 
         $datas = [];
@@ -35,11 +45,23 @@ class DashboardController extends Controller
      * @return JsonResponse
      */
     public function getTodosAction() {
-        $entityManager = $this->getDoctrine()->getManager();
+
+        $entityManager = $this->getDoctrine()->getManager()->getRepository(Todo::class);
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
         $datas = [];
         $datas['todos'] = [];
-        $datas['todos']['entities'] = $entityManager->getRepository(Todo::class)->findAll();
-        $datas['todos']['count'] = count($datas['todos']['entities'])-1;
+        $datas['todos']['tmpentities'] = $entityManager->findAll();
+
+        foreach ($datas['todos']['tmpentities'] as $entity) {
+            $datas['todos']['entities'][] = $serializer->serialize($entity, 'json');
+        }
+
+        $datas['todos']['count'] = count($datas['todos']['entities']);
+
+        unset($datas['todos']['tmpentities']);
 
         return new JsonResponse($datas);
     }

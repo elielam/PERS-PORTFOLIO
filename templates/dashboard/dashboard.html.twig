@@ -15,57 +15,65 @@
             <div id="dashboard-home-col" class="col-sm-12 h-100 w-100 pl-5 pt-3">
                 <div id="dashboard-components-row" class="row">
 
+                    {#{% for type, flash_messages in app.session.flashBag.all %}#}
+                        {#{% for flash_message in flash_messages %}#}
+                            {#<div class="alert alert-{{ type }}"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>{{ flash_message }}</strong></div>#}
+                        {#{% endfor %}#}
+                    {#{% endfor %}#}
+
                     <div id="todoComponent-col" class="col-2">
                         <div class="row">
 
                             <div id="todoComponent-header" class="col-12 bg-dark">
                             </div>
 
-                            {% for key, todo in todos.entities %}
+                            <div id="todoComponent-elements" class="col-12 m-0 p-0 h-100 w-100" style="min-height: 5vh; height: auto; max-height: auto;">
+                                {% for key, todo in todos.entities %}
 
-                                {% if key == todos.count %}
-                                <div id="{{ key }}" class="col-12 todoComponent-element border-0 border-bottom-0 bg-secondary">
-                                {% else %}
-                                <div id="{{ key }}" class="col-12 todoComponent-element bg-secondary">
-                                {% endif %}
-                                    <div class="row">
+                                    {% if key == todos.count %}
+                                    <div id="{{ key }}" class="col-12 todoComponent-element border-0 border-bottom-0 bg-secondary">
+                                    {% else %}
+                                    <div id="{{ key }}" class="col-12 todoComponent-element bg-secondary">
+                                    {% endif %}
+                                        <div class="row">
 
-                                        <div class="col-2 todoComponent-element-icon todoComponent-element-icon-{{ key }} text-center">
-                                            <span><i class="fas fa-angle-right fa-2x mt-1"></i></span>
-                                        </div>
+                                            <div class="col-2 todoComponent-element-icon todoComponent-element-icon-{{ key }} text-center">
+                                                <span><i class="fas fa-angle-right fa-2x mt-1"></i></span>
+                                            </div>
 
-                                        <div class="col-10 todoComponent-element-libelle todoComponent-element-libelle-{{ key }}">
-                                            <h6 class="p-0 font-weight-bold mt-1">{{ todo.libelle }}</h6>
-                                        </div>
+                                            <div class="col-10 todoComponent-element-libelle todoComponent-element-libelle-{{ key }}">
+                                                <h6 class="p-0 font-weight-bold mt-1">{{ todo.libelle }}</h6>
+                                            </div>
 
-                                        <div class="col-10 todoComponent-element-toolsbox todoComponent-element-toolsbox-{{ key }} bg-danger">
-                                            <div class="row">
-                                                <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool1">
-                                                    <span><i class="fas fa-angle-left fa-2x mt-1"></i></span>
-                                                </div>
-                                                <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool2">
-                                                    <span><i class="fas fa-angle-double-right fa-2x mt-1"></i></span>
-                                                </div>
-                                                <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool3">
-                                                    <span><i class="fas fa-check fa-2x mt-1"></i></span>
-                                                </div>
-                                                <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool last toolsbox-{{ key }}-tool4">
-                                                    <span><i class="fas fa-times fa-2x mt-1"></i></span>
+                                            <div class="col-10 todoComponent-element-toolsbox todoComponent-element-toolsbox-{{ key }} bg-danger">
+                                                <div class="row">
+                                                    <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool1">
+                                                        <span><i class="fas fa-angle-left fa-2x mt-1"></i></span>
+                                                    </div>
+                                                    <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool2">
+                                                        <span><i class="fas fa-angle-double-right fa-2x mt-1"></i></span>
+                                                    </div>
+                                                    <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool3">
+                                                        <span><i class="fas fa-check fa-2x mt-1"></i></span>
+                                                    </div>
+                                                    <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool last toolsbox-{{ key }}-tool4">
+                                                        <span><i class="fas fa-times fa-2x mt-1"></i></span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-12 todoComponent-element-desc todoComponent-element-desc-{{ key }}">
-                                            <p style="font-size: 12px;">{{ todo.description }}</p>
-                                        </div>
+                                            <div class="col-12 todoComponent-element-desc todoComponent-element-desc-{{ key }}">
+                                                <p style="font-size: 12px;">{{ todo.description }}</p>
+                                            </div>
 
+                                        </div>
                                     </div>
-                                </div>
 
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
 
-                            <div id="todoComponent-input" class="col-12 bg-dark">
-                                <button id="todoComponent-input-submit-btn" class="btn btn-lg" style="height: 5vh"><i class="fas fa-spinner fa-spin"></i></button>
+                            <div id="todoComponent-input" class="col-12 bg-dark p-0">
+                                <button id="todoComponent-input-submit-btn" class="btn btn-lg w-100" style="height: 5vh; border-radius: 0"><i class="fas fa-spinner fa-spin"></i></button>
                             </div>
 
                         </div>

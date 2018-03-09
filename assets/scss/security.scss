@@ -42,31 +42,31 @@
           min-height: 40vh;
           max-height: 40vh;
 
-          #login-form-type-col {
-            height: 5vh;
-
-            #login-form-type-email, #login-form-type-phone {
-              min-height: 5vh;
-              height: 5vh;
-              max-height: 5vh;
-
-              &:hover {
-                background-color: lightgray;
-                color: white;
-                transition: all 1s;
-              }
-            }
-
-            #login-form-type-email {
-              border-right: 1px solid lightgray;
-            }
-
-            & h5 {
-              min-height: 5vh;
-              height: 5vh;
-              max-height: 5vh;
-            }
-          }
+          //#login-form-type-col {
+          //  height: 5vh;
+          //
+          //  #login-form-type-email, #login-form-type-phone {
+          //    min-height: 5vh;
+          //    height: 5vh;
+          //    max-height: 5vh;
+          //
+          //    &:hover {
+          //      background-color: lightgray;
+          //      color: white;
+          //      transition: all 1s;
+          //    }
+          //  }
+          //
+          //  #login-form-type-email {
+          //    border-right: 1px solid lightgray;
+          //  }
+          //
+          //  & h5 {
+          //    min-height: 5vh;
+          //    height: 5vh;
+          //    max-height: 5vh;
+          //  }
+          //}
 
           #form-col {
             height: 30vh;
@@ -94,6 +94,7 @@
               max-height: 5vh;
               font-size: 20px;
               font-weight: bold;
+              border-radius: 10px;
 
               &:hover {
                 background-color: lightgray;

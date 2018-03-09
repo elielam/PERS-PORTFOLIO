@@ -233,9 +233,6 @@
     "symfony/process": {
         "version": "v4.0.4"
     },
-    "symfony/profiler-pack": {
-        "version": "v1.0.3"
-    },
     "symfony/property-access": {
         "version": "v4.0.5"
     },
@@ -268,9 +265,6 @@
     },
     "symfony/serializer-pack": {
         "version": "v1.0.1"
-    },
-    "symfony/stopwatch": {
-        "version": "v4.0.2"
     },
     "symfony/translation": {
         "version": "3.3",

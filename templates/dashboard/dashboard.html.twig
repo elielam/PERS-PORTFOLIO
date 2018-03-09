@@ -21,10 +21,9 @@
                             <div id="todoComponent-header" class="col-12 bg-dark">
                             </div>
 
-                            {% set maxValue = 5 %}
-                            {% for key, todo in todos %}
+                            {% for key, todo in todos.entities %}
 
-                                {% if key == maxValue %}
+                                {% if key == todos.count %}
                                 <div id="{{ key }}" class="col-12 todoComponent-element border-0 border-bottom-0 bg-secondary">
                                 {% else %}
                                 <div id="{{ key }}" class="col-12 todoComponent-element bg-secondary">
@@ -32,32 +31,32 @@
                                     <div class="row">
 
                                         <div class="col-2 todoComponent-element-icon todoComponent-element-icon-{{ key }} text-center">
-                                            <span><i class="fas fa-angle-right fa-2x mt-2"></i></span>
+                                            <span><i class="fas fa-angle-right fa-2x mt-1"></i></span>
                                         </div>
 
                                         <div class="col-10 todoComponent-element-libelle todoComponent-element-libelle-{{ key }}">
-                                            <h6 class="p-0 font-weight-bold mt-2"></h6>
+                                            <h6 class="p-0 font-weight-bold mt-1">{{ todo.libelle }}</h6>
                                         </div>
 
                                         <div class="col-10 todoComponent-element-toolsbox todoComponent-element-toolsbox-{{ key }} bg-danger">
                                             <div class="row">
                                                 <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool1">
-                                                    <span><i class="fas fa-angle-left fa-2x mt-2"></i></span>
+                                                    <span><i class="fas fa-angle-left fa-2x mt-1"></i></span>
                                                 </div>
                                                 <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool2">
-                                                    <span><i class="fas fa-angle-double-right fa-2x mt-2"></i></span>
+                                                    <span><i class="fas fa-angle-double-right fa-2x mt-1"></i></span>
                                                 </div>
                                                 <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool3">
-                                                    <span><i class="fas fa-check fa-2x mt-2"></i></span>
+                                                    <span><i class="fas fa-check fa-2x mt-1"></i></span>
                                                 </div>
                                                 <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool last toolsbox-{{ key }}-tool4">
-                                                    <span><i class="fas fa-times fa-2x mt-2"></i></span>
+                                                    <span><i class="fas fa-times fa-2x mt-1"></i></span>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col-12 todoComponent-element-desc todoComponent-element-desc-{{ key }}">
-
+                                            <p style="font-size: 12px;">{{ todo.description }}</p>
                                         </div>
 
                                     </div>
@@ -66,7 +65,7 @@
                             {% endfor %}
 
                             <div id="todoComponent-input" class="col-12 bg-dark">
-
+                                <button id="todoComponent-input-submit-btn" class="btn btn-lg" style="height: 5vh"><i class="fas fa-spinner fa-spin"></i></button>
                             </div>
 
                         </div>

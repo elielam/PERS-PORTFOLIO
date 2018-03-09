@@ -25,10 +25,10 @@ class Todo
     /**
      * @ORM\Column(type="string", length=200, unique=false, nullable=false)
      */
-    private $desc;
+    private $description;
 
     /**
-     * @ORM\Column(type="datetime", length=17, unique=false, nullable=false)
+     * @ORM\Column(type="datetime", length=100, unique=false, nullable=true)
      */
     private $datetime;
 
@@ -77,17 +77,17 @@ class Todo
     /**
      * @return mixed
      */
-    public function getDesc()
+    public function getDescription()
     {
-        return $this->desc;
+        return $this->description;
     }
 
     /**
-     * @param mixed $desc
+     * @param mixed $description
      */
-    public function setDesc($desc): void
+    public function setDescription($description): void
     {
-        $this->desc = $desc;
+        $this->description = $description;
     }
 
     /**

@@ -74,6 +74,7 @@
     .todoComponent-element {
       height: auto;
       border-bottom: 1px solid white;
+      display: none;
 
       &:hover {
         .todoComponent-element-icon {
@@ -135,10 +136,34 @@
       border-bottom: 1px solid white;
     }
     #todoComponent-input {
+      min-height: 5vh;
       height: 5vh;
+      max-height: 5vh;
       border-radius: 10px;
       border-top-left-radius: 0;
       border-top-right-radius: 0;
+
+      #todoComponent-input-libelle {
+        height: 4vh;
+        outline:0 !important;
+        box-shadow: none;
+        -webkit-appearance:none;
+      }
+      #todoComponent-input-description {
+        height: 10vh;
+        outline:0 !important;
+        box-shadow: none;
+        -webkit-appearance:none;
+      }
+      #todoComponent-input-submit-btn {
+        height: 5vh;
+        border-radius: 0;
+        border-bottom-left-radius: 10px !important;
+        border-bottom-right-radius: 10px !important;
+        outline:0 !important;
+        box-shadow: none;
+        -webkit-appearance:none;
+      }
     }
 
   }

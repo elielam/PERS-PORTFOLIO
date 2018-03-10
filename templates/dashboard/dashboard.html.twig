@@ -45,18 +45,18 @@
                                                 <h6 class="p-0 font-weight-bold mt-1">{{ todo.libelle }}</h6>
                                             </div>
 
-                                            <div class="col-10 todoComponent-element-toolsbox todoComponent-element-toolsbox-{{ key }} bg-danger">
+                                            <div class="col-10 todoComponent-element-toolsbox todoComponent-element-toolsbox-{{ key }} bg-dark">
                                                 <div class="row">
-                                                    <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool1">
+                                                    <div id="{{ todo.id }}" class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-late toolsbox-{{ key }}-tool1">
                                                         <span><i class="fas fa-angle-left fa-2x mt-1"></i></span>
                                                     </div>
-                                                    <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool2">
+                                                    <div id="{{ todo.id }}" class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-report toolsbox-{{ key }}-tool2">
                                                         <span><i class="fas fa-angle-double-right fa-2x mt-1"></i></span>
                                                     </div>
-                                                    <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool toolsbox-{{ key }}-tool3">
+                                                    <div id="{{ todo.id }}" class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-check toolsbox-{{ key }}-tool3">
                                                         <span><i class="fas fa-check fa-2x mt-1"></i></span>
                                                     </div>
-                                                    <div class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool last toolsbox-{{ key }}-tool4">
+                                                    <div id="{{ todo.id }}" class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-delete last toolsbox-{{ key }}-tool4">
                                                         <span><i class="fas fa-times fa-2x mt-1"></i></span>
                                                     </div>
                                                 </div>
@@ -73,7 +73,11 @@
                             </div>
 
                             <div id="todoComponent-input" class="col-12 bg-dark p-0">
-                                <button id="todoComponent-input-submit-btn" class="btn btn-lg w-100" style="height: 5vh; border-radius: 0"><i class="fas fa-spinner fa-spin"></i></button>
+                                <div class="form-group">
+                                    <input id="todoComponent-input-libelle" class="form-control rounded-0" type="text" placeholder="Title">
+                                    <textarea id="todoComponent-input-description" class="form-control rounded-0" placeholder="Enter description or notes .." rows="4"></textarea>
+                                    <button id="todoComponent-input-submit-btn" class="btn btn-lg w-100"><i class="fas fa-plus"></i></button>
+                                </div>
                             </div>
 
                         </div>

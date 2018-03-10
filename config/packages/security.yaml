@@ -20,7 +20,7 @@ security:
             security: false
         main:
             anonymous: ~
-            provider: in_memory
+            provider: maindb
             form_login:
               login_path: login
               check_path: login
@@ -30,7 +30,6 @@ security:
               target: /
 
     access_control:
-         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
          - { path: ^/dashboard, roles: ['ROLE_USER','ROLE_ADMIN']}
          - { path: ^/admin, roles: ['ROLE_ADMIN']}
 

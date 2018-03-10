@@ -23,7 +23,7 @@ class Todo
     private $libelle;
 
     /**
-     * @ORM\Column(type="string", length=200, unique=false, nullable=false)
+     * @ORM\Column(type="string", length=200, unique=false, nullable=true)
      */
     private $description;
 

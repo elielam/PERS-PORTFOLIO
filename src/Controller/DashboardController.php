@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\Entity\Todo;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -40,20 +41,70 @@ class DashboardController extends Controller
     // Retrieve Datas */
 
     /**
-     * @Route("/dashboard/refresh/todos", name="ajax_todos")
-     * @Method("GET")
+     * @Route("/dashboard/add/todos", name="ajax_add_todos")
+     * @Method("POST")
+     * @param Request $request
      * @return JsonResponse
      */
-    public function getTodosAction() {
+    public function addTodoAction(Request $request) {
 
-        $entityManager = $this->getDoctrine()->getManager()->getRepository(Todo::class);
+        $entityManager = $this->getDoctrine()->getManager();
+        $todoRepository = $entityManager->getRepository(Todo::class);
         $encoders = array(new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
 
+        $tmpTitle = $request->get('newTitle');
+        $tmpDescription = $request->get('newDescription');
+
+        $todo = new Todo();
+        $todo->setLibelle($tmpTitle);
+        $todo->setDescription($tmpDescription);
+        $todo->setDatetime(null);
+        $todo->setState(1);
+        $todo->setUid(1);
+        $entityManager->persist($todo);
+        $entityManager->flush();
+
         $datas = [];
         $datas['todos'] = [];
-        $datas['todos']['tmpentities'] = $entityManager->findAll();
+        $datas['todos']['tmpentities'] = $todoRepository->findAll();
+
+        foreach ($datas['todos']['tmpentities'] as $entity) {
+            $datas['todos']['entities'][] = $serializer->serialize($entity, 'json');
+        }
+
+        $datas['todos']['count'] = count($datas['todos']['entities']);
+
+        unset($datas['todos']['tmpentities']);
+
+
+        return new JsonResponse($datas);
+    }
+
+    /**
+     * @Route("/dashboard/delete/todos", name="ajax_delete_todos")
+     * @Method("POST")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function deleteTodoAction (Request $request) {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $todoRepository = $entityManager->getRepository(Todo::class);
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $tmpId = $request->get('todoId');
+
+        $todo = $todoRepository->findOneBy(['id' => $tmpId]);
+        $entityManager->remove($todo);
+        $entityManager->flush();
+
+        $datas = [];
+        $datas['todos'] = [];
+        $datas['todos']['tmpentities'] = $todoRepository->findAll();
 
         foreach ($datas['todos']['tmpentities'] as $entity) {
             $datas['todos']['entities'][] = $serializer->serialize($entity, 'json');

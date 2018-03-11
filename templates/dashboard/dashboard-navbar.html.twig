@@ -9,30 +9,17 @@
                     <a class="nav-link font-weight-bold pl-0" href="/">PORTFOLIO</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href="/">TODO</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href="/">ECONOMY</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link font-weight-bold" href="/">MAILS</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold" href="/">SERVERS</a>
                 </li>
+            </ul>
+            <ul class="navbar-nav ml-auto mr-0">
                 {% if is_granted('ROLE_ADMIN') %}
-                <li class="nav-item ml-2">
-                    <a class="nav-link link font-weight-bold" href="/backoffice">BACK-OFFICE</a>
-                </li>
-                <li class="nav-item dropdown ml-2">
-                    <a class="nav-link link font-weight-bold dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">TEST</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ path('injectUsers') }}">INJECT USERS</a>
-                        <a class="dropdown-item" href="{{ path('injectTodos') }}">INJECT TODOS</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">FIXTURE CONFIG</a>
-                    </div>
-                </li>
+                    <li class="nav-item ml-2">
+                        <a class="nav-link link font-weight-bold" href="/backoffice">BACK-OFFICE</a>
+                    </li>
                 {% endif %}
                 <li class="nav-item ml-1">
                     <a class="nav-link link font-weight-bold" href="/logout">LOGOUT</a>

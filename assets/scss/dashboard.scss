@@ -10,7 +10,7 @@
   color: black;
 
   .nav-link {
-    margin-top: 5vh !important;
+    margin-top: 0.5vh !important;
     color: black !important;
   }
 
@@ -70,70 +70,94 @@
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
     }
-
-    .todoComponent-element {
+    #todoComponent-elements {
+      min-height: 15vh;
       height: auto;
-      border-bottom: 1px solid white;
-      display: none;
+      max-height: 60vh;
+      overflow-y: auto;
 
-      &:hover {
-        .todoComponent-element-icon {
-          background-color: white;
-          border-right: 1px solid lightgray;
-          transition: 1s all;
-        }
-        .todoComponent-element-libelle {
-          background-color: white;
-          transition: 1s all;
-        }
-      }
-    }
-    .todoComponent-element-icon {
-      border-right: 1px solid white;
-      height: 5vh
-    }
-    .todoComponent-element-libelle {
-      height: 5vh;
-
-      & h6 {
-        margin-top: 1vh;
-        font-size: 21px;
-      }
-    }
-    .todoComponent-element-toolsbox {
-      display: none;
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 5vh;
-      border: none;
-
-      &:hover {
-        background: white !important;
+      #mCSB_1_container {
+        margin-right: 0 !important;
       }
 
-      .todoComponent-element-toolsbox-tool {
-        height: 5vh;
-        min-height: 5vh;
-        max-height: 5vh;
-        border-right: 1px solid white;
+      .todoComponent-element {
+        height: auto;
+        border-bottom: 1px solid white;
+        display: none;
 
         &:hover {
-          background-color: white !important;
-          color: black !important;
-          border: none !important;
-          transition: all 1s;
+          .todoComponent-element-icon {
+            background-color: white;
+            border-right: 1px solid lightgray;
+            transition: 1s all;
+          }
+          .todoComponent-element-libelle {
+            background-color: white;
+            transition: 1s all;
+          }
         }
       }
-      .last {
-        border-right: none !important;
+      .todoComponent-element-icon {
+        border-right: 1px solid white;
+        height: 5vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
-    }
-    .todoComponent-element-desc {
-      display: none;
-      height: 5vh;
-      background-color: white !important;
-      border-bottom: 1px solid white;
+      .todoComponent-element-libelle {
+        height: 5vh;
+        display: flex;
+        align-items: center;
+
+        & p {
+          margin-top: 1vh;
+          font-size: 18px;
+          font-weight: bold;
+        }
+      }
+      .todoComponent-element-toolsbox {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 5vh;
+        border: none;
+
+        &:hover {
+          background: white !important;
+        }
+
+        .todoComponent-element-toolsbox-tool {
+          height: 5vh;
+          min-height: 5vh;
+          max-height: 5vh;
+          border-right: 1px solid white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &:hover {
+            background-color: white !important;
+            color: black !important;
+            border: none !important;
+            transition: all 1s;
+          }
+        }
+        .last {
+          border-right: none !important;
+        }
+      }
+      .todoComponent-element-desc {
+        display: none;
+        height: 7vh;
+        background-color: white !important;
+        border-bottom: 1px solid white;
+        align-items: center;
+
+        .p {
+          font-weight: bold;
+        }
+      }
     }
     #todoComponent-input {
       min-height: 5vh;

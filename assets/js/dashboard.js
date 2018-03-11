@@ -10,6 +10,16 @@ $(`#dashboard-navbar-btn`).click(function(){
 });
 
 /* TODOS */
+//elemntsDivCustomScrollBar
+function initTodoCustomScrollbar() {
+    $(`#todoComponent-elements`).mCustomScrollbar({
+        axis: 'y',
+        theme: 'light'
+    });
+}
+
+initTodoCustomScrollbar();
+
 //onclickTodo
 function initTodoElementComportement() {
     $(".todoComponent-element").fadeToggle(1000);
@@ -64,8 +74,6 @@ function reconstructTodoDom(response) {
     $(`.todoComponent-element`).remove();
     for ( let i = 0; i < response['todos']['count']; i++ ) {
         let parsed_response = JSON.parse(response['todos']['entities'][i]);
-        console.log(parsed_response);
-
         let elementCol = document.createElement('div');
         elementCol.id = i;
         if ( i === response['todos']['count']-1 ) {
@@ -84,9 +92,9 @@ function reconstructTodoDom(response) {
 
         let elementLibelleCol = document.createElement('div');
         elementLibelleCol.className = 'col-10 todoComponent-element-libelle todoComponent-element-libelle-'+i;
-        let elementLibelleH6 = document.createElement('h6');
-        elementLibelleH6.className = 'p-0 font-weight-bold mt-1';
-        elementLibelleH6.textContent = parsed_response.libelle;
+        let elementLibelleP = document.createElement('p');
+        elementLibelleP.className = 'p-0 m-0';
+        elementLibelleP.textContent = parsed_response.libelle;
 
         let elementToolboxCol = document.createElement('div');
         elementToolboxCol.className = 'col-10 todoComponent-element-toolsbox todoComponent-element-toolsbox-'+i+' bg-dark';
@@ -132,7 +140,7 @@ function reconstructTodoDom(response) {
         elementIconCol.appendChild(elementIconSpan);
         elementIconSpan.appendChild(elementIcon);
         elementRow.appendChild(elementLibelleCol);
-        elementLibelleCol.appendChild(elementLibelleH6);
+        elementLibelleCol.appendChild(elementLibelleP);
         elementRow.appendChild(elementToolboxCol);
         elementToolboxCol.appendChild(elementToolboxRow);
         elementToolboxRow.appendChild(elementToolboxTool1);
@@ -157,4 +165,5 @@ function reconstructTodoDom(response) {
 
     initTodoElementComportement();
     deleteTodoAction();
+    initTodoCustomScrollbar();
 }

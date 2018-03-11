@@ -26,7 +26,7 @@ class UserFixtures extends Fixture
         $user->setBirthdate(DateTime::createFromFormat('j/M/Y', date("j/M/Y")));
         $user->setEmail('elielaloum@outlook.fr');
         $user->setPassword($this->encoder->encodePassword($user, 'elie')); // elie
-        $user->setSalt('987654321');
+        $user->setSalt(null);
         $user->setRoles('ROLE_ADMIN');
         $user->setUsername('Elie');
         $manager->persist($user);
@@ -37,7 +37,7 @@ class UserFixtures extends Fixture
         $user->setBirthdate(DateTime::createFromFormat('j/M/Y', date("j/M/Y")));
         $user->setEmail('admin@admin.fr');
         $user->setPassword($this->encoder->encodePassword($user, 'admin')); // admin
-        $user->setSalt('987654321');
+        $user->setSalt(null);
         $user->setRoles('ROLE_ADMIN');
         $user->setUsername('Admin');
         $manager->persist($user);

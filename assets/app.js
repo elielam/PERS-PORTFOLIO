@@ -5,7 +5,8 @@ $(document).ready(function() {
 
 // ### VENDORS
 import 'bootstrap';
-import './fontawesome-free-5.0.6/js/fontawesome-all';
+import './fontawesome-free-5.0.6/js/fontawesome-all.min';
+import './malihu-custom-scrollbar-3/jquery.mCustomScrollbar.concat.min';
 import 'particles.js';
 
 // ### SCSS
@@ -20,4 +21,5 @@ require('./js/portfolio');
 particlesJS.load('particles-js', '~node_modules/particle.js/demo/particles.json', function() {
     console.log('callback - particles.js config loaded');
 });
+
 

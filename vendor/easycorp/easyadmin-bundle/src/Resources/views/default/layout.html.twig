@@ -96,6 +96,9 @@
                                                 <li>
                                                     <a href="{{ _logout_path }}"><i class="fa fa-sign-out"></i> {{ 'user.signout'|trans(domain = 'EasyAdminBundle') }}</a>
                                                 </li>
+                                                <li>
+                                                    <a href="/"><i class="fa fa-home"></i> Home </a>
+                                                </li>
                                                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                                                     <li>
                                                         <a href="?_switch_user=_exit"><i class="fa fa-sign-out"></i> {{ 'user.exit_impersonation'|trans(domain = 'EasyAdminBundle') }}</a>

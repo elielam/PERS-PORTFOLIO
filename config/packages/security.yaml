@@ -1,33 +1,34 @@
 security:
     providers:
         maindb:
-          entity:
-              class: App\Entity\User
-              property: username
-        in_memory:
-          memory:
-              users:
-                  elie:
-                      password: $2y$13$f9TxL2j7es50bsOPXDHnhuTvsgcyHb0tcHN5/p2E9IWfGrHho3XhW
-                      roles: 'ROLE_USER'
-                  admin:
-                      password: $2y$13$z6WbbAHXrU3qXYXt0GaW.OEOhvpY1yBKJPNicoCtURf6qdLBCnfR6
-                      roles: 'ROLE_ADMIN'
+            entity:
+                class: App\Entity\User
+                property: email
+#        in_memory:
+#          memory:
+#              users:
+#                  elie:
+#                      password: $2y$13$f9TxL2j7es50bsOPXDHnhuTvsgcyHb0tcHN5/p2E9IWfGrHho3XhW
+#                      roles: 'ROLE_USER'
+#                  admin:
+#                      password: $2y$13$z6WbbAHXrU3qXYXt0GaW.OEOhvpY1yBKJPNicoCtURf6qdLBCnfR6
+#                      roles: 'ROLE_ADMIN'
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            pattern: ^/
             anonymous: ~
             provider: maindb
             form_login:
-              login_path: login
-              check_path: login
-              default_target_path: dashboard
+                login_path: login
+                check_path: login
+                default_target_path: dashboard
             logout:
-              path:   /logout
-              target: /
+                path:   /logout
+                target: /
 
     access_control:
          - { path: ^/dashboard, roles: ['ROLE_USER','ROLE_ADMIN']}

@@ -44,7 +44,7 @@ class User implements UserInterface, \Serializable
     private $password;
 
     /**
-     * @ORM\Column(type="integer", length=500, unique=false, nullable=false)
+     * @ORM\Column(type="integer", length=500, unique=false, nullable=true)
      */
     private $salt;
 

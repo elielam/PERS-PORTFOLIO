@@ -30,8 +30,12 @@ class DashboardController extends Controller
 
         $datas = [];
         $datas['todos'] = [];
-        $datas['todos']['entities'] = $entityManager->getRepository(Todo::class)->findAll();
-        $datas['todos']['count'] = count($datas['todos']['entities'])-1;
+        $datas['todos']['entities'] = $entityManager->getRepository(Todo::class)->findBy(['uid' => $this->getUser()->getUid()]);
+        if($datas['todos']['entities']) {
+            $datas['todos']['count'] = count($datas['todos']['entities'])-1;
+        } else {
+            $datas['todos']['count'] = 0;
+        }
 
         return $this->render('dashboard/dashboard.html.twig', array(
             'todos' => $datas['todos']
@@ -62,16 +66,21 @@ class DashboardController extends Controller
         $todo->setDescription($tmpDescription);
         $todo->setDatetime(null);
         $todo->setState(1);
-        $todo->setUid(1);
+        $todo->setUid($this->getUser()->getUid());
         $entityManager->persist($todo);
         $entityManager->flush();
 
         $datas = [];
         $datas['todos'] = [];
-        $datas['todos']['tmpentities'] = $todoRepository->findAll();
+        $datas['todos']['tmpentities'] = $todoRepository->findBy(['uid' => $this->getUser()->getUid()]);
 
-        foreach ($datas['todos']['tmpentities'] as $entity) {
-            $datas['todos']['entities'][] = $serializer->serialize($entity, 'json');
+        if($datas['todos']['tmpentities']) {
+            foreach ($datas['todos']['tmpentities'] as $entity) {
+                $datas['todos']['entities'][] = $serializer->serialize($entity, 'json');
+            }
+            $datas['todos']['count'] = count($datas['todos']['entities']);
+        } else {
+            $datas['todos']['count'] = 0;
         }
 
         $datas['todos']['count'] = count($datas['todos']['entities']);
@@ -104,13 +113,18 @@ class DashboardController extends Controller
 
         $datas = [];
         $datas['todos'] = [];
-        $datas['todos']['tmpentities'] = $todoRepository->findAll();
+        $datas['todos']['tmpentities'] = $todoRepository->findBy(['uid' => $this->getUser()->getUid()]);;
 
-        foreach ($datas['todos']['tmpentities'] as $entity) {
-            $datas['todos']['entities'][] = $serializer->serialize($entity, 'json');
+        if($datas['todos']['tmpentities']) {
+            foreach ($datas['todos']['tmpentities'] as $entity) {
+                $datas['todos']['entities'][] = $serializer->serialize($entity, 'json');
+            }
+            $datas['todos']['count'] = count($datas['todos']['entities']);
+        } else {
+            $datas['todos']['count'] = 0;
         }
 
-        $datas['todos']['count'] = count($datas['todos']['entities']);
+
 
         unset($datas['todos']['tmpentities']);
 

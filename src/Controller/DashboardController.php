@@ -134,6 +134,47 @@ class DashboardController extends Controller
         return new JsonResponse($datas);
     }
 
+    /**
+     * @Route("/dashboard/update/todos", name="ajax_update_todos")
+     * @Method("POST")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateTodoAction (Request $request) {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $todoRepository = $entityManager->getRepository(Todo::class);
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $tmpId = $request->get('todoId');
+        $tmpLibelle = $request->get('libelle');
+        $tmpDescription = $request->get('description');
+
+        $todo = $todoRepository->find($tmpId);
+        $todo->setLibelle($tmpLibelle);
+        $todo->setDescription($tmpDescription);
+        $entityManager->flush();
+
+        $datas = [];
+        $datas['todos'] = [];
+        $datas['todos']['tmpentities'] = $todoRepository->findBy(['uid' => $this->getUser()->getUid()]);;
+
+        if($datas['todos']['tmpentities']) {
+            foreach ($datas['todos']['tmpentities'] as $entity) {
+                $datas['todos']['entities'][] = $serializer->serialize($entity, 'json');
+            }
+            $datas['todos']['count'] = count($datas['todos']['entities']);
+        } else {
+            $datas['todos']['count'] = 0;
+        }
+
+        unset($datas['todos']['tmpentities']);
+
+        return new JsonResponse($datas);
+    }
+
     /* Navbar */
 
     public function navbarAction () {

@@ -85,4 +85,20 @@ class TestController extends Controller
 
         return $this->redirectToRoute('dashboard');
     }
+
+    /**
+     * @Route("/test/updateTodos", name="updateTodos")
+     */
+    public function testTodosUpdateAction(ObjectManager $manager)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $todoRepository = $entityManager->getRepository(Todo::class);
+
+        $todo = $todoRepository->find(120);
+        $todo->setLibelle("test");
+        $todo->setDescription("test");
+
+        $entityManager->flush();
+        dump($todo);die;
+    }
 }

@@ -10,20 +10,11 @@ $(`#dashboard-navbar-btn`).click(function(){
 });
 
 /* TODOS */
-//onclickTodo
-function initTodoElementComportement() {
-    $(".todoComponent-element").fadeToggle(1000);
-    $(".todoComponent-element").click(function () {
-        let id = $(this).attr('id');
-        let targetDescPanel = ".todoComponent-element-desc-" + id;
-        let targetToolsBoxPanel = ".todoComponent-element-toolsbox-" + id;
-        $(targetDescPanel).slideToggle("slow");
-        $(targetToolsBoxPanel).fadeToggle("slow", "linear");
-    });
-}
+// INIT
+$('#todoComponent-input-libelle').val("");
+$('#todoComponent-input-description').val("");
 
-initTodoElementComportement();
-
+// onclickAdd
 $(`#todoComponent-input-submit-btn`).click(function(){
     let todoTitle = $('#todoComponent-input-libelle').val();
     let todoDescription = $('#todoComponent-input-description').val();
@@ -40,6 +31,19 @@ $(`#todoComponent-input-submit-btn`).click(function(){
     });
 });
 
+//onclickTodo
+function initTodoElementComportement() {
+    $(".todoComponent-element").fadeToggle(1000);
+    $(".todoComponent-element").click(function () {
+        let id = $(this).attr('id');
+        let targetDescPanel = ".todoComponent-element-desc-" + id;
+        let targetToolsBoxPanel = ".todoComponent-element-toolsbox-" + id;
+        $(targetDescPanel).slideToggle("slow");
+        $(targetToolsBoxPanel).fadeToggle("slow", "linear");
+    });
+}
+
+// onclickDelete
 function deleteTodoAction() {
     $('.todoComponent-element-toolsbox-tool-delete').click(function () {
         let id = $(this).attr('id');
@@ -57,6 +61,50 @@ function deleteTodoAction() {
     });
 }
 
+// onclickUpdate
+function updateTodoAction() {
+    $('.todoComponent-element-toolsbox-tool-update').click(function () {
+        let id = $(this).attr('id');
+        let toolbox = $(this).parent().parent();
+        let tmplibelle = toolbox.prev().children(0).text();
+        let tmpdescription = toolbox.next().children(0).text();
+
+        $('#todoComponent-input-libelle').val(tmplibelle);
+        $('#todoComponent-input-description').val(tmpdescription);
+        $('#todoComponent-input-submit-btn').hide();
+        $('#todoComponent-input-update-btns').fadeIn(800);
+
+        $('#todoComponent-input-submit-update-btn').click(function () {
+            let libelle = $('#todoComponent-input-libelle').val();
+            let description = $('#todoComponent-input-description').val();
+            $.ajax({
+                method: "post",
+                url: '/dashboard/update/todos',
+                data: {todoId: id, libelle: libelle, description: description},
+                dataType: "json",
+            }).done( function(response) {
+                reconstructTodoDom(response);
+                $('#todoComponent-input-libelle').val("");
+                $('#todoComponent-input-description').val("");
+                $('#todoComponent-input-submit-btn').show(800);
+                $('#todoComponent-input-update-btns').hide();
+            }).fail(function(jxh,textmsg,errorThrown){
+                console.log(textmsg);
+                console.log(errorThrown);
+            });
+        });
+    });
+
+    $('#todoComponent-input-close-update-btn').click(function () {
+        $('#todoComponent-input-libelle').val("");
+        $('#todoComponent-input-description').val("");
+        $('#todoComponent-input-submit-btn').show(800);
+        $('#todoComponent-input-update-btns').hide();
+    });
+}
+
+initTodoElementComportement();
+updateTodoAction();
 deleteTodoAction();
 
 function reconstructTodoDom(response) {
@@ -103,7 +151,7 @@ function reconstructTodoDom(response) {
         elementToolboxTool2.id = parsed_response.id;
         let elementTool2IconSpan = document.createElement('span');
         let elementTool2Icon = document.createElement('i');
-        elementTool2Icon.className = 'fas fa-sync fa-2x';
+        elementTool2Icon.className = 'far fa-edit fa-2x';
 
         let elementToolboxTool3 = document.createElement('div');
         elementToolboxTool3.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-check toolsbox-'+i+'-tool3';
@@ -154,5 +202,6 @@ function reconstructTodoDom(response) {
     $('#todoComponent-input-description').val("");
 
     initTodoElementComportement();
+    updateTodoAction();
     deleteTodoAction();
 }

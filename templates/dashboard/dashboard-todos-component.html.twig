@@ -1,0 +1,62 @@
+<div id="todoComponent-col" class="col-2">
+    <div class="row">
+
+        <div id="todoComponent-header" class="col-12 bg-dark">
+        </div>
+
+        <div id="todoComponent-elements" class="col-12 m-0 p-0 h-100 w-100" style="min-height: 5vh; height: auto; max-height: auto;">
+            {% for key, todo in todos.entities %}
+
+            {% if key == todos.count %}
+            <div id="{{ key }}" class="col-12 todoComponent-element border-0 border-bottom-0 bg-secondary">
+                {% else %}
+                <div id="{{ key }}" class="col-12 todoComponent-element bg-secondary">
+                    {% endif %}
+                    <div class="row">
+
+                        <div class="col-2 todoComponent-element-icon todoComponent-element-icon-{{ key }} text-center">
+                            <span><i class="fas fa-angle-right fa-2x"></i></span>
+                        </div>
+
+                        <div class="col-10 todoComponent-element-libelle todoComponent-element-libelle-{{ key }}">
+                            <p class="p-0 m-0">{{ todo.libelle }}</p>
+                        </div>
+
+                        <div class="col-10 todoComponent-element-toolsbox todoComponent-element-toolsbox-{{ key }} bg-dark">
+                            <div class="row">
+                                <div id="{{ todo.id }}" class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-report toolsbox-{{ key }}-tool1">
+                                    <span><i class="fas fa-angle-double-right fa-2x"></i></span>
+                                </div>
+                                <div id="{{ todo.id }}" class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-update toolsbox-{{ key }}-tool2">
+                                    <span><i class="fas fa-sync fa-2x"></i></span>
+                                </div>
+                                <div id="{{ todo.id }}" class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-check toolsbox-{{ key }}-tool3">
+                                    <span><i class="fas fa-check fa-2x"></i></span>
+                                </div>
+                                <div id="{{ todo.id }}" class="col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-delete last toolsbox-{{ key }}-tool4">
+                                    <span><i class="fas fa-times fa-2x"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 todoComponent-element-desc todoComponent-element-desc-{{ key }}">
+                            <p>{{ todo.description }}</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                {% endfor %}
+            </div>
+
+            <div id="todoComponent-input" class="col-12 bg-dark p-0">
+                <div class="form-group">
+                    <input id="todoComponent-input-libelle" class="form-control rounded-0" type="text" placeholder="Title">
+                    <textarea id="todoComponent-input-description" class="form-control rounded-0" placeholder="Enter description or notes .." rows="4"></textarea>
+                    <button id="todoComponent-input-submit-btn" class="btn btn-lg w-100"><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

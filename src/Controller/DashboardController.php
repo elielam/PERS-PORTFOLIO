@@ -26,6 +26,11 @@ class DashboardController extends Controller
     //    'Suppression a été effectuée avec succès!'
     //  );
 
+        return $this->render('dashboard/dashboard.html.twig');
+    }
+
+    public function todosComponentAction()
+    {
         $entityManager = $this->getDoctrine()->getManager();
 
         $datas = [];
@@ -37,7 +42,7 @@ class DashboardController extends Controller
             $datas['todos']['count'] = 0;
         }
 
-        return $this->render('dashboard/dashboard.html.twig', array(
+        return $this->render('dashboard/dashboard-todos-component.html.twig', array(
             'todos' => $datas['todos']
         ));
     }
@@ -124,8 +129,6 @@ class DashboardController extends Controller
             $datas['todos']['count'] = 0;
         }
 
-
-
         unset($datas['todos']['tmpentities']);
 
         return new JsonResponse($datas);
@@ -142,4 +145,8 @@ class DashboardController extends Controller
     public function navbtnsAction () {
         return $this->render('dashboard/dashboard-navbtns.html.twig');
     }
+
+    /* Todo Component */
+
+
 }

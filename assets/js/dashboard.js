@@ -10,16 +10,6 @@ $(`#dashboard-navbar-btn`).click(function(){
 });
 
 /* TODOS */
-//elemntsDivCustomScrollBar
-function initTodoCustomScrollbar() {
-    $(`#todoComponent-elements`).mCustomScrollbar({
-        axis: 'y',
-        theme: 'light'
-    });
-}
-
-initTodoCustomScrollbar();
-
 //onclickTodo
 function initTodoElementComportement() {
     $(".todoComponent-element").fadeToggle(1000);
@@ -88,7 +78,7 @@ function reconstructTodoDom(response) {
         elementIconCol.className = 'col-2 todoComponent-element-icon todoComponent-element-icon-'+i+' text-center';
         let elementIconSpan = document.createElement('span');
         let elementIcon = document.createElement('i');
-        elementIcon.className = 'fas fa-angle-right fa-2x mt-1';
+        elementIcon.className = 'fas fa-angle-right fa-2x';
 
         let elementLibelleCol = document.createElement('div');
         elementLibelleCol.className = 'col-10 todoComponent-element-libelle todoComponent-element-libelle-'+i;
@@ -102,32 +92,32 @@ function reconstructTodoDom(response) {
         elementToolboxRow.className = 'row';
 
         let elementToolboxTool1 = document.createElement('div');
-        elementToolboxTool1.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-late toolsbox-'+i+'-tool1';
+        elementToolboxTool1.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-report toolsbox-'+i+'-tool1';
         elementToolboxTool1.id = parsed_response.id;
         let elementTool1IconSpan = document.createElement('span');
         let elementTool1Icon = document.createElement('i');
-        elementTool1Icon.className = 'fas fa-angle-left fa-2x mt-1';
+        elementTool1Icon.className = 'fas fa-angle-double-right fa-2x';
 
         let elementToolboxTool2 = document.createElement('div');
-        elementToolboxTool2.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-report toolsbox-'+i+'-tool2';
+        elementToolboxTool2.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-update toolsbox-'+i+'-tool2';
         elementToolboxTool2.id = parsed_response.id;
         let elementTool2IconSpan = document.createElement('span');
         let elementTool2Icon = document.createElement('i');
-        elementTool2Icon.className = 'fas fa-angle-double-right fa-2x mt-1';
+        elementTool2Icon.className = 'fas fa-sync fa-2x';
 
         let elementToolboxTool3 = document.createElement('div');
         elementToolboxTool3.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-check toolsbox-'+i+'-tool3';
         elementToolboxTool3.id = parsed_response.id;
         let elementTool3IconSpan = document.createElement('span');
         let elementTool3Icon = document.createElement('i');
-        elementTool3Icon.className = 'fas fa-check fa-2x mt-1';
+        elementTool3Icon.className = 'fas fa-check fa-2x';
 
         let elementToolboxTool4 = document.createElement('div');
         elementToolboxTool4.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-delete last toolsbox-'+i+'-tool4';
         elementToolboxTool4.id = parsed_response.id;
         let elementTool4IconSpan = document.createElement('span');
         let elementTool4Icon = document.createElement('i');
-        elementTool4Icon.className = 'fas fa-times fa-2x mt-1';
+        elementTool4Icon.className = 'fas fa-times fa-2x';
 
         let elementDescCol = document.createElement('div');
         elementDescCol.className = 'col-12 todoComponent-element-desc todoComponent-element-desc-'+i;
@@ -165,5 +155,4 @@ function reconstructTodoDom(response) {
 
     initTodoElementComportement();
     deleteTodoAction();
-    initTodoCustomScrollbar();
 }

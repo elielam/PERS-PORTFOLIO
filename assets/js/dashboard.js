@@ -4,7 +4,7 @@
 
 
 /* NAVBTNS */
-$(`#dashboard-navbar-btn`).click(function(){
+$(`#dashboard-navbar-btn`).off('click').click(function(){
     $(`#dashboard-navbar-col`).slideToggle( "slow");
     return false;
 });
@@ -15,7 +15,7 @@ $('#todoComponent-input-libelle').val("");
 $('#todoComponent-input-description').val("");
 
 // onclickAdd
-$(`#todoComponent-input-submit-btn`).click(function(){
+$(`#todoComponent-input-submit-btn`).off('click').click(function(){
     let todoTitle = $('#todoComponent-input-libelle').val();
     let todoDescription = $('#todoComponent-input-description').val();
     $.ajax({
@@ -23,6 +23,7 @@ $(`#todoComponent-input-submit-btn`).click(function(){
         url: '/dashboard/add/todos',
         data: {newTitle: todoTitle, newDescription: todoDescription },
         dataType: "json",
+        cache: false
     }).done( function(response) {
         reconstructTodoDom(response);
     }).fail(function(jxh,textmsg,errorThrown){
@@ -34,7 +35,7 @@ $(`#todoComponent-input-submit-btn`).click(function(){
 //onclickTodo
 function initTodoElementComportement() {
     $(".todoComponent-element").fadeToggle(1000);
-    $(".todoComponent-element").click(function () {
+    $(".todoComponent-element").off('click').click(function () {
         let id = $(this).attr('id');
         let targetDescPanel = ".todoComponent-element-desc-" + id;
         let targetToolsBoxPanel = ".todoComponent-element-toolsbox-" + id;
@@ -45,13 +46,14 @@ function initTodoElementComportement() {
 
 // onclickDelete
 function deleteTodoAction() {
-    $('.todoComponent-element-toolsbox-tool-delete').click(function () {
+    $('.todoComponent-element-toolsbox-tool-delete').off('click').click(function () {
         let id = $(this).attr('id');
         $.ajax({
             method: "post",
             url: '/dashboard/delete/todos',
             data: {todoId: id},
             dataType: "json",
+            cache: false
         }).done( function(response) {
             reconstructTodoDom(response);
         }).fail(function(jxh,textmsg,errorThrown){
@@ -63,7 +65,7 @@ function deleteTodoAction() {
 
 // onclickUpdate
 function updateTodoAction() {
-    $('.todoComponent-element-toolsbox-tool-update').click(function () {
+    $('.todoComponent-element-toolsbox-tool-update').off('click').click(function () {
         let id = $(this).attr('id');
         let toolbox = $(this).parent().parent();
         let tmplibelle = toolbox.prev().children(0).text();
@@ -74,7 +76,7 @@ function updateTodoAction() {
         $('#todoComponent-input-submit-btn').hide();
         $('#todoComponent-input-update-btns').fadeIn(800);
 
-        $('#todoComponent-input-submit-update-btn').click(function () {
+        $('#todoComponent-input-submit-update-btn').off('click').click(function () {
             let libelle = $('#todoComponent-input-libelle').val();
             let description = $('#todoComponent-input-description').val();
             $.ajax({
@@ -82,6 +84,7 @@ function updateTodoAction() {
                 url: '/dashboard/update/todos',
                 data: {todoId: id, libelle: libelle, description: description},
                 dataType: "json",
+                cache: false
             }).done( function(response) {
                 reconstructTodoDom(response);
                 $('#todoComponent-input-libelle').val("");
@@ -95,7 +98,7 @@ function updateTodoAction() {
         });
     });
 
-    $('#todoComponent-input-close-update-btn').click(function () {
+    $('#todoComponent-input-close-update-btn').off('click').click(function () {
         $('#todoComponent-input-libelle').val("");
         $('#todoComponent-input-description').val("");
         $('#todoComponent-input-submit-btn').show(800);
@@ -195,7 +198,6 @@ function reconstructTodoDom(response) {
         elementTool4IconSpan.appendChild(elementTool4Icon);
         elementRow.appendChild(elementDescCol);
         elementDescCol.appendChild(elementDesc);
-
     }
 
     $('#todoComponent-input-libelle').val("");

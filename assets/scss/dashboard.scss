@@ -194,4 +194,16 @@
 
   }
 
+  /* Fianncial */
+  #financialComponent-col {
+    height: auto;
+    width: 35vw;
+
+    #financialComponent-header {
+      height: 5vh;
+      border-radius: 10px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
 }

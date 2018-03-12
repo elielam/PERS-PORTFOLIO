@@ -14,7 +14,7 @@ class TodoFixtures extends Fixture
         $time = date("h:i:s");
         $date = date("j-m-Y");
 
-        for ($i = 1; $i <= 6; $i++) {
+        for ($i = 0; $i <= 5; $i++) {
             $todo = new Todo();
             $todo->setLibelle('TODO '.$i);
             $todo->setDescription('This is the '.$i.' description sample !');

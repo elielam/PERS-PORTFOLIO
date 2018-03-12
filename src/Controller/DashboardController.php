@@ -30,27 +30,6 @@ class DashboardController extends Controller
         return $this->render('dashboard/dashboard.html.twig');
     }
 
-    public function todosComponentAction()
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $datas = [];
-        $datas['todos'] = [];
-        $datas['todos']['entities'] = $entityManager->getRepository(Todo::class)->findBy(
-            array('uid' => $this->getUser()->getUid()),
-            array('state' => 'DESC'));
-
-        if($datas['todos']['entities']) {
-            $datas['todos']['count'] = count($datas['todos']['entities'])-1;
-        } else {
-            $datas['todos']['count'] = 0;
-        }
-
-        return $this->render('dashboard/dashboard-todos-component.html.twig', array(
-            'todos' => $datas['todos']
-        ));
-    }
-
     // Retrieve Datas */
 
     /**
@@ -242,6 +221,34 @@ class DashboardController extends Controller
     }
 
     /* Todo Component */
+
+    public function todosComponentAction()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $datas = [];
+        $datas['todos'] = [];
+        $datas['todos']['entities'] = $entityManager->getRepository(Todo::class)->findBy(
+            array('uid' => $this->getUser()->getUid()),
+            array('state' => 'DESC'));
+
+        if($datas['todos']['entities']) {
+            $datas['todos']['count'] = count($datas['todos']['entities'])-1;
+        } else {
+            $datas['todos']['count'] = 0;
+        }
+
+        return $this->render('dashboard/dashboard-todos-component.html.twig', array(
+            'todos' => $datas['todos']
+        ));
+    }
+
+    /* Financial Component */
+
+    public function financialComponentAction()
+    {
+        return $this->render('dashboard/dashboard-financial-component.html.twig');
+    }
 
 
 }

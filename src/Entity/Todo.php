@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Entity;
 
+namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -17,33 +17,27 @@ class Todo
      * @ORM\Column(type="integer", nullable=false)
      */
     private $id;
-
     /**
      * @ORM\Column(type="string", length=40, unique=false, nullable=false)
      */
     private $libelle;
-
     /**
      * @ORM\Column(type="string", length=200, unique=false, nullable=true)
      */
     private $description;
-
     /**
      * @Assert\DateTime()
      * @ORM\Column(type="datetime", length=100, unique=false, nullable=false)
      */
     private $datetime;
-
     /**
      * @ORM\Column(type="integer", length=2, unique=false, nullable=false)
      */
     private $state;
-
     /**
      * @ORM\Column(type="integer", unique=false, nullable=false)
      */
     private $uid;
-
     /**
      * @return mixed
      */
@@ -51,7 +45,6 @@ class Todo
     {
         return $this->id;
     }
-
     /**
      * @param mixed $id
      */
@@ -59,7 +52,6 @@ class Todo
     {
         $this->id = $id;
     }
-
     /**
      * @return mixed
      */
@@ -67,7 +59,6 @@ class Todo
     {
         return $this->libelle;
     }
-
     /**
      * @param mixed $libelle
      */
@@ -75,7 +66,6 @@ class Todo
     {
         $this->libelle = $libelle;
     }
-
     /**
      * @return mixed
      */
@@ -83,7 +73,6 @@ class Todo
     {
         return $this->description;
     }
-
     /**
      * @param mixed $description
      */
@@ -91,7 +80,6 @@ class Todo
     {
         $this->description = $description;
     }
-
     /**
      * @return mixed
      */
@@ -99,7 +87,6 @@ class Todo
     {
         return $this->datetime;
     }
-
     /**
      * @param mixed $datetime
      */
@@ -107,7 +94,6 @@ class Todo
     {
         $this->datetime = $datetime;
     }
-
     /**
      * @return mixed
      */
@@ -115,7 +101,6 @@ class Todo
     {
         return $this->state;
     }
-
     /**
      * @param mixed $state
      */
@@ -123,7 +108,6 @@ class Todo
     {
         $this->state = $state;
     }
-
     /**
      * @return mixed
      */
@@ -131,7 +115,6 @@ class Todo
     {
         return $this->uid;
     }
-
     /**
      * @param mixed $uid
      */
@@ -139,5 +122,4 @@ class Todo
     {
         $this->uid = $uid;
     }
-
 }

@@ -101,4 +101,19 @@ class TestController extends Controller
         $entityManager->flush();
         dump($todo);die;
     }
+
+    /**
+     * @Route("/test/", name="testAction")
+     */
+    public function testAction(ObjectManager $manager)
+    {
+
+        date_default_timezone_set('Europe/Paris');
+        $time = date("h:i:s");
+        $date = date("j-m-Y");
+        $date1= date_create("18-01-1996");
+
+
+        dump($time, $date, $date1);die;
+    }
 }

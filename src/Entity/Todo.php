@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="APP_TODOS")
@@ -28,7 +29,8 @@ class Todo
     private $description;
 
     /**
-     * @ORM\Column(type="datetime", length=100, unique=false, nullable=true)
+     * @Assert\DateTime()
+     * @ORM\Column(type="datetime", length=100, unique=false, nullable=false)
      */
     private $datetime;
 

@@ -11,12 +11,14 @@ class TodoFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
+        $time = date("h:i:s");
+        $date = date("j-m-Y");
 
         for ($i = 1; $i <= 6; $i++) {
             $todo = new Todo();
             $todo->setLibelle('TODO '.$i);
             $todo->setDescription('This is the '.$i.' description sample !');
-            $todo->setDatetime(null);
+            $todo->setDatetime(DateTime::createFromFormat('d-m-Y H:i:s', $date.' '.$time));
             $todo->setState(1);
             $todo->setUid(1);
             $manager->persist($todo);

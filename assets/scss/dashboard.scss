@@ -154,9 +154,10 @@
         border-bottom: 1px solid white;
         align-items: center;
 
-        .p {
+        p {
           font-weight: bold;
           font-size: 12px;
+          border-left: 2px solid black;
         }
       }
     }

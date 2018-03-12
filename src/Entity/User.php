@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="APP_USERS")
@@ -29,7 +30,8 @@ class User implements UserInterface, \Serializable
     private $lastname;
 
     /**
-     * @ORM\Column(type="date", unique=false, nullable=false)
+     * @Assert\DateTime()
+     * @ORM\Column(type="datetime", unique=false, nullable=false)
      */
     private $birthdate;
 

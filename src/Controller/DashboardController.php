@@ -14,6 +14,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class DashboardController extends Controller
 {
@@ -35,7 +36,10 @@ class DashboardController extends Controller
 
         $datas = [];
         $datas['todos'] = [];
-        $datas['todos']['entities'] = $entityManager->getRepository(Todo::class)->findBy(['uid' => $this->getUser()->getUid()]);
+        $datas['todos']['entities'] = $entityManager->getRepository(Todo::class)->findBy(
+            array('uid' => $this->getUser()->getUid()),
+            array('state' => 'DESC'));
+
         if($datas['todos']['entities']) {
             $datas['todos']['count'] = count($datas['todos']['entities'])-1;
         } else {
@@ -66,10 +70,13 @@ class DashboardController extends Controller
         $tmpTitle = $request->get('newTitle');
         $tmpDescription = $request->get('newDescription');
 
+        $time = date("h:i:s");
+        $date = date("j-m-Y");
+
         $todo = new Todo();
         $todo->setLibelle($tmpTitle);
         $todo->setDescription($tmpDescription);
-        $todo->setDatetime(null);
+        $todo->setDatetime(\DateTime::createFromFormat('d-m-Y H:i:s', $date.' '.$time));
         $todo->setState(1);
         $todo->setUid($this->getUser()->getUid());
         $entityManager->persist($todo);
@@ -77,7 +84,9 @@ class DashboardController extends Controller
 
         $datas = [];
         $datas['todos'] = [];
-        $datas['todos']['tmpentities'] = $todoRepository->findBy(['uid' => $this->getUser()->getUid()]);
+        $datas['todos']['tmpentities'] = $todoRepository->findBy(
+            array('uid' => $this->getUser()->getUid()),
+            array('state' => 'DESC'));
 
         if($datas['todos']['tmpentities']) {
             foreach ($datas['todos']['tmpentities'] as $entity) {
@@ -118,7 +127,9 @@ class DashboardController extends Controller
 
         $datas = [];
         $datas['todos'] = [];
-        $datas['todos']['tmpentities'] = $todoRepository->findBy(['uid' => $this->getUser()->getUid()]);;
+        $datas['todos']['tmpentities'] = $todoRepository->findBy(
+            array('uid' => $this->getUser()->getUid()),
+            array('state' => 'DESC'));
 
         if($datas['todos']['tmpentities']) {
             foreach ($datas['todos']['tmpentities'] as $entity) {
@@ -159,7 +170,50 @@ class DashboardController extends Controller
 
         $datas = [];
         $datas['todos'] = [];
-        $datas['todos']['tmpentities'] = $todoRepository->findBy(['uid' => $this->getUser()->getUid()]);;
+        $datas['todos']['tmpentities'] = $todoRepository->findBy(
+            array('uid' => $this->getUser()->getUid()),
+            array('state' => 'DESC'));
+
+        if($datas['todos']['tmpentities']) {
+            foreach ($datas['todos']['tmpentities'] as $entity) {
+                $datas['todos']['entities'][] = $serializer->serialize($entity, 'json');
+            }
+            $datas['todos']['count'] = count($datas['todos']['entities']);
+        } else {
+            $datas['todos']['count'] = 0;
+        }
+
+        unset($datas['todos']['tmpentities']);
+
+        return new JsonResponse($datas);
+    }
+
+    /**
+     * @Route("/dashboard/state/todos", name="ajax_state_todos")
+     * @Method("POST")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function stateTodoAction (Request $request) {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $todoRepository = $entityManager->getRepository(Todo::class);
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $tmpId = $request->get('todoId');
+        $tmpState = $request->get('todoState');
+
+        $todo = $todoRepository->find($tmpId);
+        $todo->setState($tmpState);
+        $entityManager->flush();
+
+        $datas = [];
+        $datas['todos'] = [];
+        $datas['todos']['tmpentities'] = $todoRepository->findBy(
+            array('uid' => $this->getUser()->getUid()),
+            array('state' => 'DESC'));
 
         if($datas['todos']['tmpentities']) {
             foreach ($datas['todos']['tmpentities'] as $entity) {

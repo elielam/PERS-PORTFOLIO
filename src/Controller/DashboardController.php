@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Account;
+use App\Entity\OperationMinus;
+use App\Entity\OperationPlus;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -247,7 +250,33 @@ class DashboardController extends Controller
 
     public function financialComponentAction()
     {
-        return $this->render('dashboard/dashboard-financial-component.html.twig');
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $datas = [];
+        $datas['accounts'] = [];
+        $datas['accounts']['entities'] = $entityManager->getRepository(Account::class)->findBy(
+            array('uid' => $this->getUser()->getUid()),
+            array('balance' => 'DESC'));
+
+        $i=0;
+        foreach ($datas['accounts']['entities'] as $account) {
+            $datas['accounts']['entities']['operationPlus Account '.$i] = $entityManager->getRepository(OperationPlus::class)->findBy(
+                array('aid' => $account->getAid()),
+                array('datetime' => 'DESC'));
+            $datas['accounts']['entities']['operationMinus Account '.$i] = $entityManager->getRepository(OperationMinus::class)->findBy(
+                array('aid' => $account->getAid()),
+                array('datetime' => 'DESC'));
+        }
+
+        if($datas['accounts']['entities']) {
+            $datas['accounts']['count'] = count($datas['accounts']['entities'])-1;
+        } else {
+            $datas['accounts']['count'] = 0;
+        }
+
+        return $this->render('dashboard/dashboard-financial-component.html.twig', array(
+            'accounts' => $datas['accounts']
+        ));
     }
 
 

@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="APP_OPERATIONS_MINUS")
  * @ORM\Entity(repositoryClass="App\Repository\OperationMinusRepository")
  */
-class OperationMinus extends Operation
+class OperationMinus
 {
     /**
      * @ORM\Id
@@ -18,24 +19,41 @@ class OperationMinus extends Operation
     private $id;
 
     /**
+     * @ORM\Column(type="string", unique=false, nullable=false)
+     */
+    private $libelle;
+
+    /**
+     * @Assert\DateTime()
+     * @ORM\Column(type="datetime", unique=false, nullable=false)
+     */
+    private $datetime;
+
+    /**
      * @ORM\Column(type="integer", unique=false, nullable=false)
      */
-    private $minusSum;
+    private $sum;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Account")
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="aid")
+     */
+    private $aid;
 
     /**
      * @return mixed
      */
-    public function getAid()
+    public function getId()
     {
-        return $this->aid;
+        return $this->id;
     }
 
     /**
-     * @param mixed $aid
+     * @param mixed $id
      */
-    public function setAid($aid): void
+    public function setId($id): void
     {
-        $this->aid = $aid;
+        $this->id = $id;
     }
 
     /**
@@ -57,33 +75,49 @@ class OperationMinus extends Operation
     /**
      * @return mixed
      */
-    public function getId()
+    public function getDatetime()
     {
-        return $this->id;
+        return $this->datetime;
     }
 
     /**
-     * @param mixed $id
+     * @param mixed $datetime
      */
-    public function setId($id): void
+    public function setDatetime($datetime): void
     {
-        $this->id = $id;
+        $this->datetime = $datetime;
     }
 
     /**
      * @return mixed
      */
-    public function getMinusSum()
+    public function getSum()
     {
-        return $this->minusSum;
+        return $this->sum;
     }
 
     /**
-     * @param mixed $minusSum
+     * @param mixed $sum
      */
-    public function setMinusSum($minusSum): void
+    public function setSum($sum): void
     {
-        $this->minusSum = $minusSum;
+        $this->sum = $sum;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAid()
+    {
+        return $this->aid;
+    }
+
+    /**
+     * @param mixed $aid
+     */
+    public function setAid($aid): void
+    {
+        $this->aid = $aid;
     }
 
 }

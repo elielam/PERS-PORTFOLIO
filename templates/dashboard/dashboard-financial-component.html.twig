@@ -5,16 +5,19 @@
         </div>
 
         <div id="financialComponent-elements" class="col-12">
-            <div class="row financialComponent-account">
-                <div class="col-12 border border-dark border-left-0 border-right-0 financialComponent-account-header" style="height: 3.5vh">
-                </div>
-                <div class="col-12 bg-success financialComponent-element-account-plus" style="height: 5vh;">
+            {% for key, account in accounts.entities %}
+                <div class="row financialComponent-account">
+                    <div class="col-12 border border-dark border-left-0 border-right-0 financialComponent-account-header" style="height: 3.5vh">
 
-                </div>
-                <div class="col-10 offset-2 bg-danger financialComponent-element-account-minus" style="height: 5vh;">
+                    </div>
+                    <div class="col-12 bg-success financialComponent-element-account-plus" style="height: 5vh;">
+                        {{ account.balance }}
+                    </div>
+                    <div class="col-10 offset-2 bg-danger financialComponent-element-account-minus" style="height: 5vh;">
 
+                    </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>

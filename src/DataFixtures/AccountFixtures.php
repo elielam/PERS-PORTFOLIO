@@ -28,7 +28,6 @@ class AccountFixtures extends Fixture
             $account->setType(1); // 1 : Visa | 2 : Mastercard | 0 : Autres
             $account->setBalance($balance);
             $account->setInterestDraft($interestedDraft);
-            $account->setUid(1);
             $account->setOverdraft($overdraft);
 
             for ($i = 1; $i < 11; $i++) {
@@ -38,7 +37,7 @@ class AccountFixtures extends Fixture
                 $operationPlus->setLibelle('Account N°'.$j.' Operation N°'.$i);
                 $operationPlus->setDatetime(DateTime::createFromFormat('d-m-Y H:i:s', $date.' '.$time));
                 $operationPlus->setSum($plusSum);
-                $operationPlus->setAid($account);
+                $operationPlus->setAccount($account);
                 $manager->persist($operationPlus);
             }
 
@@ -49,7 +48,8 @@ class AccountFixtures extends Fixture
                 $operationMinus->setLibelle('Account N°'.$j.' Operation N°'.$i);
                 $operationMinus->setDatetime(DateTime::createFromFormat('d-m-Y H:i:s', $date.' '.$time));
                 $operationMinus->setSum($minusSum);
-                $operationMinus->setAid($account);
+                dump($account);
+                $operationMinus->setAccount($account);
                 $manager->persist($operationMinus);
             }
 

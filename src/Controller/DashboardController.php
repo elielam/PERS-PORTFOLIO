@@ -254,9 +254,10 @@ class DashboardController extends Controller
 
         $datas = [];
         $datas['accounts'] = [];
-        $datas['accounts']['entities'] = $entityManager->getRepository(Account::class)->findBy(
-            array('uid' => $this->getUser()->getUid()),
-            array('balance' => 'DESC'));
+        $tmp =  $entityManager->getRepository(Account::class)->find(6);
+        $datas['accounts']['entities'] = $tmp->getOperationsPlus();
+
+        dump($datas['accounts']['entities']);die;
 
         $i=0;
         foreach ($datas['accounts']['entities'] as $account) {

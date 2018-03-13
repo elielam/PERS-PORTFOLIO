@@ -35,10 +35,10 @@ class OperationPlus
     private $sum;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Account")
-     * @ORM\JoinColumn(nullable=true, referencedColumnName="aid")
+     * @ORM\OneToOne(targetEntity="App\Entity\Account", mappedBy="operationPlus")
+     * @ORM\JoinColumn(nullable=true, unique=false, referencedColumnName="aid")
      */
-    private $aid;
+    private $account;
 
     /**
      * @return mixed
@@ -107,17 +107,16 @@ class OperationPlus
     /**
      * @return mixed
      */
-    public function getAid()
+    public function getAccount()
     {
-        return $this->aid;
+        return $this->account;
     }
 
     /**
-     * @param mixed $aid
+     * @param mixed $account
      */
-    public function setAid($aid): void
+    public function setAccount($account): void
     {
-        $this->aid = $aid;
+        $this->account = $account;
     }
-
 }

@@ -6,6 +6,7 @@ use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use http\Exception\BadMethodCallException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
@@ -13,11 +14,18 @@ class UserFixtures extends Fixture
 
     private $encoder;
 
+    public const ELIE_USER_REF = 'elie-user';
+    public const ADMIN_USER_REF = 'admin-user';
+    public const TEST_USER_REF = 'test-user';
+
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
     }
 
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
 
@@ -32,6 +40,8 @@ class UserFixtures extends Fixture
         $user->setUsername('Elie');
         $manager->persist($user);
 
+        $this->addReference(self::ELIE_USER_REF, $user);
+
         $user = new User();
         $user->setName('Admin');
         $user->setLastName('ADMIN');
@@ -42,6 +52,8 @@ class UserFixtures extends Fixture
         $user->setRoles('ROLE_ADMIN');
         $user->setUsername('Admin');
         $manager->persist($user);
+
+        $this->addReference(self::ADMIN_USER_REF, $user);
 
         $user = new User();
         $user->setName('Test');
@@ -54,6 +66,9 @@ class UserFixtures extends Fixture
         $user->setUsername('Test');
         $manager->persist($user);
 
+        $this->addReference(self::TEST_USER_REF, $user);
+
         $manager->flush();
+
     }
 }

@@ -7,10 +7,11 @@ use App\Entity\OperationMinus;
 use App\Entity\OperationPlus;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Validator\Constraints\Collection;
 
-class AccountFixtures extends Fixture
+class AccountFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -29,6 +30,7 @@ class AccountFixtures extends Fixture
             $account->setBalance($balance);
             $account->setInterestDraft($interestedDraft);
             $account->setOverdraft($overdraft);
+            $account->setUid($this->getReference(UserFixtures::ELIE_USER_REF));
 
             for ($i = 1; $i < 11; $i++) {
                 $plusSum = rand(0, 1000);
@@ -57,5 +59,18 @@ class AccountFixtures extends Fixture
         }
 
         $manager->flush();
+    }
+
+    /**
+     * This method must return an array of fixtures classes
+     * on which the implementing class depends on
+     *
+     * @return array
+     */
+    function getDependencies()
+    {
+        return array(
+          UserFixtures::class
+        );
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -59,6 +61,17 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=40, unique=true, nullable=false)
      */
     private $username;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Account", indexBy="user", mappedBy="user")
+     * @ORM\JoinColumn(name="account", referencedColumnName="aid")
+     */
+    private $accounts;
+
+    public function __construct()
+    {
+        $this->accounts = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -202,6 +215,22 @@ class User implements UserInterface, \Serializable
     public function setUsername($username): void
     {
         $this->username = $username;
+    }
+
+    /**
+     * @return Collection|Account[]
+     */
+    public function getAccounts()
+    {
+        return $this->accounts;
+    }
+
+    /**
+     * @param mixed $accounts
+     */
+    public function setAccounts($accounts): void
+    {
+        $this->accounts = $accounts;
     }
 
 

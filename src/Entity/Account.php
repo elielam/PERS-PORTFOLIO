@@ -1,6 +1,7 @@
 <?php
 namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Table(name="APP_ACCOUNTS")
@@ -41,13 +42,21 @@ class Account
 
     /**
      * @ORM\OneToMany(targetEntity="OperationPlus", indexBy="aid", mappedBy="account")
+     * @ORM\JoinColumn(name="operationsPlus", referencedColumnName="id")
      */
     private $operationsPlus;
 
     /**
      * @ORM\OneToMany(targetEntity="OperationMinus", indexBy="account", mappedBy="account")
+     * @ORM\JoinColumn(name="operationsMinus", referencedColumnName="id")
      */
     private $operationsMinus;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="user")
+     * @ORM\JoinColumn(nullable=true, unique=false, referencedColumnName="uid")
+     */
+    private $uid;
 
     public function __construct()
     {
@@ -152,7 +161,7 @@ class Account
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection|OperationPlus[]
      */
     public function getOperationsPlus()
     {
@@ -168,7 +177,7 @@ class Account
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection|OperationMinus[]
      */
     public function getOperationsMinus()
     {
@@ -181,5 +190,21 @@ class Account
     public function setOperationsMinus($operationsMinus): void
     {
         $this->operationsMinus = $operationsMinus;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUid()
+    {
+        return $this->uid;
+    }
+
+    /**
+     * @param mixed $uid
+     */
+    public function setUid($uid): void
+    {
+        $this->uid = $uid;
     }
 }

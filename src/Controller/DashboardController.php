@@ -2,22 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Todo;
 use App\Entity\Account;
 use App\Entity\OperationMinus;
 use App\Entity\OperationPlus;
+
+use App\Entity\User;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
-use App\Entity\Todo;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class DashboardController extends Controller
 {
@@ -29,6 +28,12 @@ class DashboardController extends Controller
     //  $this->addFlash('success',
     //    'Suppression a été effectuée avec succès!'
     //  );
+
+//        $entityManager = $this->getDoctrine()->getManager();
+//        $tmp =  $entityManager->getRepository(User::class)->find(4);
+//        $datas['test'] = $tmp->getAccounts();
+//
+//        dump($datas['test']);die;
 
         return $this->render('dashboard/dashboard.html.twig');
     }
@@ -254,18 +259,16 @@ class DashboardController extends Controller
 
         $datas = [];
         $datas['accounts'] = [];
-        $tmp =  $entityManager->getRepository(Account::class)->find(6);
-        $datas['accounts']['entities'] = $tmp->getOperationsPlus();
-
-        dump($datas['accounts']['entities']);die;
-
-        $i=0;
+        $datas['accounts']['entities']['operationPlus'] = [];
+        $datas['accounts']['entities']['operationMinus'] = [];
+        $datas['accounts']['entities'] = $entityManager->getRepository(Account::class)->findBy(['uid' => $this->getUser()]);
+        
         foreach ($datas['accounts']['entities'] as $account) {
-            $datas['accounts']['entities']['operationPlus Account '.$i] = $entityManager->getRepository(OperationPlus::class)->findBy(
-                array('aid' => $account->getAid()),
+            $datas['accounts']['entities']['operationPlus'][] = $entityManager->getRepository(OperationPlus::class)->findBy(
+                array('account' => $account->getAid()),
                 array('datetime' => 'DESC'));
-            $datas['accounts']['entities']['operationMinus Account '.$i] = $entityManager->getRepository(OperationMinus::class)->findBy(
-                array('aid' => $account->getAid()),
+            $datas['accounts']['entities']['operationMinus'][] = $entityManager->getRepository(OperationMinus::class)->findBy(
+                array('account' => $account->getAid()),
                 array('datetime' => 'DESC'));
         }
 

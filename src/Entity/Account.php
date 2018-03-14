@@ -14,15 +14,12 @@ class Account
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $aid;
+    private $id;
     /**
      * @ORM\Column(type="string", length=40, unique=false, nullable=false)
      */
     private $libelle;
-//    /**
-//     * @ORM\Column(type="string", length=40, unique=false, nullable=false)
-//     */
-//    private $number;
+
     /**
      * @ORM\Column(type="integer", length=1, unique=false, nullable=false)
      */
@@ -41,22 +38,22 @@ class Account
     private $overdraft;
 
     /**
-     * @ORM\OneToMany(targetEntity="OperationPlus", indexBy="aid", mappedBy="account")
+     * @ORM\OneToMany(targetEntity="OperationPlus", indexBy="aid", mappedBy="account", fetch="EAGER")
      * @ORM\JoinColumn(name="operationsPlus", referencedColumnName="id")
      */
     private $operationsPlus;
 
     /**
-     * @ORM\OneToMany(targetEntity="OperationMinus", indexBy="account", mappedBy="account")
+     * @ORM\OneToMany(targetEntity="OperationMinus", indexBy="account", mappedBy="account", fetch="EAGER")
      * @ORM\JoinColumn(name="operationsMinus", referencedColumnName="id")
      */
     private $operationsMinus;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="user")
-     * @ORM\JoinColumn(nullable=true, unique=false, referencedColumnName="uid")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="accounts")
+     * @ORM\JoinColumn(nullable=true, unique=false, referencedColumnName="id")
      */
-    private $uid;
+    private $user;
 
     public function __construct()
     {
@@ -67,17 +64,17 @@ class Account
     /**
      * @return mixed
      */
-    public function getAid()
+    public function getId()
     {
-        return $this->aid;
+        return $this->id;
     }
 
     /**
-     * @param mixed $aid
+     * @param mixed $id
      */
-    public function setAid($aid): void
+    public function setId($id): void
     {
-        $this->aid = $aid;
+        $this->id = $id;
     }
 
     /**
@@ -195,16 +192,16 @@ class Account
     /**
      * @return mixed
      */
-    public function getUid()
+    public function getUser()
     {
-        return $this->uid;
+        return $this->user;
     }
 
     /**
-     * @param mixed $uid
+     * @param mixed $user
      */
-    public function setUid($uid): void
+    public function setUser($user): void
     {
-        $this->uid = $uid;
+        $this->user = $user;
     }
 }

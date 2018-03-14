@@ -34,10 +34,13 @@ class Todo
      * @ORM\Column(type="integer", length=2, unique=false, nullable=false)
      */
     private $state;
+
     /**
-     * @ORM\Column(type="integer", unique=false, nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="todos")
+     * @ORM\JoinColumn(nullable=true, unique=false, referencedColumnName="id")
      */
-    private $uid;
+    private $user;
+
     /**
      * @return mixed
      */
@@ -45,6 +48,7 @@ class Todo
     {
         return $this->id;
     }
+
     /**
      * @param mixed $id
      */
@@ -52,6 +56,7 @@ class Todo
     {
         $this->id = $id;
     }
+
     /**
      * @return mixed
      */
@@ -59,6 +64,7 @@ class Todo
     {
         return $this->libelle;
     }
+
     /**
      * @param mixed $libelle
      */
@@ -66,6 +72,7 @@ class Todo
     {
         $this->libelle = $libelle;
     }
+
     /**
      * @return mixed
      */
@@ -73,6 +80,7 @@ class Todo
     {
         return $this->description;
     }
+
     /**
      * @param mixed $description
      */
@@ -80,6 +88,7 @@ class Todo
     {
         $this->description = $description;
     }
+
     /**
      * @return mixed
      */
@@ -87,6 +96,7 @@ class Todo
     {
         return $this->datetime;
     }
+
     /**
      * @param mixed $datetime
      */
@@ -94,6 +104,7 @@ class Todo
     {
         $this->datetime = $datetime;
     }
+
     /**
      * @return mixed
      */
@@ -101,6 +112,7 @@ class Todo
     {
         return $this->state;
     }
+
     /**
      * @param mixed $state
      */
@@ -108,18 +120,20 @@ class Todo
     {
         $this->state = $state;
     }
+
     /**
      * @return mixed
      */
-    public function getUid()
+    public function getUser()
     {
-        return $this->uid;
+        return $this->user;
     }
+
     /**
-     * @param mixed $uid
+     * @param mixed $user
      */
-    public function setUid($uid): void
+    public function setUser($user): void
     {
-        $this->uid = $uid;
+        $this->user = $user;
     }
 }

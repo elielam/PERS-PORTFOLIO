@@ -15,14 +15,22 @@ class TodoFixtures extends Fixture implements DependentFixtureInterface
         $time = date("h:i:s");
         $date = date("j-m-Y");
 
-        for ($i = 0; $i <= 5; $i++) {
-            $todo = new Todo();
-            $todo->setLibelle('TODO '.$i);
-            $todo->setDescription('This is the '.$i.' description sample !');
-            $todo->setDatetime(DateTime::createFromFormat('d-m-Y H:i:s', $date.' '.$time));
-            $todo->setState(1);
-            $todo->setUid(1);
-            $manager->persist($todo);
+        for ($j = 1 ; $j < 4; $j++) {
+            for ($i = 1; $i < 6; $i++) {
+                $todo = new Todo();
+                $todo->setLibelle('TODO ' . $i);
+                $todo->setDescription('This is the ' . $i . ' description sample !');
+                $todo->setDatetime(DateTime::createFromFormat('d-m-Y H:i:s', $date . ' ' . $time));
+                $todo->setState(1);
+                if ($j == 1) {
+                    $todo->setUser($this->getReference(UserFixtures::ELIE_USER_REF));
+                } elseif ($j == 2) {
+                    $todo->setUser($this->getReference(UserFixtures::ADMIN_USER_REF));
+                } else {
+                    $todo->setUser($this->getReference(UserFixtures::TEST_USER_REF));
+                }
+                $manager->persist($todo);
+            }
         }
 
         $manager->flush();

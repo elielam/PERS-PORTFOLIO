@@ -25,12 +25,18 @@ class AccountFixtures extends Fixture implements DependentFixtureInterface
 
             $account = new Account();
             $account->setLibelle('Account N°'.$j);
-            $account->setAid($j);
             $account->setType(1); // 1 : Visa | 2 : Mastercard | 0 : Autres
             $account->setBalance($balance);
             $account->setInterestDraft($interestedDraft);
             $account->setOverdraft($overdraft);
-            $account->setUid($this->getReference(UserFixtures::ELIE_USER_REF));
+            if ($j == 1 || $j == 2) {
+                $account->setUser($this->getReference(UserFixtures::ELIE_USER_REF));
+            } elseif ($j == 3 || $j == 4) {
+                $account->setUser($this->getReference(UserFixtures::TEST_USER_REF));
+            } else {
+                $account->setUser($this->getReference(UserFixtures::ADMIN_USER_REF));
+            }
+
 
             for ($i = 1; $i < 11; $i++) {
                 $plusSum = rand(0, 1000);
@@ -50,13 +56,14 @@ class AccountFixtures extends Fixture implements DependentFixtureInterface
                 $operationMinus->setLibelle('Account N°'.$j.' Operation N°'.$i);
                 $operationMinus->setDatetime(DateTime::createFromFormat('d-m-Y H:i:s', $date.' '.$time));
                 $operationMinus->setSum($minusSum);
-                dump($account);
                 $operationMinus->setAccount($account);
                 $manager->persist($operationMinus);
             }
 
             $manager->persist($account);
         }
+
+
 
         $manager->flush();
     }

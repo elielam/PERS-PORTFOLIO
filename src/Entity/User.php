@@ -19,7 +19,7 @@ class User implements UserInterface, \Serializable
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer", unique=true, nullable=false)
      */
-    private $uid;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=20, unique=false, nullable=false)
@@ -63,30 +63,37 @@ class User implements UserInterface, \Serializable
     private $username;
 
     /**
-     * @ORM\OneToMany(targetEntity="Account", indexBy="user", mappedBy="user")
-     * @ORM\JoinColumn(name="account", referencedColumnName="aid")
+     * @ORM\OneToMany(targetEntity="Account", indexBy="user", mappedBy="user", fetch="EAGER")
+     * @ORM\JoinColumn(name="account", referencedColumnName="user")
      */
     private $accounts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Todo", indexBy="user", mappedBy="user", fetch="EAGER")
+     * @ORM\JoinColumn(name="todos", referencedColumnName="user")
+     */
+    private $todos;
 
     public function __construct()
     {
         $this->accounts = new ArrayCollection();
+        $this->todos = new ArrayCollection();
     }
 
     /**
      * @return mixed
      */
-    public function getUid()
+    public function getId()
     {
-        return $this->uid;
+        return $this->id;
     }
 
     /**
-     * @param mixed $uid
+     * @param mixed $id
      */
-    public function setUid($uid): void
+    public function setId($id): void
     {
-        $this->uid = $uid;
+        $this->id = $id;
     }
 
     /**
@@ -233,12 +240,27 @@ class User implements UserInterface, \Serializable
         $this->accounts = $accounts;
     }
 
+    /**
+     * @return Collection|Todo[]
+     */
+    public function getTodos()
+    {
+        return $this->todos;
+    }
+
+    /**
+     * @param mixed $todos
+     */
+    public function setTodos($todos): void
+    {
+        $this->todos = $todos;
+    }
 
     /** @see \Serializable::serialize() */
     public function serialize()
     {
         return serialize(array(
-            $this->uid,
+            $this->id,
             $this->name,
             $this->lastname,
             $this->email,
@@ -252,7 +274,7 @@ class User implements UserInterface, \Serializable
     public function unserialize($serialized)
     {
         list (
-            $this->uid,
+            $this->id,
             $this->name,
             $this->lastname,
             $this->email,

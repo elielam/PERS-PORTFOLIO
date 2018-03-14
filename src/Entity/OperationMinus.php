@@ -35,8 +35,8 @@ class OperationMinus
     private $sum;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Account", inversedBy="operationMinus")
-     * @ORM\JoinColumn(nullable=true, unique=false, referencedColumnName="aid")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Account", inversedBy="operationsMinus")
+     * @ORM\JoinColumn(nullable=true, unique=false, referencedColumnName="id")
      */
     private $account;
 

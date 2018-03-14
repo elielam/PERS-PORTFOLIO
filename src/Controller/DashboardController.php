@@ -29,12 +29,6 @@ class DashboardController extends Controller
     //    'Suppression a été effectuée avec succès!'
     //  );
 
-//        $entityManager = $this->getDoctrine()->getManager();
-//        $tmp =  $entityManager->getRepository(User::class)->find(4);
-//        $datas['test'] = $tmp->getAccounts();
-//
-//        dump($datas['test']);die;
-
         return $this->render('dashboard/dashboard.html.twig');
     }
 
@@ -65,14 +59,14 @@ class DashboardController extends Controller
         $todo->setDescription($tmpDescription);
         $todo->setDatetime(\DateTime::createFromFormat('d-m-Y H:i:s', $date.' '.$time));
         $todo->setState(1);
-        $todo->setUid($this->getUser()->getUid());
+        $todo->setUser($this->getUser());
         $entityManager->persist($todo);
         $entityManager->flush();
 
         $datas = [];
         $datas['todos'] = [];
         $datas['todos']['tmpentities'] = $todoRepository->findBy(
-            array('uid' => $this->getUser()->getUid()),
+            array('user' => $this->getUser()),
             array('state' => 'DESC'));
 
         if($datas['todos']['tmpentities']) {
@@ -115,7 +109,7 @@ class DashboardController extends Controller
         $datas = [];
         $datas['todos'] = [];
         $datas['todos']['tmpentities'] = $todoRepository->findBy(
-            array('uid' => $this->getUser()->getUid()),
+            array('user' => $this->getUser()),
             array('state' => 'DESC'));
 
         if($datas['todos']['tmpentities']) {
@@ -158,7 +152,7 @@ class DashboardController extends Controller
         $datas = [];
         $datas['todos'] = [];
         $datas['todos']['tmpentities'] = $todoRepository->findBy(
-            array('uid' => $this->getUser()->getUid()),
+            array('user' => $this->getUser()),
             array('state' => 'DESC'));
 
         if($datas['todos']['tmpentities']) {
@@ -186,7 +180,12 @@ class DashboardController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $todoRepository = $entityManager->getRepository(Todo::class);
         $encoders = array(new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
+        $normalizer = new ObjectNormalizer();
+        $normalizer->setCircularReferenceLimit(2);
+        $normalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getId();
+        });
+        $normalizers = array($normalizer);
         $serializer = new Serializer($normalizers, $encoders);
 
         $tmpId = $request->get('todoId');
@@ -199,7 +198,7 @@ class DashboardController extends Controller
         $datas = [];
         $datas['todos'] = [];
         $datas['todos']['tmpentities'] = $todoRepository->findBy(
-            array('uid' => $this->getUser()->getUid()),
+            array('user' => $this->getUser()),
             array('state' => 'DESC'));
 
         if($datas['todos']['tmpentities']) {
@@ -237,7 +236,7 @@ class DashboardController extends Controller
         $datas = [];
         $datas['todos'] = [];
         $datas['todos']['entities'] = $entityManager->getRepository(Todo::class)->findBy(
-            array('uid' => $this->getUser()->getUid()),
+            array('user' => $this->getUser()),
             array('state' => 'DESC'));
 
         if($datas['todos']['entities']) {
@@ -255,25 +254,16 @@ class DashboardController extends Controller
 
     public function financialComponentAction()
     {
-        $entityManager = $this->getDoctrine()->getManager();
-
         $datas = [];
         $datas['accounts'] = [];
-        $datas['accounts']['entities']['operationPlus'] = [];
-        $datas['accounts']['entities']['operationMinus'] = [];
-        $datas['accounts']['entities'] = $entityManager->getRepository(Account::class)->findBy(['uid' => $this->getUser()]);
-        
-        foreach ($datas['accounts']['entities'] as $account) {
-            $datas['accounts']['entities']['operationPlus'][] = $entityManager->getRepository(OperationPlus::class)->findBy(
-                array('account' => $account->getAid()),
-                array('datetime' => 'DESC'));
-            $datas['accounts']['entities']['operationMinus'][] = $entityManager->getRepository(OperationMinus::class)->findBy(
-                array('account' => $account->getAid()),
-                array('datetime' => 'DESC'));
+        $accounts = $this->getUser()->getAccounts();
+        foreach ( $accounts as $account){
+            $datas['accounts'][] = $account;
         }
 
-        if($datas['accounts']['entities']) {
-            $datas['accounts']['count'] = count($datas['accounts']['entities'])-1;
+
+        if($datas['accounts']) {
+            $datas['accounts']['count'] = count($datas['accounts']);
         } else {
             $datas['accounts']['count'] = 0;
         }
@@ -282,6 +272,5 @@ class DashboardController extends Controller
             'accounts' => $datas['accounts']
         ));
     }
-
 
 }

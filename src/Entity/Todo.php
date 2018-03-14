@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Entity;
 
+namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="APP_TODOS")
@@ -16,31 +17,29 @@ class Todo
      * @ORM\Column(type="integer", nullable=false)
      */
     private $id;
-
     /**
      * @ORM\Column(type="string", length=40, unique=false, nullable=false)
      */
     private $libelle;
-
     /**
      * @ORM\Column(type="string", length=200, unique=false, nullable=true)
      */
     private $description;
-
     /**
-     * @ORM\Column(type="datetime", length=100, unique=false, nullable=true)
+     * @Assert\DateTime()
+     * @ORM\Column(type="datetime", length=100, unique=false, nullable=false)
      */
     private $datetime;
-
     /**
      * @ORM\Column(type="integer", length=2, unique=false, nullable=false)
      */
     private $state;
 
     /**
-     * @ORM\Column(type="integer", unique=false, nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="todos")
+     * @ORM\JoinColumn(nullable=true, unique=false, referencedColumnName="id")
      */
-    private $uid;
+    private $user;
 
     /**
      * @return mixed
@@ -125,17 +124,16 @@ class Todo
     /**
      * @return mixed
      */
-    public function getUid()
+    public function getUser()
     {
-        return $this->uid;
+        return $this->user;
     }
 
     /**
-     * @param mixed $uid
+     * @param mixed $user
      */
-    public function setUid($uid): void
+    public function setUser($user): void
     {
-        $this->uid = $uid;
+        $this->user = $user;
     }
-
 }

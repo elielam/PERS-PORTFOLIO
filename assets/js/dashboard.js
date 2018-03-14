@@ -106,9 +106,44 @@ function updateTodoAction() {
     });
 }
 
+function stateTodoAction() {
+    $('.todoComponent-element-toolsbox-tool-plan').off('click').click(function () {
+        let id = $(this).attr('id');
+        let state = 1;
+        ajaxCall(id, state);
+    });
+
+    $('.todoComponent-element-toolsbox-tool-report').off('click').click(function () {
+        let id = $(this).attr('id');
+        let state = 2;
+        ajaxCall(id, state);
+    });
+
+    $('.todoComponent-element-toolsbox-tool-check').off('click').click(function () {
+        let id = $(this).attr('id');
+        let state = 3;
+        ajaxCall(id, state);
+    });
+
+    function ajaxCall(id, state) {
+        $.ajax({
+            method: "post",
+            url: '/dashboard/state/todos',
+            data: {todoId: id, todoState: state},
+            dataType: "json",
+        }).done( function(response) {
+            reconstructTodoDom(response);
+        }).fail(function(jxh,textmsg,errorThrown){
+            console.log(textmsg);
+            console.log(errorThrown);
+        });
+    }
+}
+
 initTodoElementComportement();
 updateTodoAction();
 deleteTodoAction();
+stateTodoAction();
 
 function reconstructTodoDom(response) {
     let todoCol = document.getElementById('todoComponent-elements');
@@ -117,10 +152,18 @@ function reconstructTodoDom(response) {
         let parsed_response = JSON.parse(response['todos']['entities'][i]);
         let elementCol = document.createElement('div');
         elementCol.id = i;
-        if ( i === response['todos']['count']-1 ) {
-            elementCol.className = 'col-12 todoComponent-element border-0 border-bottom-0 bg-secondary';
+        if ( parsed_response.state === 3 ) {
+            if ( i === response['todos']['count']-1 ) {
+                elementCol.className = 'col-12 todoComponent-element border-0 border-bottom-0 bg-success';
+            } else {
+                elementCol.className = 'col-12 todoComponent-element bg-success';
+            }
         } else {
-            elementCol.className = 'col-12 todoComponent-element bg-secondary';
+            if ( i === response['todos']['count']-1 ) {
+                elementCol.className = 'col-12 todoComponent-element border-0 border-bottom-0 bg-secondary';
+            } else {
+                elementCol.className = 'col-12 todoComponent-element bg-secondary';
+            }
         }
         let elementRow = document.createElement('div');
         elementRow.className = 'row';
@@ -129,7 +172,17 @@ function reconstructTodoDom(response) {
         elementIconCol.className = 'col-2 todoComponent-element-icon todoComponent-element-icon-'+i+' text-center';
         let elementIconSpan = document.createElement('span');
         let elementIcon = document.createElement('i');
-        elementIcon.className = 'fas fa-angle-right fa-2x';
+
+        if ( parsed_response.state === 1 ) {
+            elementIcon.className = 'fas fa-angle-right fa-2x';
+        } else if ( parsed_response.state === 2 ) {
+            elementIcon.className = 'fas fa-angle-double-right fa-2x';
+        } else if ( parsed_response.state === 3 ) {
+            elementIcon.className = 'fas fa-check fa-2x';
+        } else {
+            elementIcon.className = 'fas fa-angle-right fa-2x';
+        }
+
 
         let elementLibelleCol = document.createElement('div');
         elementLibelleCol.className = 'col-10 todoComponent-element-libelle todoComponent-element-libelle-'+i;
@@ -142,26 +195,53 @@ function reconstructTodoDom(response) {
         let elementToolboxRow = document.createElement('div');
         elementToolboxRow.className = 'row';
 
-        let elementToolboxTool1 = document.createElement('div');
-        elementToolboxTool1.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-report toolsbox-'+i+'-tool1';
-        elementToolboxTool1.id = parsed_response.id;
-        let elementTool1IconSpan = document.createElement('span');
-        let elementTool1Icon = document.createElement('i');
-        elementTool1Icon.className = 'fas fa-angle-double-right fa-2x';
+        if (parsed_response.state === 2 || parsed_response.state === 3) {
+            var elementToolboxTool1 = document.createElement('div');
+            elementToolboxTool1.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-plan toolsbox-'+i+'-tool1';
+            elementToolboxTool1.id = parsed_response.id;
+            var elementTool1IconSpan = document.createElement('span');
+            var elementTool1Icon = document.createElement('i');
+            elementTool1Icon.className = 'fas fa-angle-right fa-2x';
+        } else {
+            var elementToolboxTool1 = document.createElement('div');
+            elementToolboxTool1.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-report toolsbox-'+i+'-tool1';
+            elementToolboxTool1.id = parsed_response.id;
+            var elementTool1IconSpan = document.createElement('span');
+            var elementTool1Icon = document.createElement('i');
+            elementTool1Icon.className = 'fas fa-angle-double-right fa-2x';
+        }
 
-        let elementToolboxTool2 = document.createElement('div');
-        elementToolboxTool2.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-update toolsbox-'+i+'-tool2';
-        elementToolboxTool2.id = parsed_response.id;
-        let elementTool2IconSpan = document.createElement('span');
-        let elementTool2Icon = document.createElement('i');
-        elementTool2Icon.className = 'far fa-edit fa-2x';
+        if (parsed_response.state === 3) {
+            var elementToolboxTool2 = document.createElement('div');
+            elementToolboxTool2.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-report toolsbox-' + i + '-tool2';
+            elementToolboxTool2.id = parsed_response.id;
+            var elementTool2IconSpan = document.createElement('span');
+            var elementTool2Icon = document.createElement('i');
+            elementTool2Icon.className = 'fas fa-angle-double-right fa-2x';
+        } else {
+            var elementToolboxTool2 = document.createElement('div');
+            elementToolboxTool2.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-update toolsbox-' + i + '-tool2';
+            elementToolboxTool2.id = parsed_response.id;
+            var elementTool2IconSpan = document.createElement('span');
+            var elementTool2Icon = document.createElement('i');
+            elementTool2Icon.className = 'far fa-edit fa-2x';
+        }
 
-        let elementToolboxTool3 = document.createElement('div');
-        elementToolboxTool3.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-check toolsbox-'+i+'-tool3';
-        elementToolboxTool3.id = parsed_response.id;
-        let elementTool3IconSpan = document.createElement('span');
-        let elementTool3Icon = document.createElement('i');
-        elementTool3Icon.className = 'fas fa-check fa-2x';
+        if (parsed_response.state === 3) {
+            var elementToolboxTool3 = document.createElement('div');
+            elementToolboxTool3.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-update toolsbox-' + i + '-tool3';
+            elementToolboxTool3.id = parsed_response.id;
+            var elementTool3IconSpan = document.createElement('span');
+            var elementTool3Icon = document.createElement('i');
+            elementTool3Icon.className = 'far fa-edit fa-2x';
+        } else {
+            var elementToolboxTool3 = document.createElement('div');
+            elementToolboxTool3.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-check toolsbox-' + i + '-tool3';
+            elementToolboxTool3.id = parsed_response.id;
+            var elementTool3IconSpan = document.createElement('span');
+            var elementTool3Icon = document.createElement('i');
+            elementTool3Icon.className = 'fas fa-check fa-2x';
+        }
 
         let elementToolboxTool4 = document.createElement('div');
         elementToolboxTool4.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-delete last toolsbox-'+i+'-tool4';
@@ -173,6 +253,7 @@ function reconstructTodoDom(response) {
         let elementDescCol = document.createElement('div');
         elementDescCol.className = 'col-12 todoComponent-element-desc todoComponent-element-desc-'+i;
         let elementDesc = document.createElement('p');
+        elementDesc.className = 'pl-2 mt-2';
         elementDesc.textContent = parsed_response.description;
 
         todoCol.appendChild(elementCol);
@@ -206,4 +287,5 @@ function reconstructTodoDom(response) {
     initTodoElementComportement();
     updateTodoAction();
     deleteTodoAction();
+    stateTodoAction();
 }

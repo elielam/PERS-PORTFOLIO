@@ -6,3 +6,9 @@ easy_admin:
             class: App\Entity\User
         Todo:
             class: App\Entity\Todo
+        Account:
+            class: App\Entity\Account
+        OperationPlus:
+            class: App\Entity\OperationPlus
+        OperationMinus:
+            class: App\Entity\OperationMinus

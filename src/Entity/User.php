@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="APP_USERS")
@@ -16,7 +19,7 @@ class User implements UserInterface, \Serializable
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer", unique=true, nullable=false)
      */
-    private $uid;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=20, unique=false, nullable=false)
@@ -29,7 +32,8 @@ class User implements UserInterface, \Serializable
     private $lastname;
 
     /**
-     * @ORM\Column(type="date", unique=false, nullable=false)
+     * @Assert\DateTime()
+     * @ORM\Column(type="datetime", unique=false, nullable=false)
      */
     private $birthdate;
 
@@ -59,19 +63,37 @@ class User implements UserInterface, \Serializable
     private $username;
 
     /**
-     * @return mixed
+     * @ORM\OneToMany(targetEntity="Account", indexBy="user", mappedBy="user", fetch="EAGER")
+     * @ORM\JoinColumn(name="account", referencedColumnName="user")
      */
-    public function getUid()
+    private $accounts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Todo", indexBy="user", mappedBy="user", fetch="EAGER")
+     * @ORM\JoinColumn(name="todos", referencedColumnName="user")
+     */
+    private $todos;
+
+    public function __construct()
     {
-        return $this->uid;
+        $this->accounts = new ArrayCollection();
+        $this->todos = new ArrayCollection();
     }
 
     /**
-     * @param mixed $uid
+     * @return mixed
      */
-    public function setUid($uid): void
+    public function getId()
     {
-        $this->uid = $uid;
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 
     /**
@@ -202,12 +224,43 @@ class User implements UserInterface, \Serializable
         $this->username = $username;
     }
 
+    /**
+     * @return Collection|Account[]
+     */
+    public function getAccounts()
+    {
+        return $this->accounts;
+    }
+
+    /**
+     * @param mixed $accounts
+     */
+    public function setAccounts($accounts): void
+    {
+        $this->accounts = $accounts;
+    }
+
+    /**
+     * @return Collection|Todo[]
+     */
+    public function getTodos()
+    {
+        return $this->todos;
+    }
+
+    /**
+     * @param mixed $todos
+     */
+    public function setTodos($todos): void
+    {
+        $this->todos = $todos;
+    }
 
     /** @see \Serializable::serialize() */
     public function serialize()
     {
         return serialize(array(
-            $this->uid,
+            $this->id,
             $this->name,
             $this->lastname,
             $this->email,
@@ -221,7 +274,7 @@ class User implements UserInterface, \Serializable
     public function unserialize($serialized)
     {
         list (
-            $this->uid,
+            $this->id,
             $this->name,
             $this->lastname,
             $this->email,

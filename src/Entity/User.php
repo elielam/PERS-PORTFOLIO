@@ -63,13 +63,13 @@ class User implements UserInterface, \Serializable
     private $username;
 
     /**
-     * @ORM\OneToMany(targetEntity="Account", indexBy="user", mappedBy="user", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Account", indexBy="user", mappedBy="user", orphanRemoval=true, cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinColumn(name="account", referencedColumnName="user")
      */
     private $accounts;
 
     /**
-     * @ORM\OneToMany(targetEntity="Todo", indexBy="user", mappedBy="user", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Todo", indexBy="user", mappedBy="user", orphanRemoval=true, cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinColumn(name="todos", referencedColumnName="user")
      */
     private $todos;
@@ -79,6 +79,41 @@ class User implements UserInterface, \Serializable
         $this->accounts = new ArrayCollection();
         $this->todos = new ArrayCollection();
     }
+
+    public function addTodo(Todo $todo)
+    {
+        if ($this->todos->contains($todo)) {
+            return;
+        }
+
+        $this->todos[] = $todo;
+        $todo->setUser($this);
+    }
+
+    public function removeTodo(Todo $todo)
+    {
+        $this->todos->removeElement($todo);
+        // set the owning side to null
+        $todo->setUser(null);
+    }
+
+    public function addAccount(Account $account)
+    {
+        if ($this->accounts->contains($account)) {
+            return;
+        }
+
+        $this->accounts[] = $account;
+        $account->setUser($this);
+    }
+
+    public function removeAccount(Account $account)
+    {
+        $this->accounts->removeElement($account);
+        // set the owning side to null
+        $account->setUser(null);
+    }
+
 
     /**
      * @return mixed
@@ -256,7 +291,9 @@ class User implements UserInterface, \Serializable
         $this->todos = $todos;
     }
 
-    /** @see \Serializable::serialize() */
+    /**
+     * @see \Serializable::serialize()
+     */
     public function serialize()
     {
         return serialize(array(
@@ -270,7 +307,9 @@ class User implements UserInterface, \Serializable
         ));
     }
 
-    /** @see \Serializable::unserialize() */
+    /**
+     * @see \Serializable::unserialize()
+     */
     public function unserialize($serialized)
     {
         list (

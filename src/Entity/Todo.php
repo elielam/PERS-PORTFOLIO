@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="APP_TODOS")
  * @ORM\Entity(repositoryClass="App\Repository\TodoRepository")
  */
-class Todo
+class Todo implements \Serializable
 {
     /**
      * @ORM\Id
@@ -132,8 +132,32 @@ class Todo
     /**
      * @param mixed $user
      */
-    public function setUser($user): void
+    public function setUser($user = null): void
     {
         $this->user = $user;
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            "id" => $this->id,
+            "libelle" => $this->libelle,
+            "description" => $this->description,
+            "datetime" => $this->datetime,
+            "state" => $this->state
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->libelle,
+            $this->description,
+            $this->datetime,
+            $this->state
+            ) = unserialize($serialized);
     }
 }

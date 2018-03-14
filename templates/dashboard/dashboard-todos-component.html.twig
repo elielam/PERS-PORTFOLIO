@@ -4,17 +4,19 @@
         <div id="todoComponent-header" class="col-12 bg-dark">
         </div>
 
+        {% set count = 4 %}
+
         <div id="todoComponent-elements" class="col-12 m-0 p-0 h-100 w-100" style="min-height: 5vh; height: auto; max-height: auto;">
-            {% for key, todo in todos.entities %}
+            {% for key, todo in todos %}
 
             {% if todo.state == 3 %}
-                {% if key == todos.count %}
+                {% if key == count %}
                     <div id="{{ key }}" class="col-12 todoComponent-element border-0 border-bottom-0 bg-success">
                 {% else %}
                     <div id="{{ key }}" class="col-12 todoComponent-element bg-success">
                 {% endif %}
             {% else %}
-                {% if key == todos.count %}
+                {% if key == count %}
                     <div id="{{ key }}" class="col-12 todoComponent-element border-0 border-bottom-0 bg-secondary">
                 {% else %}
                     <div id="{{ key }}" class="col-12 todoComponent-element bg-secondary">

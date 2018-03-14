@@ -25,7 +25,9 @@ $(`#todoComponent-input-submit-btn`).off('click').click(function(){
         dataType: "json",
         cache: false
     }).done( function(response) {
-        reconstructTodoDom(response);
+        // reconstructTodoDom(response);
+        // let res = JSON.parse(response);
+        console.log(response);
     }).fail(function(jxh,textmsg,errorThrown){
         console.log(textmsg);
         console.log(errorThrown);

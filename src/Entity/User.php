@@ -71,6 +71,7 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\OneToMany(targetEntity="Todo", indexBy="user", mappedBy="user", orphanRemoval=true, cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinColumn(name="todos", referencedColumnName="user")
+     * @ORM\OrderBy({"state" = "desc"})
      */
     private $todos;
 
@@ -78,6 +79,7 @@ class User implements UserInterface, \Serializable
     {
         $this->accounts = new ArrayCollection();
         $this->todos = new ArrayCollection();
+        dump($this->todos);die;
     }
 
     public function addTodo(Todo $todo)
@@ -88,6 +90,19 @@ class User implements UserInterface, \Serializable
 
         $this->todos[] = $todo;
         $todo->setUser($this);
+    }
+
+    public function getTodo($id)
+    {
+        if($this->getTodos()) {
+            foreach ($this->getTodos() as $todo) {
+                if($todo->getId() === $id){
+                    return $todo;
+                }
+            }
+        } else {
+            return;
+        }
     }
 
     public function removeTodo(Todo $todo)

@@ -140,13 +140,13 @@ class Todo implements \Serializable
     /** @see \Serializable::serialize() */
     public function serialize()
     {
-        return serialize(array(
-            "id" => $this->id,
-            "libelle" => $this->libelle,
-            "description" => $this->description,
-            "datetime" => $this->datetime,
-            "state" => $this->state
-        ));
+        return array(
+            $this->id,
+            $this->libelle,
+            $this->description,
+            $this->datetime->format('Y-m-d H:i:s'),
+            $this->state
+        );
     }
 
     /** @see \Serializable::unserialize() */

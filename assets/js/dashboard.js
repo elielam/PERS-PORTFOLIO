@@ -25,9 +25,7 @@ $(`#todoComponent-input-submit-btn`).off('click').click(function(){
         dataType: "json",
         cache: false
     }).done( function(response) {
-        // reconstructTodoDom(response);
-        // let res = JSON.parse(response);
-        console.log(response);
+        reconstructTodoDom(response);
     }).fail(function(jxh,textmsg,errorThrown){
         console.log(textmsg);
         console.log(errorThrown);
@@ -149,19 +147,41 @@ stateTodoAction();
 
 function reconstructTodoDom(response) {
     let todoCol = document.getElementById('todoComponent-elements');
+    let count = response.todos.length-1;
     $(`.todoComponent-element`).remove();
-    for ( let i = 0; i < response['todos']['count']; i++ ) {
-        let parsed_response = JSON.parse(response['todos']['entities'][i]);
+    for ( let i = 0; i <= count; i++ ) {
+
+        let unformattedTodo = response.todos[i];
+        let todo = response.todos[i].split(",");
+
+        let tempId = todo[0].replace('"', '');
+        let id = tempId.replace('"', '').replace('[', '');
+        let tempLibelle = todo[1].replace('"', '');
+        let libelle = tempLibelle.replace('"', '');
+        let tempDescription = todo[2].replace('"', '');
+        let description = tempDescription.replace('"', '');
+        let tempDatetime = todo[3].replace('"', '');
+        let datetime = tempDatetime.replace('"', '');
+        let tempState = todo[4].replace('"', '').replace(']', '');
+        let unformattedState = tempState.replace('"', '');
+        let state = parseInt(tempState);
+
         let elementCol = document.createElement('div');
         elementCol.id = i;
-        if ( parsed_response.state === 3 ) {
-            if ( i === response['todos']['count']-1 ) {
+        if ( state === 3 ) {
+            if (i === count) {
                 elementCol.className = 'col-12 todoComponent-element border-0 border-bottom-0 bg-success';
             } else {
                 elementCol.className = 'col-12 todoComponent-element bg-success';
             }
+        } else if ( state === 2 ) {
+            if ( i === count ) {
+                elementCol.className = 'col-12 todoComponent-element border-0 border-bottom-0 bg-danger';
+            } else {
+                elementCol.className = 'col-12 todoComponent-element bg-danger';
+            }
         } else {
-            if ( i === response['todos']['count']-1 ) {
+            if ( i === count ) {
                 elementCol.className = 'col-12 todoComponent-element border-0 border-bottom-0 bg-secondary';
             } else {
                 elementCol.className = 'col-12 todoComponent-element bg-secondary';
@@ -175,11 +195,11 @@ function reconstructTodoDom(response) {
         let elementIconSpan = document.createElement('span');
         let elementIcon = document.createElement('i');
 
-        if ( parsed_response.state === 1 ) {
+        if ( state === 1 ) {
             elementIcon.className = 'fas fa-angle-right fa-2x';
-        } else if ( parsed_response.state === 2 ) {
+        } else if ( state === 2 ) {
             elementIcon.className = 'fas fa-angle-double-right fa-2x';
-        } else if ( parsed_response.state === 3 ) {
+        } else if ( state === 3 ) {
             elementIcon.className = 'fas fa-check fa-2x';
         } else {
             elementIcon.className = 'fas fa-angle-right fa-2x';
@@ -190,56 +210,56 @@ function reconstructTodoDom(response) {
         elementLibelleCol.className = 'col-10 todoComponent-element-libelle todoComponent-element-libelle-'+i;
         let elementLibelleP = document.createElement('p');
         elementLibelleP.className = 'p-0 m-0';
-        elementLibelleP.textContent = parsed_response.libelle;
+        elementLibelleP.textContent = libelle;
 
         let elementToolboxCol = document.createElement('div');
         elementToolboxCol.className = 'col-10 todoComponent-element-toolsbox todoComponent-element-toolsbox-'+i+' bg-dark';
         let elementToolboxRow = document.createElement('div');
         elementToolboxRow.className = 'row';
 
-        if (parsed_response.state === 2 || parsed_response.state === 3) {
+        if (state === 2 || state === 3) {
             var elementToolboxTool1 = document.createElement('div');
             elementToolboxTool1.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-plan toolsbox-'+i+'-tool1';
-            elementToolboxTool1.id = parsed_response.id;
+            elementToolboxTool1.id = id;
             var elementTool1IconSpan = document.createElement('span');
             var elementTool1Icon = document.createElement('i');
             elementTool1Icon.className = 'fas fa-angle-right fa-2x';
         } else {
             var elementToolboxTool1 = document.createElement('div');
             elementToolboxTool1.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-report toolsbox-'+i+'-tool1';
-            elementToolboxTool1.id = parsed_response.id;
+            elementToolboxTool1.id = id;
             var elementTool1IconSpan = document.createElement('span');
             var elementTool1Icon = document.createElement('i');
             elementTool1Icon.className = 'fas fa-angle-double-right fa-2x';
         }
 
-        if (parsed_response.state === 3) {
+        if (state === 3) {
             var elementToolboxTool2 = document.createElement('div');
             elementToolboxTool2.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-report toolsbox-' + i + '-tool2';
-            elementToolboxTool2.id = parsed_response.id;
+            elementToolboxTool2.id = id;
             var elementTool2IconSpan = document.createElement('span');
             var elementTool2Icon = document.createElement('i');
             elementTool2Icon.className = 'fas fa-angle-double-right fa-2x';
         } else {
             var elementToolboxTool2 = document.createElement('div');
             elementToolboxTool2.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-update toolsbox-' + i + '-tool2';
-            elementToolboxTool2.id = parsed_response.id;
+            elementToolboxTool2.id = id;
             var elementTool2IconSpan = document.createElement('span');
             var elementTool2Icon = document.createElement('i');
             elementTool2Icon.className = 'far fa-edit fa-2x';
         }
 
-        if (parsed_response.state === 3) {
+        if (state === 3) {
             var elementToolboxTool3 = document.createElement('div');
             elementToolboxTool3.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-update toolsbox-' + i + '-tool3';
-            elementToolboxTool3.id = parsed_response.id;
+            elementToolboxTool3.id = id;
             var elementTool3IconSpan = document.createElement('span');
             var elementTool3Icon = document.createElement('i');
             elementTool3Icon.className = 'far fa-edit fa-2x';
         } else {
             var elementToolboxTool3 = document.createElement('div');
             elementToolboxTool3.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-check toolsbox-' + i + '-tool3';
-            elementToolboxTool3.id = parsed_response.id;
+            elementToolboxTool3.id = id;
             var elementTool3IconSpan = document.createElement('span');
             var elementTool3Icon = document.createElement('i');
             elementTool3Icon.className = 'fas fa-check fa-2x';
@@ -247,7 +267,7 @@ function reconstructTodoDom(response) {
 
         let elementToolboxTool4 = document.createElement('div');
         elementToolboxTool4.className = 'col-3 text-center bg-dark text-white todoComponent-element-toolsbox-tool todoComponent-element-toolsbox-tool-delete last toolsbox-'+i+'-tool4';
-        elementToolboxTool4.id = parsed_response.id;
+        elementToolboxTool4.id = id;
         let elementTool4IconSpan = document.createElement('span');
         let elementTool4Icon = document.createElement('i');
         elementTool4Icon.className = 'fas fa-times fa-2x';
@@ -256,7 +276,7 @@ function reconstructTodoDom(response) {
         elementDescCol.className = 'col-12 todoComponent-element-desc todoComponent-element-desc-'+i;
         let elementDesc = document.createElement('p');
         elementDesc.className = 'pl-2 mt-2';
-        elementDesc.textContent = parsed_response.description;
+        elementDesc.textContent = description;
 
         todoCol.appendChild(elementCol);
         elementCol.appendChild(elementRow);

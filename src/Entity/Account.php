@@ -208,14 +208,14 @@ class Account implements \Serializable
     /** @see \Serializable::serialize() */
     public function serialize()
     {
-        return serialize(array(
-            "id" => $this->id,
-            "libelle" => $this->libelle,
-            "type" => $this->type,
-            "balance" => $this->balance,
-            "interestedDraft" => $this->interestDraft,
-            "overdraft" => $this->overdraft
-        ));
+        return array(
+            $this->id,
+            $this->libelle,
+            $this->type,
+            $this->balance,
+            $this->interestDraft,
+            $this->overdraft
+        );
     }
 
     /** @see \Serializable::unserialize() */

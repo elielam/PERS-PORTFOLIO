@@ -27,10 +27,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-    //  $this->addFlash('success',
-    //    'Suppression a été effectuée avec succès!'
-    //  );
-
         return $this->render('dashboard/dashboard.html.twig');
     }
 
@@ -45,6 +41,9 @@ class DashboardController extends Controller
     public function addTodoAction(Request $request) {
 
         $entityManager = $this->getDoctrine()->getManager();
+
+        $datas = [];
+        $datas['todos'] = [];
 
         $tmpTitle = $request->get('newTitle');
         $tmpDescription = $request->get('newDescription');
@@ -62,144 +61,104 @@ class DashboardController extends Controller
         $entityManager->persist($this->getUser());
         $entityManager->flush();
 
-        $datas = [];
-        $datas['todos'] = [];
         $todos = $this->getUser()->getTodos();
         foreach ($todos as $todo) {
-            $datas['todos'][] = $todo->serialize();
+            $datas['todos'][] = json_encode($todo->serialize());
         }
 
         return new JsonResponse($datas);
     }
 
-//    /**
-//     * @Route("/dashboard/delete/todos", name="ajax_delete_todos")
-//     * @Method("POST")
-//     * @param Request $request
-//     * @return JsonResponse
-//     */
-//    public function deleteTodoAction (Request $request) {
-//
-//        $entityManager = $this->getDoctrine()->getManager();
-//        $todoRepository = $entityManager->getRepository(Todo::class);
-//        $encoders = array(new JsonEncoder());
-//        $normalizers = array(new ObjectNormalizer());
-//        $serializer = new Serializer($normalizers, $encoders);
-//
-//        $tmpId = $request->get('todoId');
-//
-//        $todo = $todoRepository->findOneBy(['id' => $tmpId]);
-//        $entityManager->remove($todo);
-//        $entityManager->flush();
-//
-//        $datas = [];
-//        $datas['todos'] = [];
-//        $datas['todos']['tmpentities'] = $todoRepository->findBy(
-//            array('user' => $this->getUser()),
-//            array('state' => 'DESC'));
-//
-//        if($datas['todos']['tmpentities']) {
-//            foreach ($datas['todos']['tmpentities'] as $entity) {
-//                $datas['todos']['entities'][] = $serializer->serialize($entity, 'json');
-//            }
-//            $datas['todos']['count'] = count($datas['todos']['entities']);
-//        } else {
-//            $datas['todos']['count'] = 0;
-//        }
-//
-//        unset($datas['todos']['tmpentities']);
-//
-//        return new JsonResponse($datas);
-//    }
-//
-//    /**
-//     * @Route("/dashboard/update/todos", name="ajax_update_todos")
-//     * @Method("POST")
-//     * @param Request $request
-//     * @return JsonResponse
-//     */
-//    public function updateTodoAction (Request $request) {
-//
-//        $entityManager = $this->getDoctrine()->getManager();
-//        $todoRepository = $entityManager->getRepository(Todo::class);
-//        $encoders = array(new JsonEncoder());
-//        $normalizers = array(new ObjectNormalizer());
-//        $serializer = new Serializer($normalizers, $encoders);
-//
-//        $tmpId = $request->get('todoId');
-//        $tmpLibelle = $request->get('libelle');
-//        $tmpDescription = $request->get('description');
-//
-//        $todo = $todoRepository->find($tmpId);
-//        $todo->setLibelle($tmpLibelle);
-//        $todo->setDescription($tmpDescription);
-//        $entityManager->flush();
-//
-//        $datas = [];
-//        $datas['todos'] = [];
-//        $datas['todos']['tmpentities'] = $todoRepository->findBy(
-//            array('user' => $this->getUser()),
-//            array('state' => 'DESC'));
-//
-//        if($datas['todos']['tmpentities']) {
-//            foreach ($datas['todos']['tmpentities'] as $entity) {
-//                $datas['todos']['entities'][] = $serializer->serialize($entity, 'json');
-//            }
-//            $datas['todos']['count'] = count($datas['todos']['entities']);
-//        } else {
-//            $datas['todos']['count'] = 0;
-//        }
-//
-//        unset($datas['todos']['tmpentities']);
-//
-//        return new JsonResponse($datas);
-//    }
-//
-//    /**
-//     * @Route("/dashboard/state/todos", name="ajax_state_todos")
-//     * @Method("POST")
-//     * @param Request $request
-//     * @return JsonResponse
-//     */
-//    public function stateTodoAction (Request $request) {
-//
-//        $entityManager = $this->getDoctrine()->getManager();
-//        $todoRepository = $entityManager->getRepository(Todo::class);
-//        $encoders = array(new JsonEncoder());
-//        $normalizer = new ObjectNormalizer();
-//        $normalizer->setCircularReferenceLimit(5);
-//        $normalizer->setCircularReferenceHandler(function ($object) {
-//            return $object->getId();
-//        });
-//        $normalizers = array($normalizer);
-//        $serializer = new Serializer($normalizers, $encoders);
-//
-//        $tmpId = $request->get('todoId');
-//        $tmpState = $request->get('todoState');
-//
-//        $todo = $todoRepository->find($tmpId);
-//        $todo->setState($tmpState);
-//        $entityManager->flush();
-//
-//        $datas = [];
-//        $datas['todos'] = [];
-//        $datas['todos']['tmpentities'] = $todoRepository->findBy(
-//            array('user' => $this->getUser()),
-//            array('state' => 'DESC'));
-//
-//        if($datas['todos']['tmpentities']) {
-//            foreach ($datas['todos']['tmpentities'] as $entity) {
-//                $datas['todos']['entities'][] = $serializer->serialize($entity, 'json');
-//            }
-//            $datas['todos']['count'] = count($datas['todos']['entities']);
-//        } else {
-//            $datas['todos']['count'] = 0;
-//        }
-//
-//        unset($datas['todos']['tmpentities']);
-//
-//        return new JsonResponse($datas);
-//    }
+    /**
+     * @Route("/dashboard/delete/todos", name="ajax_delete_todos")
+     * @Method("POST")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function deleteTodoAction (Request $request) {
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $tmpId = $request->get('todoId');
+        $id = intval($tmpId);
+
+        $datas = [];
+        $datas['todos'] = [];
+
+        $todo = $this->getUser()->getTodo($id);
+        $this->getUser()->removeTodo($todo);
+        $entityManager->persist($this->getUser());
+        $entityManager->flush();
+
+        $todos = $this->getUser()->getTodos();
+        foreach ($todos as $todo) {
+            $datas['todos'][] = json_encode($todo->serialize());
+        }
+
+        return new JsonResponse($datas);
+    }
+
+    /**
+     * @Route("/dashboard/update/todos", name="ajax_update_todos")
+     * @Method("POST")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateTodoAction (Request $request) {
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $tmpId = $request->get('todoId');
+        $id = intval($tmpId);
+        $libelle = $request->get('libelle');
+        $description = $request->get('description');
+
+        $datas = [];
+        $datas['todos'] = [];
+
+        $todo = $this->getUser()->getTodo($id);
+        $todo->setLibelle($libelle);
+        $todo->setDescription($description);
+        $entityManager->persist($this->getUser());
+        $entityManager->flush();
+
+        $todos = $this->getUser()->getTodos();
+        foreach ($todos as $todo) {
+            $datas['todos'][] = json_encode($todo->serialize());
+        }
+
+        return new JsonResponse($datas);
+    }
+
+    /**
+     * @Route("/dashboard/state/todos", name="ajax_state_todos")
+     * @Method("POST")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function stateTodoAction (Request $request) {
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $tmpId = $request->get('todoId');
+        $id = intval($tmpId);
+        $state = $request->get('todoState');
+
+        $datas = [];
+        $datas['todos'] = [];
+
+        $todo = $this->getUser()->getTodo($id);
+        $todo->setState($state);
+        $entityManager->persist($this->getUser());
+        $entityManager->flush();
+
+        $todos = $this->getUser()->getTodos();
+        foreach ($todos as $todo) {
+            $datas['todos'][] = json_encode($todo->serialize());
+        }
+
+        return new JsonResponse($datas);
+    }
 
     /* Navbar */
 
@@ -227,7 +186,7 @@ class DashboardController extends Controller
         }
 
         return $this->render('dashboard/dashboard-todos-component.html.twig', array(
-            'todos' => $datas['todos']
+            'datas' => $datas
         ));
     }
 
@@ -243,7 +202,7 @@ class DashboardController extends Controller
         }
 
         return $this->render('dashboard/dashboard-financial-component.html.twig', array(
-            'accounts' => $datas['accounts']
+            'datas' => $datas
         ));
     }
 

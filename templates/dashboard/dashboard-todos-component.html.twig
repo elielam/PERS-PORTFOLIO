@@ -7,13 +7,19 @@
         {% set count = 4 %}
 
         <div id="todoComponent-elements" class="col-12 m-0 p-0 h-100 w-100" style="min-height: 5vh; height: auto; max-height: auto;">
-            {% for key, todo in todos %}
+            {% for key, todo in datas.todos %}
 
             {% if todo.state == 3 %}
                 {% if key == count %}
                     <div id="{{ key }}" class="col-12 todoComponent-element border-0 border-bottom-0 bg-success">
                 {% else %}
                     <div id="{{ key }}" class="col-12 todoComponent-element bg-success">
+                {% endif %}
+            {% elseif todo.state == 2 %}
+                {% if key == count %}
+                    <div id="{{ key }}" class="col-12 todoComponent-element border-0 border-bottom-0 bg-danger">
+                {% else %}
+                    <div id="{{ key }}" class="col-12 todoComponent-element bg-danger">
                 {% endif %}
             {% else %}
                 {% if key == count %}

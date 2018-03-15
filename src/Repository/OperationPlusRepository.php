@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Account;
 use App\Entity\OperationPlus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -19,16 +20,18 @@ class OperationPlusRepository extends ServiceEntityRepository
         parent::__construct($registry, OperationPlus::class);
     }
 
-    /*
-    public function findBySomething($value)
+    public function findSumOperationPlus(Account $account)
     {
-        return $this->createQueryBuilder('o')
-            ->where('o.something = :value')->setParameter('value', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->where('a.account = :account')->setParameter('account', $account)
+            ->orderBy('a.id', 'ASC')
+            ->getQuery();
+
+        $totalOpPlus = 0;
+        foreach ($queryBuilder->getResult() as $opPlus) {
+            $totalOpPlus += $opPlus->getSum();
+        }
+
+        return $totalOpPlus;
     }
-    */
 }

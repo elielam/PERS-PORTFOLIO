@@ -206,4 +206,55 @@ class DashboardController extends Controller
         ));
     }
 
+    public function financialComponentSumPerDayAction($id)
+    {
+        $datas = [];
+        $datas['accounts'] = [];
+        $account = $this->getUser()->getAccount($id);
+
+        $balance = $account->getBalance();
+
+        $actualMonth = intval(date('m'));
+        $actualYear = intval(date('Y'));
+        $totalMonthDay = cal_days_in_month(CAL_GREGORIAN, $actualMonth, $actualYear);
+        $actualMonthDay = intval(date('j'));
+
+        $restDay = $totalMonthDay - $actualMonthDay;
+        $sumPerDay = number_format($balance/$restDay, 2);
+
+        return $this->render('dashboard/dashboard-financial-component-sumPerDay.html.twig', array(
+            'sum' => $sumPerDay
+        ));
+    }
+
+    public function financialComponentLeftPercentAction($id)
+    {
+        $datas = [];
+        $datas['accounts'] = [];
+        $account = $this->getUser()->getAccount($id);
+
+        $balance = $account->getBalance();
+        $spendSum = $this->getDoctrine()->getRepository(OperationMinus::class)->findSumOperationMinus($account);
+
+        $leftSum = $balance-$spendSum;
+
+        return $this->render('dashboard/dashboard-financial-component-leftPercent.html.twig', array(
+            'percent' => 0
+        ));
+    }
+
+    public function financialComponentSpendPercentAction($id)
+    {
+        $datas = [];
+        $datas['accounts'] = [];
+        $account = $this->getUser()->getAccount($id);
+
+        $balance = $account->getBalance();
+        $spendSum = $this->getDoctrine()->getRepository(OperationMinus::class)->findSumOperationMinus($account);
+
+        return $this->render('dashboard/dashboard-financial-component-spendPercent.html.twig', array(
+            'percent' => 0
+        ));
+    }
+
 }

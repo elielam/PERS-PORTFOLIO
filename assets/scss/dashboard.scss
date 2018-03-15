@@ -182,7 +182,8 @@
         -webkit-appearance:none;
       }
       #todoComponent-input-submit-btn {
-        height: 5vh;
+        min-height: 5vh;
+        height: auto;
         border-radius: 0;
         border-bottom-left-radius: 10px !important;
         border-bottom-right-radius: 10px !important;

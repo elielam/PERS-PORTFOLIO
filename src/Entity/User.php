@@ -79,7 +79,6 @@ class User implements UserInterface, \Serializable
     {
         $this->accounts = new ArrayCollection();
         $this->todos = new ArrayCollection();
-        dump($this->todos);die;
     }
 
     public function addTodo(Todo $todo)
@@ -120,6 +119,19 @@ class User implements UserInterface, \Serializable
 
         $this->accounts[] = $account;
         $account->setUser($this);
+    }
+
+    public function getAccount($id)
+    {
+        if($this->getAccounts()) {
+            foreach ($this->getAccounts() as $account) {
+                if($account->getId() === $id){
+                    return $account;
+                }
+            }
+        } else {
+            return;
+        }
     }
 
     public function removeAccount(Account $account)

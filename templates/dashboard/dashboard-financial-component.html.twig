@@ -7,13 +7,60 @@
         <div id="financialComponent-elements" class="col-12">
             {% for key, account in datas.accounts %}
                 <div class="row financialComponent-account">
-                    <div class="col-12 border border-dark border-left-0 border-right-0 financialComponent-account-header" style="height: 3.5vh">
+                    <div class="col-12 financialComponent-account-header" style="height: 3.5vh; border-bottom: 1px solid black;">
+                        <div class="row h-100">
+                            <div class="col-5 p-0 financialComponent-account-header-colL" style="display: flex; align-items: center; justify-content: left">
+                                <p class="m-0 p-0 font-weight-bold">1234-56XX-XXXX-XXXX-XXXX</p>
+                            </div>
+                            <div class="col-3 p-0 financialComponent-account-header-colC">
 
+                            </div>
+                            <div class="col-4 p-0 financialComponent-account-header-colR" style="display: flex; align-items: center; justify-content: right">
+                                <p class="m-0 p-0 font-weight-bold">{{ account.libelle }}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-12 bg-success financialComponent-element-account-plus" style="height: 5vh;">
+                    <div class="col-12 financialComponent-element-account-numbers" style="padding-top: 2vh; height: 10vh; border-bottom: 1px solid black;">
+                        <div class="row m-0 financialComponent-element-account-numbers-row">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    {{ render(controller('App\\Controller\\DashboardController::financialComponentLeftPercentAction', {'id': account.id})) }}
+                                    <div class="col-1"></div>
+                                    {{ render(controller('App\\Controller\\DashboardController::financialComponentSpendPercentAction', {'id': account.id})) }}
+                                    <div class="col-1"></div>
+                                    <div class="col-2 border border-dark" style="height: 6vh; display: flex; align-items: center; justify-content: center">
+                                        <p class="m-0 font font-weight-bold">{{ account.balance }}€</p>
+                                    </div>
+                                    <div class="col-1"></div>
+                                    {{ render(controller('App\\Controller\\DashboardController::financialComponentSumPerDayAction', {'id': account.id})) }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-10 offset-2 bg-danger financialComponent-element-account-minus" style="height: 5vh;">
+                    <div class="col-12 financialComponent-element-account-lastoperations" style="height: 10vh; border-bottom: 1px solid black;">
+                        <div class="row financialComponent-element-account-lastoperations-row justify-content-center h-100" style="overflow-y: scroll">
+                            <div class="col-12 bg-light" style="height: 4vh">
 
+                            </div>
+                            <div class="col-12" style="height: 4vh">
+
+                            </div>
+                            <div class="col-12 bg-light" style="height: 4vh">
+
+                            </div>
+                            <div class="col-12" style="height: 4vh">
+
+                            </div>
+                            <div class="col-12 bg-light" style="height: 4vh">
+
+                            </div>
+                            <div class="col-12" style="height: 4vh">
+
+                            </div>
+                            <div class="col-12 bg-light" style="height: 4vh">
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             {% endfor %}

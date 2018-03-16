@@ -34,5 +34,11 @@ class TestController extends Controller
 //
 //
 //        dump($time, $date, $date1);die;
+
+        $user = $this->getUser();
+        $account = $user->getAccount(5);
+        dump($account);
+        $account->initBalance();
+        dump($account);die;
     }
 }

@@ -27,43 +27,44 @@ class AccountFixtures extends Fixture implements DependentFixtureInterface
             $account->setLibelle('Account N°'.$j);
             $account->setType(1); // 1 : Visa | 2 : Mastercard | 0 : Autres
             $account->setBalance($balance);
+            $account->setAtFirstBalance($balance);
             $account->setInterestDraft($interestedDraft);
             $account->setOverdraft($overdraft);
             if ($j == 1 || $j == 2) {
-                $account->setUser($this->getReference(UserFixtures::ELIE_USER_REF));
+                $account->setUser($this->getReference(UserFixtures::ADMIN_USER_REF));
             } elseif ($j == 3 || $j == 4) {
                 $account->setUser($this->getReference(UserFixtures::TEST_USER_REF));
             } else {
-                $account->setUser($this->getReference(UserFixtures::ADMIN_USER_REF));
+                $account->setUser($this->getReference(UserFixtures::ELIE_USER_REF));
             }
 
 
             for ($i = 1; $i < 11; $i++) {
-                $plusSum = rand(0, 1000);
+                $plusSum = rand(0, 100);
 
                 $operationPlus = new OperationPlus();
                 $operationPlus->setLibelle('Account N°'.$j.' Operation N°'.$i);
                 $operationPlus->setDatetime(DateTime::createFromFormat('d-m-Y H:i:s', $date.' '.$time));
                 $operationPlus->setSum($plusSum);
+                $operationPlus->setIsCredit(false);
                 $operationPlus->setAccount($account);
                 $manager->persist($operationPlus);
             }
 
             for ($i = 1; $i < 11; $i++) {
-                $minusSum = rand(0, 1000);
+                $minusSum = rand(0, 100);
 
                 $operationMinus = new OperationMinus();
                 $operationMinus->setLibelle('Account N°'.$j.' Operation N°'.$i);
                 $operationMinus->setDatetime(DateTime::createFromFormat('d-m-Y H:i:s', $date.' '.$time));
                 $operationMinus->setSum($minusSum);
+                $operationMinus->setIsDebit(false);
                 $operationMinus->setAccount($account);
                 $manager->persist($operationMinus);
             }
 
             $manager->persist($account);
         }
-
-
 
         $manager->flush();
     }

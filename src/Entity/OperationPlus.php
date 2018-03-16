@@ -41,6 +41,11 @@ class OperationPlus implements \Serializable
     private $account;
 
     /**
+     * @ORM\Column(type="boolean", unique=false, nullable=false)
+     */
+    private $isCredit;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -118,6 +123,22 @@ class OperationPlus implements \Serializable
     public function setAccount($account): void
     {
         $this->account = $account;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsCredit()
+    {
+        return $this->isCredit;
+    }
+
+    /**
+     * @param mixed $isCredit
+     */
+    public function setIsCredit($isCredit): void
+    {
+        $this->isCredit = $isCredit;
     }
 
     public function serialize()

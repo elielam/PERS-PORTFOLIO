@@ -31,6 +31,10 @@ class Account implements \Serializable
     /**
      * @ORM\Column(type="integer", length=100, unique=false, nullable=false)
      */
+    private $atFirstBalance;
+    /**
+     * @ORM\Column(type="integer", length=100, unique=false, nullable=false)
+     */
     private $interestDraft;
     /**
      * @ORM\Column(type="integer", length=100, unique=false, nullable=false)
@@ -38,13 +42,13 @@ class Account implements \Serializable
     private $overdraft;
 
     /**
-     * @ORM\OneToMany(targetEntity="OperationPlus", indexBy="aid", mappedBy="account", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="OperationPlus", indexBy="aid", mappedBy="account", orphanRemoval=true, cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinColumn(name="operationsPlus", referencedColumnName="id")
      */
     private $operationsPlus;
 
     /**
-     * @ORM\OneToMany(targetEntity="OperationMinus", indexBy="account", mappedBy="account", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="OperationMinus", indexBy="account", mappedBy="account", orphanRemoval=true, cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinColumn(name="operationsMinus", referencedColumnName="id")
      */
     private $operationsMinus;
@@ -59,6 +63,93 @@ class Account implements \Serializable
     {
         $this->operationsPlus = new ArrayCollection();
         $this->operationsMinus = new ArrayCollection();
+    }
+
+    public function addOperationPlus(OperationPlus $operationPlus)
+    {
+        if ($this->operationsPlus->contains($operationPlus)) {
+            return;
+        }
+
+        $this->operationsPlus[] = $operationPlus;
+        $operationPlus->setAccount($this);
+    }
+
+    public function getOperationPlus($id)
+    {
+        if($this->getOperationsPlus()) {
+            foreach ($this->getOperationsPlus() as $operationPlus) {
+                if($operationPlus->getId() === $id){
+                    return $operationPlus;
+                }
+            }
+        } else {
+            return;
+        }
+    }
+
+    public function removeOperationPlus(OperationPlus $operationPlus)
+    {
+        $this->operationsPlus->removeElement($operationPlus);
+        // set the owning side to null
+        $operationPlus->setAccount(null);
+    }
+
+    public function addOperationMinus(OperationMinus $operationMinus)
+    {
+        if ($this->operationsMinus->contains($operationMinus)) {
+            return;
+        }
+
+        $this->operationsMinus[] = $operationMinus;
+        $operationMinus->setAccount($this);
+    }
+
+    public function getOperationMinus($id)
+    {
+        if($this->getOperationsMinus()) {
+            foreach ($this->getOperationsMinus() as $operationMinus) {
+                if($operationMinus->getId() === $id){
+                    return $operationMinus;
+                }
+            }
+        } else {
+            return;
+        }
+    }
+
+    public function removeOperationMinus(OperationMinus $operationMinus)
+    {
+        $this->operationsMinus->removeElement($operationMinus);
+        // set the owning side to null
+        $operationMinus->setAccount(null);
+    }
+
+//    public function withdraw(OperationMinus $operationMinus)
+//    {
+//        $this->balance = $this->balance - $operationMinus->getSum();
+//    }
+//
+//    public function deposit(OperationPlus $operationPlus)
+//    {
+//        $this->balance = $this->balance + $operationPlus->getSum();
+//    }
+
+    public function initBalance() {
+        $tmpBalance = $this->getBalance();
+        foreach ($this->operationsMinus as $opMinus) {
+            if (!$opMinus->getIsDebit()){
+                $tmpBalance -=  $opMinus->getSum();
+                $opMinus->setIsDebit(true);
+            }
+        }
+        foreach ($this->operationsPlus as $opPlus) {
+            if (!$opPlus->getIsCredit()){
+                $tmpBalance -=  $opPlus->getSum();
+                $opPlus->setIsCredit(true);
+            }
+        }
+        $this->setBalance($tmpBalance);
     }
 
     /**
@@ -123,6 +214,22 @@ class Account implements \Serializable
     public function setBalance($balance): void
     {
         $this->balance = $balance;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAtFirstBalance()
+    {
+        return $this->atFirstBalance;
+    }
+
+    /**
+     * @param mixed $atFirstBalance
+     */
+    public function setAtFirstBalance($atFirstBalance): void
+    {
+        $this->atFirstBalance = $atFirstBalance;
     }
 
     /**
@@ -230,4 +337,5 @@ class Account implements \Serializable
             $this->overdraft
             ) = unserialize($serialized);
     }
+
 }

@@ -41,6 +41,11 @@ class OperationMinus implements \Serializable
     private $account;
 
     /**
+     * @ORM\Column(type="boolean", unique=false, nullable=false)
+     */
+    private $isDebit;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -118,6 +123,22 @@ class OperationMinus implements \Serializable
     public function setAccount($account): void
     {
         $this->account = $account;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsDebit()
+    {
+        return $this->isDebit;
+    }
+
+    /**
+     * @param mixed $isDebit
+     */
+    public function setIsDebit($isDebit): void
+    {
+        $this->isDebit = $isDebit;
     }
 
     public function serialize()

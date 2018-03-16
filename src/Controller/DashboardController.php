@@ -30,7 +30,35 @@ class DashboardController extends Controller
         return $this->render('dashboard/dashboard.html.twig');
     }
 
-    // Retrieve Datas */
+    /* Navbar */
+
+    public function navbarAction () {
+        return $this->render('dashboard/dashboard-navbar.html.twig');
+    }
+
+    /* Navbtns */
+
+    public function navbtnsAction () {
+        return $this->render('dashboard/dashboard-navbtns.html.twig');
+    }
+
+    /* Todo Component */
+
+    public function todosComponentAction()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $datas = [];
+        $datas['todos'] = [];
+        $todos = $this->getUser()->getTodos();
+        foreach ( $todos as $todo){
+            $datas['todos'][] = $todo;
+        }
+
+        return $this->render('dashboard/dashboard-todos-component.html.twig', array(
+            'datas' => $datas
+        ));
+    }
 
     /**
      * @Route("/dashboard/add/todos", name="ajax_add_todos")
@@ -160,42 +188,22 @@ class DashboardController extends Controller
         return new JsonResponse($datas);
     }
 
-    /* Navbar */
-
-    public function navbarAction () {
-        return $this->render('dashboard/dashboard-navbar.html.twig');
-    }
-
-    /* Navbtns */
-
-    public function navbtnsAction () {
-        return $this->render('dashboard/dashboard-navbtns.html.twig');
-    }
-
-    /* Todo Component */
-
-    public function todosComponentAction()
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $datas = [];
-        $datas['todos'] = [];
-        $todos = $this->getUser()->getTodos();
-        foreach ( $todos as $todo){
-            $datas['todos'][] = $todo;
-        }
-
-        return $this->render('dashboard/dashboard-todos-component.html.twig', array(
-            'datas' => $datas
-        ));
-    }
-
     /* Financial Component */
 
     public function financialComponentAction()
     {
+        $entityManager = $this->getDoctrine()->getManager();
+
         $datas = [];
         $datas['accounts'] = [];
+        $accounts = $this->getUser()->getAccounts();
+        foreach ( $accounts as $account){
+            $account->initBalance();
+            $entityManager->persist($account);
+        }
+        $entityManager->flush();
+
+        unset($accounts);
         $accounts = $this->getUser()->getAccounts();
         foreach ( $accounts as $account){
             $datas['accounts'][] = $account;
@@ -234,12 +242,12 @@ class DashboardController extends Controller
         $account = $this->getUser()->getAccount($id);
 
         $balance = $account->getBalance();
-        $spendSum = $this->getDoctrine()->getRepository(OperationMinus::class)->findSumOperationMinus($account);
+        $atfirstBalance = $account->getAtFirstBalance();
 
-        $leftSum = $balance-$spendSum;
+        $percent = number_format(($balance*100)/$atfirstBalance, 2);
 
         return $this->render('dashboard/dashboard-financial-component-leftPercent.html.twig', array(
-            'percent' => 0
+            'percent' => $percent
         ));
     }
 
@@ -252,8 +260,10 @@ class DashboardController extends Controller
         $balance = $account->getBalance();
         $spendSum = $this->getDoctrine()->getRepository(OperationMinus::class)->findSumOperationMinus($account);
 
+        $percent = number_format(($spendSum*100)/$balance, 2);
+
         return $this->render('dashboard/dashboard-financial-component-spendPercent.html.twig', array(
-            'percent' => 0
+            'percent' => $percent
         ));
     }
 

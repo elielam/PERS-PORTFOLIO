@@ -61,7 +61,7 @@ class UserFixtures extends Fixture
         $user->setBirthdate(DateTime::createFromFormat('d-m-Y H:i:s', date('d-m-Y H:i:s', mktime(0, 0, 0, 01, 01, 0001))));
         $user->setEmail('test@test.fr');
         $user->setPassword($this->encoder->encodePassword($user, 'test')); // test
-        $user->setSalt('987654321');
+        $user->setSalt(null);
         $user->setRoles('ROLE_USER');
         $user->setUsername('Test');
         $manager->persist($user);

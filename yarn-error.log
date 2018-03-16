@@ -23,6 +23,8 @@ npm manifest:
     },
     "dependencies": {
       "bootstrap": "4.0.0-beta.2",
+      "datatables.net": "^1.10.16",
+      "datatables.net-bs4": "^1.10.16",
       "jquery": "^3.2.1",
       "jquery-mousewheel": "^3.1.13",
       "particles.js": "^2.0.0",
@@ -1486,6 +1488,19 @@ Lockfile:
     dependencies:
       assert-plus "^1.0.0"
   
+  datatables.net-bs4@^1.10.16:
+    version "1.10.16"
+    resolved "https://registry.yarnpkg.com/datatables.net-bs4/-/datatables.net-bs4-1.10.16.tgz#9eee67cfa8565bd3807a603a188305f7d0e20e32"
+    dependencies:
+      datatables.net "1.10.16"
+      jquery ">=1.7"
+  
+  datatables.net@1.10.16, datatables.net@^1.10.16:
+    version "1.10.16"
+    resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-1.10.16.tgz#4b052d1082824261b68eed9d22741b711d3d2469"
+    dependencies:
+      jquery ">=1.7"
+  
   date-now@^0.1.4:
     version "0.1.4"
     resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
@@ -2719,6 +2734,10 @@ Lockfile:
   jquery-mousewheel@^3.1.13:
     version "3.1.13"
     resolved "https://registry.yarnpkg.com/jquery-mousewheel/-/jquery-mousewheel-3.1.13.tgz#06f0335f16e353a695e7206bf50503cb523a6ee5"
+  
+  jquery@>=1.7:
+    version "3.3.1"
+    resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
   
   jquery@^3.2.1:
     version "3.2.1"
@@ -5273,8 +5292,8 @@ Trace:
   Error: Command failed.
   Exit code: 2
   Command: C:\Windows\system32\cmd.exe
-  Arguments: /d /s /c C:\c03735\workarea\labo\Autres\test\node_modules\.bin\encore dev
-  Directory: C:\c03735\workarea\labo\Autres\test
+  Arguments: /d /s /c C:\c03735\workarea\labo\Autres\Personal-Portfolio\node_modules\.bin\encore dev
+  Directory: C:\c03735\workarea\labo\Autres\Personal-Portfolio
   Output:
   
       at ProcessTermError.MessageError (C:\Users\c03735\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:186:110)

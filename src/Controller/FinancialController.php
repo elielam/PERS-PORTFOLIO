@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Account;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -19,6 +22,27 @@ class FinancialController extends Controller
         $datas['operationsM'] = $datas['account']->getOperationsMinus();
 
         return $this->render('financial/financial-edit.html.twig', array(
+            'datas' => $datas
+        ));
+    }
+
+    /**
+     * @Route("/financial/add/account/", name="financial_add_account")
+     */
+    public function addAccountAction($id)
+    {
+        $datas = [];
+
+        $account = new Account();
+        $account->setLibelle('Account 6');
+
+        $form = $this->createFormBuilder($account)
+            ->add('libelle', TextType::class)
+            ->add('save', SubmitType::class, array('label' => 'Create Account'))
+            ->getForm();
+
+        return $this->render('financial/financial .html.twig', array(
+            'form' => $form->createView(),
             'datas' => $datas
         ));
     }

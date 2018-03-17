@@ -244,7 +244,11 @@ class DashboardController extends Controller
         $balance = $account->getBalance();
         $atfirstBalance = $account->getAtFirstBalance();
 
-        $percent = number_format(($balance*100)/$atfirstBalance, 2);
+        if ($atfirstBalance != 0) {
+            $percent = number_format(($balance*100)/$atfirstBalance, 2);
+        } else {
+            $percent = "error ";
+        }
 
         return $this->render('dashboard/dashboard-financial-component-leftPercent.html.twig', array(
             'percent' => $percent
@@ -260,7 +264,11 @@ class DashboardController extends Controller
         $balance = $account->getBalance();
         $spendSum = $this->getDoctrine()->getRepository(OperationMinus::class)->findSumOperationMinus($account);
 
-        $percent = number_format(($spendSum*100)/$balance, 2);
+        if ($balance != 0) {
+            $percent = number_format(($spendSum * 100) / $balance, 2);
+        } else {
+            $percent = "error ";
+        }
 
         return $this->render('dashboard/dashboard-financial-component-spendPercent.html.twig', array(
             'percent' => $percent

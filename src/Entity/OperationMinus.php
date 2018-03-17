@@ -141,6 +141,13 @@ class OperationMinus implements \Serializable
         $this->isDebit = $isDebit;
     }
 
+    public function invalidateOperationMinus () {
+        $account = $this->getAccount();
+        $balance = $account->getBalance();
+        $newBalance = $balance + $this->getSum();
+        $account->setBalance($newBalance);
+    }
+
     public function serialize()
     {
 

@@ -1,16 +1,14 @@
 {
   "devDependencies": {
     "@symfony/webpack-encore": "^0.17.0",
-    "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6",
     "webpack-notifier": "^1.5.0"
   },
   "dependencies": {
     "bootstrap": "4.0.0-beta.2",
-    "datatables.net": "^1.10.16",
-    "datatables.net-bs4": "^1.10.16",
     "jquery": "^3.2.1",
     "jquery-mousewheel": "^3.1.13",
+    "node-sass": "^4.7.2",
     "particles.js": "^2.0.0",
     "popper.js": "1.12.3",
     "yarn": "^1.5.1"

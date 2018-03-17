@@ -141,6 +141,13 @@ class OperationPlus implements \Serializable
         $this->isCredit = $isCredit;
     }
 
+    public function invalidateOperationPlus () {
+        $account = $this->getAccount();
+        $balance = $account->getBalance();
+        $newBalance = $balance - $this->getSum();
+        $account->setBalance($newBalance);
+    }
+
     public function serialize()
     {
 

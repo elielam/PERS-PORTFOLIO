@@ -145,7 +145,7 @@ class Account implements \Serializable
         }
         foreach ($this->operationsPlus as $opPlus) {
             if (!$opPlus->getIsCredit()){
-                $tmpBalance -=  $opPlus->getSum();
+                $tmpBalance +=  $opPlus->getSum();
                 $opPlus->setIsCredit(true);
             }
         }

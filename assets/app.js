@@ -2,8 +2,6 @@
 import 'bootstrap';
 import './fontawesome-free-5.0.6/js/fontawesome-all.min';
 import 'particles.js';
-const $ = require('jquery');
-require('datatables.net-bs4')(window, $);
 
 // ### SCSS
 require('./app.scss');
@@ -16,7 +14,6 @@ require('./js/portfolio');
 // ### POPPER JS
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
-    $('#example').DataTable();
 });
 
 // ### PARTICLES JS LOAD

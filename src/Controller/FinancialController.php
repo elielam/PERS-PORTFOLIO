@@ -27,9 +27,9 @@ class FinancialController extends Controller
     }
 
     /**
-     * @Route("/financial/add/account/", name="financial_add_account")
+     * @Route("/financial/edit/account/", name="financial_edit_account")
      */
-    public function addAccountAction($id)
+    public function editAccountAction($id)
     {
         $datas = [];
 
@@ -41,7 +41,7 @@ class FinancialController extends Controller
             ->add('save', SubmitType::class, array('label' => 'Create Account'))
             ->getForm();
 
-        return $this->render('financial/financial .html.twig', array(
+        return $this->render('financial/financial-edit-account.html.twig', array(
             'form' => $form->createView(),
             'datas' => $datas
         ));

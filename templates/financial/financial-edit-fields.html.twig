@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12" style="height: 10vh">
+                {{ render(controller('App\\Controller\\FinancialController::navbarAction')) }}
+            </div>
+            <div class="col-12">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+{% endblock %}

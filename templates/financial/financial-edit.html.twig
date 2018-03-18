@@ -48,11 +48,15 @@
                     <tr>
                         <td>{{ operation.libelle }}</td>
                         <td>{{ operation.datetime|date('Y-m-d H:i:s') }}</td>
-                        <td>{{ operation.sum }}</td>
-                        <td>{{ operation.isCredit }}</td>
+                        <td class="font-weight-bold">{{ operation.sum }}</td>
+                        {% if operation.isCredit == 1 %}
+                            <td>Yes</td>
+                        {% else %}
+                            <td>No</td>
+                        {% endif %}
                         <td>
                             <a href="#" style="color: black !important;"><span><i class="fas fa-edit"></i></span></a>
-                            <a href="{{ path('financial_invalidate_operation_plus', {'idA': datas.account.id, 'idO': operation.id}) }}" style="color: black !important;"><span><i class="fas fa-times ml-2"></i></span></a>
+                            <a href="{{ path('financial_invalidate_operation_plus', 'idO': operation.id}) }}" style="color: black !important;"><span><i class="fas fa-times ml-2"></i></span></a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -76,8 +80,12 @@
                         <tr>
                             <td>{{ operation.libelle }}</td>
                             <td>{{ operation.datetime|date('Y-m-d H:i:s') }}</td>
-                            <td>{{ operation.sum }}</td>
-                            <td>{{ operation.isDebit }}</td>
+                            <td class="font-weight-bold">{{ operation.sum }}</td>
+                            {% if operation.isDebit == 1 %}
+                                <td>Yes</td>
+                            {% else %}
+                                <td>No</td>
+                            {% endif %}
                             <td>
                                 <a href="#" style="color: black !important;"><span><i class="fas fa-edit"></i></span></a>
                                 <a href="{{ path('financial_invalidate_operation_minus', {'idA': datas.account.id, 'idO': operation.id}) }}" style="color: black !important;"><span><i class="fas fa-times ml-2"></i></span></a>

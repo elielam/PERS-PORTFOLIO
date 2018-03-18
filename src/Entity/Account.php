@@ -3,6 +3,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table(name="APP_ACCOUNTS")
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
@@ -16,27 +17,33 @@ class Account implements \Serializable
      */
     private $id;
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=40, unique=false, nullable=false)
      */
     private $libelle;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="integer", length=1, unique=false, nullable=false)
      */
     private $type;
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="integer", length=100, unique=false, nullable=false)
      */
     private $balance;
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="integer", length=100, unique=false, nullable=false)
      */
     private $atFirstBalance;
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="integer", length=100, unique=false, nullable=false)
      */
     private $interestDraft;
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="integer", length=100, unique=false, nullable=false)
      */
     private $overdraft;

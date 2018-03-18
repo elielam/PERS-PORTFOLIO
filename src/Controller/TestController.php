@@ -23,9 +23,7 @@ class TestController extends Controller
      */
     public function testAction()
     {
-        //  $this->addFlash('success',
-        //    'Suppression a été effectuée avec succès!'
-        //  );
+
 
 //        date_default_timezone_set('Europe/Paris');
 //        $time = date("h:i:s");

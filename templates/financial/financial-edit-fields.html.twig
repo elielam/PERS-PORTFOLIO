@@ -4,11 +4,25 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12" style="height: 10vh">
-                {{ render(controller('App\\Controller\\FinancialController::navbarAction')) }}
+                {{ render(controller('App\\Controller\\FinancialController::navbarAction', {'idA': idA, 'page': 'edit-fields'})) }}
             </div>
             <div class="col-12">
-                {{ form_start(form) }}
-                {{ form_widget(form) }}
-                {{ form_end(form) }}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            {% for type, flash_messages in app.session.flashBag.all %}
+                                {% for flash_message in flash_messages %}
+                                    <div class="alert alert-{{ type }}">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>{{ flash_message }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                        <div class="col-12">
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
             </div>
 {% endblock %}

@@ -6,7 +6,11 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-0 mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href="/dashboard"><i class="fas fa-chevron-left"></i></a>
+                    {% if page == 'edit' %}
+                        <a class="nav-link font-weight-bold" href="/dashboard"><i class="fas fa-chevron-left"></i></a>
+                    {% elseif page == 'edit-fields' %}
+                        <a class="nav-link font-weight-bold" href="{{ path('financial_edit', {'id': idA}) }}"><i class="fas fa-chevron-left"></i></a>
+                    {% endif %}
                 </li>
             </ul>
             <ul class="navbar-nav mr-0 ml-auto">
@@ -33,7 +37,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('financial_edit_account', {'idA': datas.account.id}) }}"> Edit Account </a>
+                    <a class="nav-link" href="{{ path('financial_edit_account', {'idA': idA}) }}"> Edit Account </a>
                 </li>
             </ul>
             <ul class="navbar-nav mr-0">

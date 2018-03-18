@@ -15,12 +15,6 @@
             <div id="dashboard-home-col" class="col-sm-12 h-100 w-100 pl-5 pt-3">
                 <div id="dashboard-components-row" class="row">
 
-                    {#{% for type, flash_messages in app.session.flashBag.all %}#}
-                        {#{% for flash_message in flash_messages %}#}
-                            {#<div class="alert alert-{{ type }}"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>{{ flash_message }}</strong></div>#}
-                        {#{% endfor %}#}
-                    {#{% endfor %}#}
-
                     {{ render(controller('App\\Controller\\DashboardController::todosComponentAction')) }}
 
                     {{ render(controller('App\\Controller\\DashboardController::financialComponentAction')) }}

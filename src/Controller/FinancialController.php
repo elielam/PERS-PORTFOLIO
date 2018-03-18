@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Account;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Form\AccountType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -27,24 +27,45 @@ class FinancialController extends Controller
     }
 
     /**
-     * @Route("/financial/edit/account/", name="financial_edit_account")
+     * @Route("/financial/edit/account/{idA}", name="financial_edit_account")
      */
-    public function editAccountAction($id)
+    public function editAccountAction($idA, Request $request)
     {
         $datas = [];
 
-        $account = new Account();
-        $account->setLibelle('Account 6');
+        $account = $this->getUser()->getAccount(intval($idA));
 
-        $form = $this->createFormBuilder($account)
-            ->add('libelle', TextType::class)
-            ->add('save', SubmitType::class, array('label' => 'Create Account'))
-            ->getForm();
+        $form = $this->createForm(AccountType::class, $account);
 
-        return $this->render('financial/financial-edit-account.html.twig', array(
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $account = $form->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($account);
+            $entityManager->flush();
+
+            $this->addFlash('success',
+              'La modification a été effectuée avec succès!'
+            );
+
+            return $this->render('financial/financial-edit-fields.html.twig', array(
+                'form' => $form->createView(),
+                'idA' => $idA
+            ));
+        }
+
+        return $this->render('financial/financial-edit-fields.html.twig', array(
             'form' => $form->createView(),
-            'datas' => $datas
+            'idA' => $idA
         ));
+    }
+
+    public function editOperationAction()
+    {
+
     }
 
     /**
@@ -79,7 +100,10 @@ class FinancialController extends Controller
         return $this->redirectToRoute('financial_edit', array('id' => intval($idA)));
     }
 
-    public function navbarAction () {
-        return $this->render('financial/financial-navbar.html.twig');
+    public function navbarAction ($idA, $page) {
+        return $this->render('financial/financial-navbar.html.twig', array(
+            'idA' => $idA,
+            'page' => $page
+        ));
     }
 }

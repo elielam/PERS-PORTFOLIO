@@ -197,11 +197,6 @@ class DashboardController extends Controller
         $datas = [];
         $datas['accounts'] = [];
         $accounts = $this->getUser()->getAccounts();
-        foreach ( $accounts as $account){
-            $account->initBalance();
-            $entityManager->persist($account);
-        }
-        $entityManager->flush();
 
         unset($accounts);
         $accounts = $this->getUser()->getAccounts();

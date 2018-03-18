@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Account;
 use App\Form\AccountType;
+use App\Form\OperationMinusType;
+use App\Form\OperationPlusType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -63,8 +65,64 @@ class FinancialController extends Controller
         ));
     }
 
-    public function editOperationAction()
+    /**
+     * @Route("/financial/edit/operation/{idA}/{idO}/{type}", name="financial_edit_operation")
+     */
+    public function editOperationAction($idA, $idO, $type, Request $request)
     {
+        $account = $this->getUser()->getAccount(intval($idA));
+
+        if ($type === "credit"){
+            $operation = $account->getOperationPlus(intval($idO));
+            $form = $this->createForm(OperationPlusType::class, $operation);
+            $lastV = $operation->getSum();
+        } elseif ($type === "debit"){
+            $operation = $account->getOperationMinus(intval($idO));
+            $form = $this->createForm(OperationMinusType::class, $operation);
+            $lastV = $operation->getSum();
+        }
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $operation = $form->getData();
+            $tmpBalance = $account->getBalance();
+
+            if ($type === "credit"){
+                if ($operation->getIsCredit() === true) {
+                    $balance = $tmpBalance - $lastV + $operation->getSum();
+                } else {
+                    $balance = $tmpBalance - $lastV;
+                }
+            } elseif ($type === "debit"){
+                if ($operation->getIsDebit() === true) {
+                    $balance = $tmpBalance + $lastV - $operation->getSum();
+                } else {
+                    $balance = $tmpBalance + $lastV;
+                }
+            }
+
+            $account->setBalance($balance);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($operation);
+            $entityManager->persist($account);
+            $entityManager->flush();
+
+            $this->addFlash('success',
+                'La modification a été effectuée avec succès!'
+            );
+
+            return $this->render('financial/financial-edit-fields.html.twig', array(
+                'form' => $form->createView(),
+                'idA' => $idA
+            ));
+        }
+
+        return $this->render('financial/financial-edit-fields.html.twig', array(
+            'form' => $form->createView(),
+            'idA' => $idA
+        ));
 
     }
 

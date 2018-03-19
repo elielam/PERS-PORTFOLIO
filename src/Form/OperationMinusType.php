@@ -19,12 +19,6 @@ class OperationMinusType extends AbstractType
             ->add('libelle', TextType::class, array(
                 'label'  => 'Operation Libelle',
             ))
-            ->add('datetime', DateTimeType::class, array(
-                'label'  => 'Operation Date',
-                'placeholder' => array(
-                    'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
-                )
-            ))
             ->add('sum', TextType::class, array(
                 'label'  => 'Operation Sum',
             ))
@@ -34,9 +28,23 @@ class OperationMinusType extends AbstractType
                     'Yes' => true,
                     'No' => false,
                 ),
-            ))
-            ->add('save', SubmitType::class, array('label' => 'Update Operation'))
-        ;
+                'attr' => ['class' => 'disabled'
+                ]
+            ));
+        if($options['data']->getId() === null) {
+            $builder
+                ->add('datetime', DateTimeType::class, array(
+                    'label'  => false,
+                    'data' => new \DateTime()
+                ))
+                ->add('save', SubmitType::class, array('label' => 'Add Operation'));
+        } else {
+            $builder
+                ->add('datetime', DateTimeType::class, array(
+                    'label'  => false
+                ))
+                ->add('save', SubmitType::class, array('label' => 'Update Operation'));
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)

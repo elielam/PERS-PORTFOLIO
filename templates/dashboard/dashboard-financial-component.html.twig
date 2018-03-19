@@ -18,15 +18,15 @@
                         <div class="row m-0 financialComponent-element-account-numbers-row">
                             <div class="container">
                                 <div class="row justify-content-center">
-                                    {{ render(controller('App\\Controller\\DashboardController::financialComponentLeftPercentAction', {'id': account.id})) }}
+                                    {{ render(controller('App\\Controller\\FinancialController::financialComponentIncomingAction', {'id': account.id})) }}
                                     <div class="col-1"></div>
-                                    {{ render(controller('App\\Controller\\DashboardController::financialComponentSpendPercentAction', {'id': account.id})) }}
+                                    {{ render(controller('App\\Controller\\FinancialController::financialComponentSpendPercentAction', {'id': account.id})) }}
                                     <div class="col-1"></div>
                                     <div class="col-2 border border-dark" style="height: 6vh; display: flex; align-items: center; justify-content: center">
                                         <p class="m-0 font font-weight-bold">{{ account.balance }}€</p>
                                     </div>
                                     <div class="col-1"></div>
-                                    {{ render(controller('App\\Controller\\DashboardController::financialComponentSumPerDayAction', {'id': account.id})) }}
+                                    {{ render(controller('App\\Controller\\FinancialController::financialComponentSumPerDayAction', {'id': account.id})) }}
                                 </div>
                             </div>
                         </div>
@@ -34,35 +34,10 @@
                     <div class="col-12 financialComponent-account-header" style="height: 4vh;">
                         <div class="row h-100">
                             <div class="col-12 p-0" style="display: flex; align-items: center; justify-content: center">
-                                <a href="{{ path('financial_edit', {'id': account.id}) }}" style="color: black !important;"><span><i class="fas fa-eye"></i></span></a>
+                                <a href="{{ path('financial_edit', {'id': account.id}) }}" style="color: black !important; font-weight: bold">Details</a>
                             </div>
                         </div>
                     </div>
-                    {#<div class="col-12 financialComponent-element-account-lastoperations" style="height: 10vh; border-bottom: 1px solid black;">#}
-                        {#<div class="row financialComponent-element-account-lastoperations-row justify-content-center h-100" style="overflow-y: scroll">#}
-                            {#<div class="col-12 bg-light" style="height: 4vh">#}
-
-                            {#</div>#}
-                            {#<div class="col-12" style="height: 4vh">#}
-
-                            {#</div>#}
-                            {#<div class="col-12 bg-light" style="height: 4vh">#}
-
-                            {#</div>#}
-                            {#<div class="col-12" style="height: 4vh">#}
-
-                            {#</div>#}
-                            {#<div class="col-12 bg-light" style="height: 4vh">#}
-
-                            {#</div>#}
-                            {#<div class="col-12" style="height: 4vh">#}
-
-                            {#</div>#}
-                            {#<div class="col-12 bg-light" style="height: 4vh">#}
-
-                            {#</div>#}
-                        {#</div>#}
-                    {#</div>#}
                 </div>
             {% endfor %}
         </div>

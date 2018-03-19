@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class PortfolioController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="portfolio")
      */
     public function home() {
         return $this->render('portfolio/home.html.twig');

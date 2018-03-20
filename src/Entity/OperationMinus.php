@@ -35,6 +35,12 @@ class OperationMinus implements \Serializable
     private $sum;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\PaymentCategory", inversedBy="operationsMinus")
+     * @ORM\JoinColumn(nullable=true, unique=false, referencedColumnName="id")
+     */
+    private $category;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Account", inversedBy="operationsMinus")
      * @ORM\JoinColumn(nullable=true, unique=false, referencedColumnName="id")
      */
@@ -139,6 +145,22 @@ class OperationMinus implements \Serializable
     public function setIsDebit($isDebit): void
     {
         $this->isDebit = $isDebit;
+    }
+
+    /**
+     * @return PaymentCategory
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category): void
+    {
+        $this->category = $category;
     }
 
     public function validateOperationMinus () {

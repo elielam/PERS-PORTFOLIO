@@ -35,6 +35,12 @@ class OperationPlus implements \Serializable
     private $sum;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\PaymentCategory", inversedBy="operationsPlus")
+     * @ORM\JoinColumn(nullable=true, unique=false, referencedColumnName="id")
+     */
+    private $category;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Account", inversedBy="operationsPlus")
      * @ORM\JoinColumn(nullable=true, unique=false, referencedColumnName="id")
      */
@@ -139,6 +145,22 @@ class OperationPlus implements \Serializable
     public function setIsCredit($isCredit): void
     {
         $this->isCredit = $isCredit;
+    }
+
+    /**
+     * @return PaymentCategory
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category): void
+    {
+        $this->category = $category;
     }
 
     public function validateOperationPlus () {

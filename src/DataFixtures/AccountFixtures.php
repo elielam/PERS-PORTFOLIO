@@ -64,6 +64,17 @@ class AccountFixtures extends Fixture implements DependentFixtureInterface
                 $operationPlus->setSum($plusSum);
                 $operationPlus->setIsCredit(false);
                 $operationPlus->setAccount($account);
+                if($i === 1 OR $i === 2) {
+                    $operationPlus->setCategory($this->getReference(PaymentCategoryFixtures::LOISIRS_USER_REF));
+                } elseif ($i === 3 OR $i === 4) {
+                    $operationPlus->setCategory($this->getReference(PaymentCategoryFixtures::VETEMENTS_USER_REF));
+                } elseif ($i === 5 OR $i === 6 ) {
+                    $operationPlus->setCategory($this->getReference(PaymentCategoryFixtures::CHARGES_USER_REF));
+                } elseif ($i === 7 OR $i === 8 ) {
+                    $operationPlus->setCategory($this->getReference(PaymentCategoryFixtures::ABONEMENTS_USER_REF));
+                } elseif ($i === 9 OR $i === 10 ) {
+                    $operationPlus->setCategory($this->getReference(PaymentCategoryFixtures::ALIMENTAIRES_USER_REF));
+                }
                 $manager->persist($operationPlus);
             }
 
@@ -76,6 +87,17 @@ class AccountFixtures extends Fixture implements DependentFixtureInterface
                 $operationMinus->setSum($minusSum);
                 $operationMinus->setIsDebit(false);
                 $operationMinus->setAccount($account);
+                if($i === 1 OR $i === 2) {
+                    $operationMinus->setCategory($this->getReference(PaymentCategoryFixtures::LOISIRS_USER_REF));
+                } elseif ($i === 3 OR $i === 4) {
+                    $operationMinus->setCategory($this->getReference(PaymentCategoryFixtures::VETEMENTS_USER_REF));
+                } elseif ($i === 5 OR $i === 6 ) {
+                    $operationMinus->setCategory($this->getReference(PaymentCategoryFixtures::CHARGES_USER_REF));
+                } elseif ($i === 7 OR $i === 8 ) {
+                    $operationMinus->setCategory($this->getReference(PaymentCategoryFixtures::ABONEMENTS_USER_REF));
+                } elseif ($i === 9 OR $i === 10 ) {
+                    $operationMinus->setCategory($this->getReference(PaymentCategoryFixtures::ALIMENTAIRES_USER_REF));
+                }
                 $manager->persist($operationMinus);
             }
 
@@ -94,7 +116,8 @@ class AccountFixtures extends Fixture implements DependentFixtureInterface
     function getDependencies()
     {
         return array(
-          UserFixtures::class
+          UserFixtures::class,
+          PaymentCategoryFixtures::class
         );
     }
 }

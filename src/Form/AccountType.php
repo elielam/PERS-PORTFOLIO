@@ -38,6 +38,30 @@ class AccountType extends AbstractType
                     'label' => 'Save Account',
                     'attr' => ['class' => 'btn btn-primary']
                 ));
+        } else {
+            $builder
+                ->add('libelle', TextType::class, array(
+                    'label' => 'Account Name',
+                ))
+                ->add('bic', TextType::class, array(
+                    'label' => 'Account BIC',
+                ))
+                ->add('iban', TextType::class, array(
+                    'label' => 'Account IBAN',
+                ))
+                ->add('balance', TextType::class, array(
+                    'label' => 'Account Balance',
+                ))
+                ->add('interestDraft', TextType::class, array(
+                    'label' => 'Account Interest draft rate',
+                ))
+                ->add('overdraft', TextType::class, array(
+                    'label' => 'Account Overdraft',
+                ))
+                ->add('save', SubmitType::class, array(
+                    'label' => 'Update Account',
+                    'attr' => ['class' => 'btn btn-primary']
+                ));
         }
     }
 

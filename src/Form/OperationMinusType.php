@@ -22,13 +22,19 @@ class OperationMinusType extends AbstractType
             ->add('sum', TextType::class, array(
                 'label'  => 'Operation Sum',
             ))
+            ->add('category', ChoiceType::class, array(
+                'label'  => 'Operation Category',
+                'choices'  => array(
+                    'Yes' => true,
+                    'No' => false,
+                ),
+            ))
             ->add('isDebit', ChoiceType::class, array(
                 'label'  => 'Operation is debit',
                 'choices'  => array(
                     'Yes' => true,
                     'No' => false,
-                ),
-                'attr' => ['class' => 'disabled']
+                )
             ));
         if($options['data']->getId() === null) {
             $builder

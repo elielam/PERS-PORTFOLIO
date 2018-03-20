@@ -11,6 +11,7 @@ use App\Form\OperationPlusType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class FinancialController extends Controller
@@ -72,13 +73,18 @@ class FinancialController extends Controller
     public function addOperationAction($idA, $type, Request $request)
     {
         $account = $this->getUser()->getAccount(intval($idA));
+        $entityManager = $this->getDoctrine()->getManager();
 
         if($type === 'credit') {
             $operation = new OperationPlus();
-            $form = $this->createForm(OperationPlusType::class, $operation);
+            $form = $this->createForm(OperationPlusType::class, $operation, array(
+                'entity_manager' => $entityManager,
+            ));
         } else if ($type === 'debit') {
             $operation = new OperationMinus();
-            $form = $this->createForm(OperationMinusType::class, $operation);
+            $form = $this->createForm(OperationMinusType::class, $operation, array(
+                'entity_manager' => $entityManager,
+            ));
         }
 
         $form->handleRequest($request);
@@ -120,15 +126,20 @@ class FinancialController extends Controller
     public function editOperationAction($idA, $idO, $type, Request $request)
     {
         $account = $this->getUser()->getAccount(intval($idA));
+        $entityManager = $this->getDoctrine()->getManager();
 
         if ($type === "credit"){
             $operation = $account->getOperationPlus(intval($idO));
-            $form = $this->createForm(OperationPlusType::class, $operation);
+            $form = $this->createForm(OperationPlusType::class, $operation, array(
+                'entity_manager' => $entityManager,
+            ));
             $lastV = $operation->getSum();
             $lastState = $operation->getIsCredit();
         } elseif ($type === "debit"){
             $operation = $account->getOperationMinus(intval($idO));
-            $form = $this->createForm(OperationMinusType::class, $operation);
+            $form = $this->createForm(OperationMinusType::class, $operation, array(
+                'entity_manager' => $entityManager,
+            ));
             $lastV = $operation->getSum();
             $lastState = $operation->getIsDebit();
         }
@@ -389,28 +400,28 @@ class FinancialController extends Controller
         ));
     }
 
-    /**
-     * @Route("/financial/account/add", name="financial_account_add")
-     * @Method("POST")
-     */
-    public function addAccountAction (Request $request) {
-
-        $account = new Account();
-        $form = $this->createForm(AccountType::class, $account);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $account = $form->getData();
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($account);
-            $entityManager->persist($this->getUser());
-            $entityManager->flush();
-
-            return new JsonResponse(array('message' => 'Success!'), 200);
-        }
-
-        return new JsonResponse(array('message' => 'Error!'), 200);
-    }
+//    /**
+//     * @Route("/financial/account/add", name="financial_account_add")
+//     * @Method("POST")
+//     */
+//    public function addAccountAction (Request $request) {
+//
+//        $account = new Account();
+//        $form = $this->createForm(AccountType::class, $account);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//
+//            $account = $form->getData();
+//
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->persist($account);
+//            $entityManager->persist($this->getUser());
+//            $entityManager->flush();
+//
+//            return new JsonResponse(array('message' => 'Success!'), 200);
+//        }
+//
+//        return new JsonResponse(array('message' => 'Error!'), 200);
+//    }
 }

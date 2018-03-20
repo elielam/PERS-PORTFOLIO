@@ -81,19 +81,4 @@ class DashboardController extends Controller
             'datas' => $datas
         ));
     }
-
-    /**
-     * @Route("/dashboard", name="dashboard")
-     */
-    public function financialAddAccountModalAction(Request $request)
-    {
-
-        $account = new Account();
-        $form = $this->createForm(AccountType::class, $account);
-
-        return $this->render('dashboard/dashboard-financial-modal-addAccount.html.twig', array(
-            'form' => $form->createView()
-        ));
-    }
-
 }

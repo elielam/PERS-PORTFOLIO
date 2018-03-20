@@ -21,12 +21,16 @@ class Account implements \Serializable
      * @ORM\Column(type="string", length=40, unique=false, nullable=false)
      */
     private $libelle;
-
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(type="integer", length=1, unique=false, nullable=false)
+     * @ORM\Column(type="string", length=11, unique=true, nullable=false)
      */
-    private $type;
+    private $bic;
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=34, unique=true, nullable=false)
+     */
+    private $iban;
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="integer", length=100, unique=false, nullable=false)
@@ -49,7 +53,13 @@ class Account implements \Serializable
     private $overdraft;
 
     /**
-     * @ORM\OneToMany(targetEntity="OperationPlus", indexBy="aid", mappedBy="account", orphanRemoval=true, cascade={"persist"}, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="MeanOfPayment", indexBy="account", mappedBy="account", orphanRemoval=true, cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinColumn(name="operationsPlus", referencedColumnName="id")
+     */
+    private $meansOfPayment;
+
+    /**
+     * @ORM\OneToMany(targetEntity="OperationPlus", indexBy="account", mappedBy="account", orphanRemoval=true, cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinColumn(name="operationsPlus", referencedColumnName="id")
      */
     private $operationsPlus;
@@ -70,6 +80,7 @@ class Account implements \Serializable
     {
         $this->operationsPlus = new ArrayCollection();
         $this->operationsMinus = new ArrayCollection();
+        $this->meansOfPayment = new ArrayCollection();
     }
 
     public function addOperationPlus(OperationPlus $operationPlus)
@@ -132,32 +143,22 @@ class Account implements \Serializable
         $operationMinus->setAccount(null);
     }
 
-//    public function withdraw(OperationMinus $operationMinus)
-//    {
-//        $this->balance = $this->balance - $operationMinus->getSum();
+//    public function initBalance() {
+//        $tmpBalance = $this->getBalance();
+//        foreach ($this->operationsMinus as $opMinus) {
+//            if (!$opMinus->getIsDebit()){
+//                $tmpBalance -=  $opMinus->getSum();
+//                $opMinus->setIsDebit(true);
+//            }
+//        }
+//        foreach ($this->operationsPlus as $opPlus) {
+//            if (!$opPlus->getIsCredit()){
+//                $tmpBalance +=  $opPlus->getSum();
+//                $opPlus->setIsCredit(true);
+//            }
+//        }
+//        $this->setBalance($tmpBalance);
 //    }
-//
-//    public function deposit(OperationPlus $operationPlus)
-//    {
-//        $this->balance = $this->balance + $operationPlus->getSum();
-//    }
-
-    public function initBalance() {
-        $tmpBalance = $this->getBalance();
-        foreach ($this->operationsMinus as $opMinus) {
-            if (!$opMinus->getIsDebit()){
-                $tmpBalance -=  $opMinus->getSum();
-                $opMinus->setIsDebit(true);
-            }
-        }
-        foreach ($this->operationsPlus as $opPlus) {
-            if (!$opPlus->getIsCredit()){
-                $tmpBalance +=  $opPlus->getSum();
-                $opPlus->setIsCredit(true);
-            }
-        }
-        $this->setBalance($tmpBalance);
-    }
 
     /**
      * @return mixed
@@ -189,22 +190,6 @@ class Account implements \Serializable
     public function setLibelle($libelle): void
     {
         $this->libelle = $libelle;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param mixed $type
-     */
-    public function setType($type): void
-    {
-        $this->type = $type;
     }
 
     /**
@@ -306,6 +291,54 @@ class Account implements \Serializable
     /**
      * @return mixed
      */
+    public function getBic()
+    {
+        return $this->bic;
+    }
+
+    /**
+     * @param mixed $bic
+     */
+    public function setBic($bic): void
+    {
+        $this->bic = $bic;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIban()
+    {
+        return $this->iban;
+    }
+
+    /**
+     * @param mixed $iban
+     */
+    public function setIban($iban): void
+    {
+        $this->iban = $iban;
+    }
+
+    /**
+     * @return Collection|MeanOfPayment[]
+     */
+    public function getMeansOfPayment()
+    {
+        return $this->meansOfPayment;
+    }
+
+    /**
+     * @param mixed $meansOfPayment
+     */
+    public function setMeansOfPayment($meansOfPayment): void
+    {
+        $this->meansOfPayment = $meansOfPayment;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getUser()
     {
         return $this->user;
@@ -325,7 +358,6 @@ class Account implements \Serializable
         return array(
             $this->id,
             $this->libelle,
-            $this->type,
             $this->balance,
             $this->interestDraft,
             $this->overdraft
@@ -338,7 +370,6 @@ class Account implements \Serializable
         list (
             $this->id,
             $this->libelle,
-            $this->type,
             $this->balance,
             $this->interestDraft,
             $this->overdraft

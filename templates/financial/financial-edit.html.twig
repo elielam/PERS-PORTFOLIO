@@ -11,7 +11,9 @@
                     <thead class="thead-dark">
                     <tr>
                         <th>Name</th>
-                        <th>Type</th>
+                        <th>BIC</th>
+                        <th>IBAN</th>
+                        <th>Means of Payment</th>
                         <th>Balance</th>
                         <th>Balance At Month Start</th>
                         <th>Interest Draft</th>
@@ -21,7 +23,13 @@
                     <tbody>
                     <tr>
                         <td>{{ datas.account.libelle }}</td>
-                        <td>{{ datas.account.type }}</td>
+                        <td>{{ datas.account.bic }}</td>
+                        <td>{{ datas.account.iban }}</td>
+                        {% if datas.account.meansOfPayment %}
+                            <td> Yes </td>
+                        {% else %}
+                            <td> No </td>
+                        {% endif %}
                         <td>{{ datas.account.balance }}</td>
                         <td>{{ datas.account.atFirstBalance }}</td>
                         <td>{{ datas.account.interestDraft }}</td>

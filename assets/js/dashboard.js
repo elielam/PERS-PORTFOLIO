@@ -311,3 +311,7 @@ function reconstructTodoDom(response) {
     deleteTodoAction();
     stateTodoAction();
 }
+
+/* Financial */
+
+// addAccount

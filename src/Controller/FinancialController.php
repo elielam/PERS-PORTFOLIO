@@ -8,6 +8,7 @@ use App\Entity\OperationPlus;
 use App\Form\AccountType;
 use App\Form\OperationMinusType;
 use App\Form\OperationPlusType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -124,10 +125,12 @@ class FinancialController extends Controller
             $operation = $account->getOperationPlus(intval($idO));
             $form = $this->createForm(OperationPlusType::class, $operation);
             $lastV = $operation->getSum();
+            $lastState = $operation->getIsCredit();
         } elseif ($type === "debit"){
             $operation = $account->getOperationMinus(intval($idO));
             $form = $this->createForm(OperationMinusType::class, $operation);
             $lastV = $operation->getSum();
+            $lastState = $operation->getIsDebit();
         }
 
         $form->handleRequest($request);
@@ -139,19 +142,34 @@ class FinancialController extends Controller
 
             if ($type === "credit"){
                 if ($operation->getIsCredit() === true) {
-                    $balance = $tmpBalance - $lastV + $operation->getSum();
+                    if ($lastState === false) {
+                        $balance = $tmpBalance + $operation->getSum();
+                    } else {
+                        $balance = $tmpBalance - $lastV + $operation->getSum();
+                    }
+                    $account->setBalance($balance);
                 } else {
-                    $balance = $tmpBalance - $lastV;
+                    if ($lastState != false) {
+                        $balance = $tmpBalance - $operation->getSum();
+                        $account->setBalance($balance);
+                    }
                 }
             } elseif ($type === "debit"){
                 if ($operation->getIsDebit() === true) {
-                    $balance = $tmpBalance + $lastV - $operation->getSum();
+                    if ($lastState === false) {
+                        $balance = $tmpBalance - $operation->getSum();
+                    } else {
+                        $balance = $tmpBalance + $lastV - $operation->getSum();
+                    }
+                    $account->setBalance($balance);
                 } else {
-                    $balance = $tmpBalance + $lastV;
+                    if ($lastState != false) {
+                        $balance = $tmpBalance + $operation->getSum();
+                        $account->setBalance($balance);
+                    }
                 }
             }
 
-            $account->setBalance($balance);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($operation);
             $entityManager->persist($account);
@@ -369,5 +387,30 @@ class FinancialController extends Controller
             'idA' => $idA,
             'page' => $page
         ));
+    }
+
+    /**
+     * @Route("/financial/account/add", name="financial_account_add")
+     * @Method("POST")
+     */
+    public function addAccountAction (Request $request) {
+
+        $account = new Account();
+        $form = $this->createForm(AccountType::class, $account);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $account = $form->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($account);
+            $entityManager->persist($this->getUser());
+            $entityManager->flush();
+
+            return new JsonResponse(array('message' => 'Success!'), 200);
+        }
+
+        return new JsonResponse(array('message' => 'Error!'), 200);
     }
 }

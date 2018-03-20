@@ -8,6 +8,7 @@ use App\Entity\OperationMinus;
 use App\Entity\OperationPlus;
 
 use App\Entity\User;
+use App\Form\AccountType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -78,6 +79,20 @@ class DashboardController extends Controller
 
         return $this->render('dashboard/dashboard-financial-component.html.twig', array(
             'datas' => $datas
+        ));
+    }
+
+    /**
+     * @Route("/dashboard", name="dashboard")
+     */
+    public function financialAddAccountModalAction(Request $request)
+    {
+
+        $account = new Account();
+        $form = $this->createForm(AccountType::class, $account);
+
+        return $this->render('dashboard/dashboard-financial-modal-addAccount.html.twig', array(
+            'form' => $form->createView()
         ));
     }
 

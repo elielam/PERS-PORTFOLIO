@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Account;
+use App\Entity\MeanOfPayment;
 use App\Entity\OperationMinus;
 use App\Entity\OperationPlus;
 use DateTime;
@@ -25,7 +26,8 @@ class AccountFixtures extends Fixture implements DependentFixtureInterface
 
             $account = new Account();
             $account->setLibelle('Account N°'.$j);
-            $account->setType(1); // 1 : Visa | 2 : Mastercard | 0 : Autres
+            $account->setBic("0000000000".$j);
+            $account->setIban("000000000000000000000000000000000".$j);
             $account->setBalance($balance);
             $account->setAtFirstBalance($balance);
             $account->setInterestDraft($interestedDraft);
@@ -36,6 +38,20 @@ class AccountFixtures extends Fixture implements DependentFixtureInterface
                 $account->setUser($this->getReference(UserFixtures::TEST_USER_REF));
             } else {
                 $account->setUser($this->getReference(UserFixtures::ELIE_USER_REF));
+                $mOp = new MeanOfPayment();
+                $mOp->setLibelle('Visa 1');
+                $mOp->setcardType(1);
+                $mOp->setWithdrawalBalance(3000);
+                $mOp->setPaymentBalance(5500);
+                $mOp->setAccount($account);
+                $manager->persist($mOp);
+                $mOp = new MeanOfPayment();
+                $mOp->setLibelle('Mastercard 2');
+                $mOp->setcardType(2);
+                $mOp->setWithdrawalBalance(500);
+                $mOp->setPaymentBalance(1200);
+                $mOp->setAccount($account);
+                $manager->persist($mOp);
             }
 
 

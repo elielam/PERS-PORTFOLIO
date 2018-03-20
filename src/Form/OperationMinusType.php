@@ -28,8 +28,7 @@ class OperationMinusType extends AbstractType
                     'Yes' => true,
                     'No' => false,
                 ),
-                'attr' => ['class' => 'disabled'
-                ]
+                'attr' => ['class' => 'disabled']
             ));
         if($options['data']->getId() === null) {
             $builder

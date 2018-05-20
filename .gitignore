@@ -3,5 +3,8 @@
 /public
 /.idea/workspace.xml
 /.idea
+.idea
+.vendors
+./vendors
 /src/Migrations/
 /public/build
